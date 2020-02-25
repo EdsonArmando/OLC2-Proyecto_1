@@ -8,7 +8,7 @@ import java.util.ArrayList;
     int ESTADOACTUAL = 0;
 
     public Symbol addSymbol(Symbol s){
-        System.out.println(s.value.toString());
+        //System.out.println(s.value.toString());
         return s;
     }
 %}
@@ -29,7 +29,7 @@ entero = {digito}+
 doble = {digito}+"." {digito}+
 numero = {digito}+("." {digito}+)?
 letra = [a-zA-ZñÑ]
-id = {letra}+({letra}|{digito}|"_")*   
+id = {letra}+({letra}|{digito}|("_"|"."))*   
 caracter = "\'" [^\'] "\'"
 espacio = \t|\f|" "|\r|\n
 
@@ -85,11 +85,12 @@ espacio = \t|\f|" "|\r|\n
     "+"             {return addSymbol(new Symbol(Syma.tSuma,yycolumn,yyline,yytext()));}
     "*"             {return addSymbol(new Symbol(Syma.tMult,yycolumn,yyline,yytext()));}
     "/"             {return addSymbol(new Symbol(Syma.tDiv,yycolumn,yyline,yytext()));}
-        
+    "print"         {return addSymbol(new Symbol(Syma.tPrint,yycolumn,yyline,yytext()));}
 
     {id}            {return addSymbol(new Symbol(Syma.tId,yycolumn,yyline,yytext()));}
     {caracter}      {return addSymbol(new Symbol(Syma.tCaracter,yycolumn,yyline,yytext()));}
     {entero}        {return addSymbol(new Symbol(Syma.tEntero,yycolumn,yyline,yytext()));}
+    {doble}         {return addSymbol(new Symbol(Syma.tDoble,yycolumn,yyline,yytext()));}
 
 }
 

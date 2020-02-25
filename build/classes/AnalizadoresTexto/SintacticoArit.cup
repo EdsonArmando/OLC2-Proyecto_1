@@ -67,12 +67,13 @@ action code
 
 :} 
 terminal String tId,tDosPuntos,tPunto,tLlaveA,tPuntoComa,tLlaveC,tCadena,tCorcheA,tCorcheC;
-terminal String UMENOS,tEntero,tParA,tParC,tCaracter,tIgual,tDifQ,tOr,tAnd,tXor,tComa,tSuma,tResta,tMult,tDiv,tPow,tMayorQ,tMenorQ; 
+terminal String UMENOS,tDoble,tEntero,tParA,tParC,tCaracter,tIgual,tDifQ,tOr,tAnd,tXor,tComa,tSuma,tResta,tMult,tDiv,tPow,tMayorQ,tMenorQ; 
+terminal String tPrint;
 
 non terminal Expresion E;
 non terminal Instruccion INSTRUCCION;
 non terminal LinkedList<Instruccion> LISTA,LISTAINSTRUCCIONES;
-non terminal Instruccion DECLARACION;
+non terminal Instruccion DECLARACION,IMPRIMIR;
 
 precedence left tSuma, tResta,UMENOS;
 precedence left tMult, tDiv;
@@ -95,10 +96,13 @@ LISTAINSTRUCCIONES ::= LISTAINSTRUCCIONES:li INSTRUCCION:ins {:
                         RESULT.add(ins);
                     :}
                     ;
-INSTRUCCION ::= DECLARACION:a {:RESULT=a;:};
+INSTRUCCION ::= DECLARACION:a {:RESULT=a;:}
+                | IMPRIMIR:a {:RESULT=a;:}
+            ;
+IMPRIMIR ::= tPrint tParA E:exp tParC tPuntoComa{: RESULT=new Imprimir(exp);:};
 
-DECLARACION ::= tId:id tIgual E:exp {:RESULT= new Declaracion(id,exp);:}
-
+DECLARACION ::= tId:id tIgual E:exp tPuntoComa{:RESULT= new Declaracion(id,exp);:}
+              | tPunto tId:id tIgual E:exp tPuntoComa{:RESULT= new Declaracion(id,exp);:}
             ;
 
 E ::= tResta E:a{:RESULT=new Operacion(a,Operacion.Tipo_operacion.NEGATIVO);:}%prec UMENOS 
@@ -107,6 +111,9 @@ E ::= tResta E:a{:RESULT=new Operacion(a,Operacion.Tipo_operacion.NEGATIVO);:}%p
     | E:a tMult E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.MULTIPLICACION);:}
     | E:a tDiv E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.DIVISION);:}
     | E:a tPow E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.POTENCIA);:}  
+    | tParA E:a tParC {:RESULT=a;:}
     | tId:a {:RESULT=new Operacion(a,Tipo_operacion.IDENTIFICADOR);:}
     | tEntero:a {:RESULT=new Operacion(a,Tipo_operacion.NUMERO);:}
+    | tDoble:a {:RESULT=new Operacion(a,Tipo_operacion.NUMERO);:}
+    | tCadena:a {:RESULT=new Operacion(a,Tipo_operacion.CADENA);:}
     ;

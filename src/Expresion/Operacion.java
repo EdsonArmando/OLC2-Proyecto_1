@@ -7,12 +7,13 @@ package Expresion;
 
 import Entorno.Entorno;
 import Entorno.Simbolo;
+import Entorno.Simbolo.EnumTipoDato;
 
 /**
  *
  * @author EG
  */
-public class Operacion implements Expresion{
+public class Operacion extends Expresion{
     
     public static enum Tipo_operacion{
         SUMA,
@@ -42,6 +43,8 @@ public class Operacion implements Expresion{
      private final Tipo_operacion tipo;
      public Expresion operadorIzq;
      public Expresion operadorDer;
+     private Literal exprUno;
+     private Literal exprDos;
      public Object valor;
      public Operacion(Expresion operadorIzq, Expresion operadorDer, Tipo_operacion tipo) {
         this.tipo = tipo;
@@ -66,23 +69,28 @@ public class Operacion implements Expresion{
     public Expresion obtenerValor(Entorno ent) {
          /* ======== OPERACIONES ARITMETICAS ======== */
         if(tipo== Tipo_operacion.DIVISION){
-            Literal exprUno = (Literal)operadorIzq.obtenerValor(ent);
-            Literal exprDos = (Literal)operadorDer.obtenerValor(ent);
+            exprUno = (Literal)operadorIzq.obtenerValor(ent);
+            exprDos = (Literal)operadorDer.obtenerValor(ent);
             return new Literal(Simbolo.EnumTipoDato.INT,(Double)exprUno.valor / (Double)exprDos.valor);
         }else if(tipo== Tipo_operacion.MULTIPLICACION){
-            Literal exprUno = (Literal)operadorIzq.obtenerValor(ent);
-            Literal exprDos = (Literal)operadorDer.obtenerValor(ent);
+            exprUno = (Literal)operadorIzq.obtenerValor(ent);
+            exprDos = (Literal)operadorDer.obtenerValor(ent);
             return new Literal(Simbolo.EnumTipoDato.INT,(Double)exprUno.valor * (Double)exprDos.valor);
         }else if(tipo== Tipo_operacion.RESTA){
-            Literal exprUno = (Literal)operadorIzq.obtenerValor(ent);
-            Literal exprDos = (Literal)operadorDer.obtenerValor(ent);
+            exprUno = (Literal)operadorIzq.obtenerValor(ent);
+            exprDos = (Literal)operadorDer.obtenerValor(ent);
             return new Literal(Simbolo.EnumTipoDato.INT,(Double)exprUno.valor - (Double)exprDos.valor);
         }else if(tipo== Tipo_operacion.SUMA){
-            Literal exprUno = (Literal)operadorIzq.obtenerValor(ent);
-            Literal exprDos = (Literal)operadorDer.obtenerValor(ent);
-            return new Literal(Simbolo.EnumTipoDato.INT,(Double)exprUno.valor + (Double)exprDos.valor);
+            exprUno = (Literal)operadorIzq.obtenerValor(ent);
+            exprDos = (Literal)operadorDer.obtenerValor(ent);
+            if(exprUno.tipo==EnumTipoDato.INT && exprDos.tipo==EnumTipoDato.INT){
+                return new Literal(Simbolo.EnumTipoDato.INT,(Double)exprUno.valor + (Double)exprDos.valor);
+            }else{
+                return new Literal(Simbolo.EnumTipoDato.STRING,exprUno.valor.toString() + exprDos.valor.toString());
+            }
+            
         }else if(tipo== Tipo_operacion.NEGATIVO){
-            Literal exprUno = (Literal)operadorIzq.obtenerValor(ent);
+            exprUno = (Literal)operadorIzq.obtenerValor(ent);
             return new Literal(Simbolo.EnumTipoDato.INT,(Double)exprUno.valor *-1);
         
         }
@@ -91,22 +99,22 @@ public class Operacion implements Expresion{
             return new Literal(Simbolo.EnumTipoDato.INT,new Double(valor.toString()));
         }else if(tipo == Tipo_operacion.IDENTIFICADOR){
             Simbolo sim = ent.obtener(valor.toString());
-            return new Literal(Simbolo.EnumTipoDato.INT,sim.valor);
+            return (Expresion)sim.valor;
         }else if(tipo == Tipo_operacion.CADENA){
             return new Literal(Simbolo.EnumTipoDato.STRING,valor.toString());
         }
         /* ======== OPERACIONES RELACIONALES ======== */
         else if(tipo== Tipo_operacion.MAYOR_QUE){
-            Literal exprUno = (Literal)operadorIzq.obtenerValor(ent);
-            Literal exprDos = (Literal)operadorDer.obtenerValor(ent);
+            exprUno = (Literal)operadorIzq.obtenerValor(ent);
+            exprDos = (Literal)operadorDer.obtenerValor(ent);
             return new Literal(Simbolo.EnumTipoDato.INT,(Double)exprUno.valor > (Double)exprDos.valor);
         }else if(tipo== Tipo_operacion.MENOR_QUE){
-            Literal exprUno = (Literal)operadorIzq.obtenerValor(ent);
-            Literal exprDos = (Literal)operadorDer.obtenerValor(ent);
+            exprUno = (Literal)operadorIzq.obtenerValor(ent);
+            exprDos = (Literal)operadorDer.obtenerValor(ent);
             return new Literal(Simbolo.EnumTipoDato.INT,(Double)exprUno.valor < (Double)exprDos.valor);
         }else if(tipo== Tipo_operacion.CONCATENACION){
-            Literal exprUno = (Literal)operadorIzq.obtenerValor(ent);
-            Literal exprDos = (Literal)operadorDer.obtenerValor(ent);
+            exprUno = (Literal)operadorIzq.obtenerValor(ent);
+            exprDos = (Literal)operadorDer.obtenerValor(ent);
             return new Literal(Simbolo.EnumTipoDato.INT,exprUno.valor.toString() + exprDos.valor.toString());
         }else{
             return null;

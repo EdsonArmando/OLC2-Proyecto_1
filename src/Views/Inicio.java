@@ -25,7 +25,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author EG
  */
 public class Inicio extends javax.swing.JFrame {
-     java.awt.TextArea tex1;
+     javax.swing.JTextArea tex1;
      int cont=0;
     /**
      * Creates new form Inicio
@@ -140,7 +140,7 @@ public class Inicio extends javax.swing.JFrame {
 				     
 				}
         
-        tex1 = new java.awt.TextArea();
+        tex1 = new javax.swing.JTextArea();
         tex1.setText(texto);
         tex1.isEditable();
         tex1.isEnabled();
@@ -151,7 +151,7 @@ public class Inicio extends javax.swing.JFrame {
     private void idAnalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idAnalizarActionPerformed
         salidaConsola.setText("");
         Component comp = jTabbedPane1.getComponentAt(jTabbedPane1.getSelectedIndex());
-        tex1=(java.awt.TextArea) comp;
+        tex1=(javax.swing.JTextArea) comp;
         String datos = tex1.getText();
         LinkedList<Instruccion> resultados;
         LexicoArit lexico = new LexicoArit(new BufferedReader(new StringReader(datos)));

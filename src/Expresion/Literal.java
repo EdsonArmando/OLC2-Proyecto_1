@@ -13,9 +13,7 @@ import Entorno.Simbolo.EnumTipoDato;
  *
  * @author EG
  */
-public class Literal implements Expresion{
-    public EnumTipoDato tipo;
-    public Object valor;
+public class Literal extends Expresion{
     public Literal(EnumTipoDato tipo, Object valor) {
         this.tipo = tipo;
         this.valor = valor;

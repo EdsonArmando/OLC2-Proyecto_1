@@ -6,6 +6,7 @@
 package Instruccion;
 
 import Entorno.Entorno;
+import Entorno.Simbolo;
 import Expresion.Expresion;
 
 /**
@@ -21,7 +22,8 @@ public class Declaracion implements Instruccion {
     }
     @Override
     public Retornar ejecutar(Entorno ent) {
-        Object expr = valor.obtenerValor(ent);
+        Object exprValor = valor.obtenerValor(ent);
+        ent.insertar(id, new Simbolo(valor.tipo,exprValor,id));
         return new Retornar();
     }
     

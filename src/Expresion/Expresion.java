@@ -12,9 +12,9 @@ import Entorno.Simbolo.EnumTipoDato;
  *
  * @author EG
  */
-public interface Expresion {
+public abstract class Expresion {
     public Object valor=null;
     public EnumTipoDato tipo=null;
-    public Expresion obtenerValor(Entorno ent);
-    public EnumTipoDato getTipo();
+    public abstract Expresion obtenerValor(Entorno ent);
+    public abstract EnumTipoDato getTipo();
 }

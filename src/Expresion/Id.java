@@ -12,7 +12,7 @@ import Entorno.Simbolo;
  *
  * @author EG
  */
-public class Id implements Expresion {
+public class Id extends Expresion {
     String id;
     public Id(String id){
         this.id=id;
