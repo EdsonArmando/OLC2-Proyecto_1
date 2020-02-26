@@ -30,6 +30,7 @@ public class Operacion extends Expresion{
         MENOR_QUE,
         MAYOR_IGUAL_QUE,
         MENOR_IGUAL_QUE,
+        IDENTIFICADOR_POS_ARRAY,
         DIFERENTE_QUE,
         IGUAL_QUE,
         NOT,
@@ -112,6 +113,16 @@ public class Operacion extends Expresion{
         else if(tipo == Tipo_operacion.NUMERO){
             return new Literal(Simbolo.EnumTipoDato.INT,new Double(valor.toString()));
         }else if(tipo == Tipo_operacion.IDENTIFICADOR){
+            Simbolo sim = ent.obtener(valor.toString());
+            Expresion temp;
+            String cadena="";
+            vector = (Object[])sim.valor;
+            for(int i=0;i<vector.length;i++){
+                temp=(Expresion)vector[i];
+                cadena+=temp.obtenerValor(ent).valor.toString() + " ";
+            }
+            return new Literal(Simbolo.EnumTipoDato.ARREGLO,cadena);
+        }else if(tipo == Tipo_operacion.IDENTIFICADOR_POS_ARRAY){
             Simbolo sim = ent.obtener(valor.toString());
             vector = (Object[])sim.valor;
             if(vector.length==1){

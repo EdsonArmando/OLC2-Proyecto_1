@@ -125,7 +125,7 @@ E ::= tResta E:a{:RESULT=new Operacion(a,Operacion.Tipo_operacion.NEGATIVO);:}%p
     | E:a tDifQ E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.NOT);:}
     | E:a tXor E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.XOR);:}
     | tParA E:a tParC {:RESULT=a;:}
-    | tId:a tCorcheA tEntero:b tCorcheC {:RESULT=new Operacion(a,Tipo_operacion.IDENTIFICADOR,Integer.parseInt(b));:}
+    | tId:a tCorcheA tEntero:b tCorcheC {:RESULT=new Operacion(a,Tipo_operacion.IDENTIFICADOR_POS_ARRAY,Integer.parseInt(b));:}
     | tId:a {:RESULT=new Operacion(a,Tipo_operacion.IDENTIFICADOR);:}
     | tEntero:a {:RESULT=new Operacion(a,Tipo_operacion.NUMERO);:}
     | tTrue {:RESULT=new Operacion("true",Tipo_operacion.TRUE);:}

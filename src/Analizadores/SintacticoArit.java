@@ -755,7 +755,7 @@ class CUP$SintacticoArit$actions {
 		int bleft = ((java_cup.runtime.Symbol)CUP$SintacticoArit$stack.elementAt(CUP$SintacticoArit$top-1)).left;
 		int bright = ((java_cup.runtime.Symbol)CUP$SintacticoArit$stack.elementAt(CUP$SintacticoArit$top-1)).right;
 		String b = (String)((java_cup.runtime.Symbol) CUP$SintacticoArit$stack.elementAt(CUP$SintacticoArit$top-1)).value;
-		RESULT=new Operacion(a,Tipo_operacion.IDENTIFICADOR,Integer.parseInt(b));
+		RESULT=new Operacion(a,Tipo_operacion.IDENTIFICADOR_POS_ARRAY,Integer.parseInt(b));
               CUP$SintacticoArit$result = parser.getSymbolFactory().newSymbol("E",0, ((java_cup.runtime.Symbol)CUP$SintacticoArit$stack.elementAt(CUP$SintacticoArit$top-3)), ((java_cup.runtime.Symbol)CUP$SintacticoArit$stack.peek()), RESULT);
             }
           return CUP$SintacticoArit$result;
