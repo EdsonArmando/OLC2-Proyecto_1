@@ -73,12 +73,14 @@ espacio = \t|\f|" "|\r|\n
     "]"             {return addSymbol(new Symbol(Syma.tCorcheC,yycolumn,yyline,yytext()));}
     ","             {return addSymbol(new Symbol(Syma.tComa,yycolumn,yyline,yytext()));}
     "="             {return addSymbol(new Symbol(Syma.tIgual,yycolumn,yyline,yytext()));}
+    "=="            {return addSymbol(new Symbol(Syma.tIgualIgual,yycolumn,yyline,yytext()));}
     "-"             {return addSymbol(new Symbol(Syma.tResta,yycolumn,yyline,yytext()));}
     ";"             {return addSymbol(new Symbol(Syma.tPuntoComa,yycolumn,yyline,yytext()));}
     "."             {return addSymbol(new Symbol(Syma.tPunto,yycolumn,yyline,yytext()));}
     ">"             {return addSymbol(new Symbol(Syma.tMayorQ,yycolumn,yyline,yytext()));}
     "<"             {return addSymbol(new Symbol(Syma.tMenorQ,yycolumn,yyline,yytext()));}
     "!"             {return addSymbol(new Symbol(Syma.tDifQ,yycolumn,yyline,yytext()));}
+    "%%"            {return addSymbol(new Symbol(Syma.tModulo,yycolumn,yyline,yytext()));}
     "&"             {return addSymbol(new Symbol(Syma.tAnd,yycolumn,yyline,yytext()));}
     "^"             {return addSymbol(new Symbol(Syma.tXor,yycolumn,yyline,yytext()));}
     "|"             {return addSymbol(new Symbol(Syma.tOr,yycolumn,yyline,yytext()));}
@@ -86,6 +88,8 @@ espacio = \t|\f|" "|\r|\n
     "*"             {return addSymbol(new Symbol(Syma.tMult,yycolumn,yyline,yytext()));}
     "/"             {return addSymbol(new Symbol(Syma.tDiv,yycolumn,yyline,yytext()));}
     "print"         {return addSymbol(new Symbol(Syma.tPrint,yycolumn,yyline,yytext()));}
+    "true"          {return addSymbol(new Symbol(Syma.tTrue,yycolumn,yyline,yytext()));}
+    "false"         {return addSymbol(new Symbol(Syma.tFalse,yycolumn,yyline,yytext()));}
 
     {id}            {return addSymbol(new Symbol(Syma.tId,yycolumn,yyline,yytext()));}
     {caracter}      {return addSymbol(new Symbol(Syma.tCaracter,yycolumn,yyline,yytext()));}

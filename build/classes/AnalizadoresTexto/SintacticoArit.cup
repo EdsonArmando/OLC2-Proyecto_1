@@ -66,8 +66,8 @@ action code
 {:
 
 :} 
-terminal String tId,tDosPuntos,tPunto,tLlaveA,tPuntoComa,tLlaveC,tCadena,tCorcheA,tCorcheC;
-terminal String UMENOS,tDoble,tEntero,tParA,tParC,tCaracter,tIgual,tDifQ,tOr,tAnd,tXor,tComa,tSuma,tResta,tMult,tDiv,tPow,tMayorQ,tMenorQ; 
+terminal String tId,tModulo,tDosPuntos,tPunto,tLlaveA,tPuntoComa,tLlaveC,tCadena,tCorcheA,tCorcheC;
+terminal String UMENOS,tDoble,tIgualIgual,tEntero,tTrue,tFalse,tParA,tParC,tCaracter,tIgual,tDifQ,tOr,tAnd,tXor,tComa,tSuma,tResta,tMult,tDiv,tPow,tMayorQ,tMenorQ; 
 terminal String tPrint;
 
 non terminal Expresion E;
@@ -76,9 +76,10 @@ non terminal LinkedList<Instruccion> LISTA,LISTAINSTRUCCIONES;
 non terminal Instruccion DECLARACION,IMPRIMIR;
 
 precedence left tSuma, tResta,UMENOS;
-precedence left tMult, tDiv;
-precedence left tPow, tMayorQ,tMenorQ,tIgual;
-precedence left tAnd, tOr,tXor;
+precedence left tMult, tDiv,tModulo, tIgualIgual;
+precedence left tPow, tMayorQ,tMenorQ;
+precedence left tAnd, tOr,tXor,tDifQ;
+precedence right UMENOS,tIgual; 
 
 start with LISTA;
 
@@ -103,17 +104,32 @@ IMPRIMIR ::= tPrint tParA E:exp tParC tPuntoComa{: RESULT=new Imprimir(exp);:};
 
 DECLARACION ::= tId:id tIgual E:exp tPuntoComa{:RESULT= new Declaracion(id,exp);:}
               | tPunto tId:id tIgual E:exp tPuntoComa{:RESULT= new Declaracion(id,exp);:}
+              | tId:id tCorcheA tEntero:num tCorcheC tIgual E:exp tPuntoComa{:RESULT=new Declaracion(id,Integer.parseInt(num),exp);:}
             ;
 
 E ::= tResta E:a{:RESULT=new Operacion(a,Operacion.Tipo_operacion.NEGATIVO);:}%prec UMENOS 
+    | E:a tModulo E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.MODULO);:}     
     | E:a tSuma E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.SUMA);:}     
     | E:a tResta E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.RESTA);:}
     | E:a tMult E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.MULTIPLICACION);:}
     | E:a tDiv E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.DIVISION);:}
     | E:a tPow E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.POTENCIA);:}  
+    | E:a tIgualIgual E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.IGUAL_QUE);:} 
+    | E:a tMenorQ E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.MENOR_QUE);:}  
+    | E:a tMayorQ E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.MAYOR_QUE);:} 
+    | E:a tMenorQ tIgual E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.MENOR_IGUAL_QUE);:}  
+    | E:a tMayorQ tIgual E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.MAYOR_IGUAL_QUE);:}
+    | E:a tDifQ tIgual E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.DIFERENTE_QUE);:} 
+    | E:a tAnd E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.AND);:}
+    | E:a tOr E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.OR);:}
+    | E:a tDifQ E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.NOT);:}
+    | E:a tXor E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.XOR);:}
     | tParA E:a tParC {:RESULT=a;:}
+    | tId:a tCorcheA tEntero:b tCorcheC {:RESULT=new Operacion(a,Tipo_operacion.IDENTIFICADOR,Integer.parseInt(b));:}
     | tId:a {:RESULT=new Operacion(a,Tipo_operacion.IDENTIFICADOR);:}
     | tEntero:a {:RESULT=new Operacion(a,Tipo_operacion.NUMERO);:}
+    | tTrue {:RESULT=new Operacion("true",Tipo_operacion.TRUE);:}
+    | tFalse {:RESULT=new Operacion("false",Tipo_operacion.FALSE);:}
     | tDoble:a {:RESULT=new Operacion(a,Tipo_operacion.NUMERO);:}
     | tCadena:a {:RESULT=new Operacion(a,Tipo_operacion.CADENA);:}
     ;

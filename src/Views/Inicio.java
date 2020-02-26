@@ -10,6 +10,7 @@ import Analizadores.SintacticoArit;
 import Entorno.Entorno;
 import Instruccion.Instruccion;
 import java.awt.Component;
+import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,6 +27,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class Inicio extends javax.swing.JFrame {
      javax.swing.JTextArea tex1;
+     Font fuente=new Font("Monospaced", Font.BOLD, 25);
      int cont=0;
     /**
      * Creates new form Inicio
@@ -88,7 +90,7 @@ public class Inicio extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(idAnalizar)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(202, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,7 +100,7 @@ public class Inicio extends javax.swing.JFrame {
                     .addComponent(jTabbedPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(idAnalizar)
-                        .addGap(0, 174, Short.MAX_VALUE)))
+                        .addGap(0, 369, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
@@ -141,6 +143,7 @@ public class Inicio extends javax.swing.JFrame {
 				}
         
         tex1 = new javax.swing.JTextArea();
+        tex1.setFont(fuente);
         tex1.setText(texto);
         tex1.isEditable();
         tex1.isEnabled();

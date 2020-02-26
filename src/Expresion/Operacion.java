@@ -8,6 +8,8 @@ package Expresion;
 import Entorno.Entorno;
 import Entorno.Simbolo;
 import Entorno.Simbolo.EnumTipoDato;
+import Views.Inicio;
+import java.util.Vector;
 
 /**
  *
@@ -33,6 +35,7 @@ public class Operacion extends Expresion{
         NOT,
         AND,
         XOR,
+        MODULO,
         OR,
         TRUE,
         FALSE,
@@ -40,11 +43,13 @@ public class Operacion extends Expresion{
         CONCATENACION,
         ARRAYPOSICION
     }
+     private Object vector[];
      private final Tipo_operacion tipo;
      public Expresion operadorIzq;
      public Expresion operadorDer;
      private Literal exprUno;
      private Literal exprDos;
+     private int posVariable=0;
      public Object valor;
      public Operacion(Expresion operadorIzq, Expresion operadorDer, Tipo_operacion tipo) {
         this.tipo = tipo;
@@ -59,6 +64,11 @@ public class Operacion extends Expresion{
     public Operacion(String a, Tipo_operacion tipo) {
         this.valor=a;
         this.tipo = tipo;
+    }
+    public Operacion(String a, Tipo_operacion tipo,int pos) {
+        this.valor=a;
+        this.tipo = tipo;
+        this.posVariable = pos;
     }
     public Operacion(Double a) {
         this.valor=a;
@@ -76,6 +86,10 @@ public class Operacion extends Expresion{
             exprUno = (Literal)operadorIzq.obtenerValor(ent);
             exprDos = (Literal)operadorDer.obtenerValor(ent);
             return new Literal(Simbolo.EnumTipoDato.INT,(Double)exprUno.valor * (Double)exprDos.valor);
+        }else if(tipo== Tipo_operacion.MODULO){
+            exprUno = (Literal)operadorIzq.obtenerValor(ent);
+            exprDos = (Literal)operadorDer.obtenerValor(ent);
+            return new Literal(Simbolo.EnumTipoDato.INT,(Double)exprUno.valor % (Double)exprDos.valor);
         }else if(tipo== Tipo_operacion.RESTA){
             exprUno = (Literal)operadorIzq.obtenerValor(ent);
             exprDos = (Literal)operadorDer.obtenerValor(ent);
@@ -99,7 +113,12 @@ public class Operacion extends Expresion{
             return new Literal(Simbolo.EnumTipoDato.INT,new Double(valor.toString()));
         }else if(tipo == Tipo_operacion.IDENTIFICADOR){
             Simbolo sim = ent.obtener(valor.toString());
-            return (Expresion)sim.valor;
+            vector = (Object[])sim.valor;
+            if(vector.length==1){
+                return (Expresion)vector[0];
+            }else{
+                return (Expresion)vector[posVariable-1];
+            }
         }else if(tipo == Tipo_operacion.CADENA){
             return new Literal(Simbolo.EnumTipoDato.STRING,valor.toString());
         }
@@ -107,11 +126,43 @@ public class Operacion extends Expresion{
         else if(tipo== Tipo_operacion.MAYOR_QUE){
             exprUno = (Literal)operadorIzq.obtenerValor(ent);
             exprDos = (Literal)operadorDer.obtenerValor(ent);
-            return new Literal(Simbolo.EnumTipoDato.INT,(Double)exprUno.valor > (Double)exprDos.valor);
+            return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Double.valueOf(exprUno.valor.toString()).doubleValue() > Double.valueOf(exprDos.valor.toString()).doubleValue());
         }else if(tipo== Tipo_operacion.MENOR_QUE){
             exprUno = (Literal)operadorIzq.obtenerValor(ent);
             exprDos = (Literal)operadorDer.obtenerValor(ent);
-            return new Literal(Simbolo.EnumTipoDato.INT,(Double)exprUno.valor < (Double)exprDos.valor);
+            return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Double.valueOf(exprUno.valor.toString()).doubleValue() < Double.valueOf(exprDos.valor.toString()).doubleValue());
+        }else if(tipo== Tipo_operacion.MAYOR_IGUAL_QUE){
+            exprUno = (Literal)operadorIzq.obtenerValor(ent);
+            exprDos = (Literal)operadorDer.obtenerValor(ent);
+            return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Double.valueOf(exprUno.valor.toString()).doubleValue() >= Double.valueOf(exprDos.valor.toString()).doubleValue());
+        }else if(tipo== Tipo_operacion.MENOR_IGUAL_QUE){
+            exprUno = (Literal)operadorIzq.obtenerValor(ent);
+            exprDos = (Literal)operadorDer.obtenerValor(ent);
+            return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Double.valueOf(exprUno.valor.toString()).doubleValue() <= Double.valueOf(exprDos.valor.toString()).doubleValue());
+        }else if(tipo== Tipo_operacion.IGUAL_QUE){
+            exprUno = (Literal)operadorIzq.obtenerValor(ent);
+            exprDos = (Literal)operadorDer.obtenerValor(ent);
+            return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Double.valueOf(exprUno.valor.toString()).doubleValue() == Double.valueOf(exprDos.valor.toString()).doubleValue());
+        }else if(tipo== Tipo_operacion.DIFERENTE_QUE){
+            exprUno = (Literal)operadorIzq.obtenerValor(ent);
+            exprDos = (Literal)operadorDer.obtenerValor(ent);
+            return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Double.valueOf(exprUno.valor.toString()).doubleValue() != Double.valueOf(exprDos.valor.toString()).doubleValue());
+        }else if(tipo== Tipo_operacion.AND){
+            exprUno = (Literal)operadorIzq.obtenerValor(ent);
+            exprDos = (Literal)operadorDer.obtenerValor(ent);
+            return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(exprUno.valor.toString()) && Boolean.valueOf(exprDos.valor.toString()));
+        }else if(tipo== Tipo_operacion.OR){
+            exprUno = (Literal)operadorIzq.obtenerValor(ent);
+            exprDos = (Literal)operadorDer.obtenerValor(ent);
+            return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(exprUno.valor.toString()) | Boolean.valueOf(exprDos.valor.toString()));
+        }else if(tipo== Tipo_operacion.XOR){
+            exprUno = (Literal)operadorIzq.obtenerValor(ent);
+            exprDos = (Literal)operadorDer.obtenerValor(ent);
+            return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(exprUno.valor.toString()) ^ Boolean.valueOf(exprDos.valor.toString()));
+        }else if(tipo== Tipo_operacion.TRUE){
+            return new Literal(Simbolo.EnumTipoDato.BOOLEAN,true);
+        }else if(tipo== Tipo_operacion.FALSE){
+            return new Literal(Simbolo.EnumTipoDato.BOOLEAN,false);
         }else if(tipo== Tipo_operacion.CONCATENACION){
             exprUno = (Literal)operadorIzq.obtenerValor(ent);
             exprDos = (Literal)operadorDer.obtenerValor(ent);

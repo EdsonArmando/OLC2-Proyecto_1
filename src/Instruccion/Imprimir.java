@@ -21,8 +21,8 @@ public class Imprimir implements Instruccion  {
     @Override
     public Retornar ejecutar(Entorno ent) {
         Expresion resultado = this.expresion.obtenerValor(ent);
-        if(expresion!=null){
-            Inicio.salidaConsola.setText(resultado.valor.toString());
+        if(resultado!=null){
+            Inicio.salidaConsola.setText(resultado.valor.toString()+"\n");
         }else{
             Inicio.salidaConsola.setText("Existio un error");
         }
