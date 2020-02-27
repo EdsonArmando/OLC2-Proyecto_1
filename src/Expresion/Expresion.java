@@ -7,12 +7,13 @@ package Expresion;
 
 import Entorno.Entorno;
 import Entorno.Simbolo.EnumTipoDato;
+import Instruccion.Instruccion;
 
 /**
  *
  * @author EG
  */
-public abstract class Expresion {
+public abstract class Expresion{
     public Object valor=null;
     public EnumTipoDato tipo=null;
     public abstract Expresion obtenerValor(Entorno ent);

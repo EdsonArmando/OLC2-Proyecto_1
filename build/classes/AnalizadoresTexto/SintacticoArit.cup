@@ -167,4 +167,5 @@ E ::= tResta E:a{:RESULT=new Operacion(a,Operacion.Tipo_operacion.NEGATIVO);:}%p
     | tFalse {:RESULT=new Operacion("false",Tipo_operacion.FALSE);:}
     | tDoble:a {:RESULT=new Operacion(a,Tipo_operacion.NUMERO);:}
     | tCadena:a {:RESULT=new Operacion(a,Tipo_operacion.CADENA);:}
+    | tId:id tParA E:e1 tParC {: LinkedList<Expresion> e = new LinkedList(); e.add(e1); RESULT = new LlamadaFuncion(id,e); :}
     ;

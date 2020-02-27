@@ -8,6 +8,7 @@ package Expresion;
 import Entorno.Entorno;
 import Entorno.Simbolo;
 import Entorno.Simbolo.EnumTipoDato;
+import Instruccion.Retornar;
 import Views.Inicio;
 import java.util.Vector;
 
@@ -16,7 +17,7 @@ import java.util.Vector;
  * @author EG
  */
 public class Operacion extends Expresion{
-    
+
     public static enum Tipo_operacion{
         SUMA,
         RESTA,
@@ -187,6 +188,7 @@ public class Operacion extends Expresion{
             return null;
         }
     }
+
     @Override
     public Simbolo.EnumTipoDato getTipo() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
