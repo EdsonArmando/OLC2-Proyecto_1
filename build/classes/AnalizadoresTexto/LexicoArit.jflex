@@ -90,6 +90,11 @@ espacio = \t|\f|" "|\r|\n
     "print"         {return addSymbol(new Symbol(Syma.tPrint,yycolumn,yyline,yytext()));}
     "true"          {return addSymbol(new Symbol(Syma.tTrue,yycolumn,yyline,yytext()));}
     "false"         {return addSymbol(new Symbol(Syma.tFalse,yycolumn,yyline,yytext()));}
+    "if"            {return addSymbol(new Symbol(Syma.tIf,yycolumn,yyline,yytext()));}
+    "else"          {return addSymbol(new Symbol(Syma.tElse,yycolumn,yyline,yytext()));}
+    "do"            {return addSymbol(new Symbol(Syma.tDo,yycolumn,yyline,yytext()));}
+    "while"         {return addSymbol(new Symbol(Syma.tWhile,yycolumn,yyline,yytext()));}
+    "for"           {return addSymbol(new Symbol(Syma.tFor,yycolumn,yyline,yytext()));}
 
     {id}            {return addSymbol(new Symbol(Syma.tId,yycolumn,yyline,yytext()));}
     {caracter}      {return addSymbol(new Symbol(Syma.tCaracter,yycolumn,yyline,yytext()));}

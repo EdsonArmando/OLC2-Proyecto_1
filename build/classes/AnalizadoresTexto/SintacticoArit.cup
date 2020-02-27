@@ -66,14 +66,18 @@ action code
 {:
 
 :} 
-terminal String tId,tModulo,tDosPuntos,tPunto,tLlaveA,tPuntoComa,tLlaveC,tCadena,tCorcheA,tCorcheC;
+terminal String tId,tDo,tWhile,tFor,tIf,tElse,tModulo,tDosPuntos,tPunto,tLlaveA,tPuntoComa,tLlaveC,tCadena,tCorcheA,tCorcheC;
 terminal String UMENOS,tDoble,tIgualIgual,tEntero,tTrue,tFalse,tParA,tParC,tCaracter,tIgual,tDifQ,tOr,tAnd,tXor,tComa,tSuma,tResta,tMult,tDiv,tPow,tMayorQ,tMenorQ; 
 terminal String tPrint;
 
 non terminal Expresion E;
 non terminal Instruccion INSTRUCCION;
 non terminal LinkedList<Instruccion> LISTA,LISTAINSTRUCCIONES;
-non terminal Instruccion DECLARACION,IMPRIMIR;
+non terminal Instruccion DECLARACION,IMPRIMIR,SI,SUBIF,WHILE,DO_WHILE;
+non terminal LinkedList<SubIf> instrucciones_elseif;
+non terminal SubIf instruccion_elseif;
+non terminal SubIf instruccion_else;
+non terminal SubIf instruccion_if;
 
 precedence left tSuma, tResta,UMENOS;
 precedence left tMult, tDiv,tModulo, tIgualIgual;
@@ -99,7 +103,38 @@ LISTAINSTRUCCIONES ::= LISTAINSTRUCCIONES:li INSTRUCCION:ins {:
                     ;
 INSTRUCCION ::= DECLARACION:a {:RESULT=a;:}
                 | IMPRIMIR:a {:RESULT=a;:}
+                | SI:a {:RESULT=a;:}
+                | WHILE:a {:RESULT=a;:}
+                | DO_WHILE:a {:RESULT=a;:}
             ;
+
+WHILE ::= tWhile tParA E:a tParC tLlaveA LISTAINSTRUCCIONES:li tLlaveC {:RESULT=new While((Operacion)a,li);:};
+
+DO_WHILE ::= tDo tLlaveA LISTAINSTRUCCIONES:li tLlaveC tWhile tParA E:a tParC tPuntoComa {:RESULT=new While((Operacion)a,li);:};
+
+SI ::= 
+        instruccion_if:a {:RESULT=new If(a);:}
+      | instruccion_if:a instrucciones_elseif:b {:RESULT=new If(a,b);:}
+      | instruccion_if:a instrucciones_elseif:b instruccion_else:c {:RESULT=new If(a,b,c);:}
+      | instruccion_if:a instruccion_else:b {:RESULT=new If(a,b);:}
+;
+instruccion_if ::= 
+      tIf tParA E:a tParC tLlaveA LISTAINSTRUCCIONES:b tLlaveC {:RESULT=new SubIf((Operacion)a,b);:}
+;
+
+instrucciones_elseif ::= 
+        instrucciones_elseif:a instruccion_elseif:b{:RESULT=a; RESULT.add(b);:}
+      | instruccion_elseif:a{:RESULT=new LinkedList<>(); RESULT.add(a);:}
+; 
+
+instruccion_elseif ::= 
+        tElse tIf tParA E:a tParC tLlaveA LISTAINSTRUCCIONES:b tLlaveC {:RESULT=new SubIf((Operacion)a,b);:}
+;
+
+instruccion_else ::= 
+        tElse tLlaveA LISTAINSTRUCCIONES:a tLlaveC {:RESULT=new SubIf(a);:}
+;
+
 IMPRIMIR ::= tPrint tParA E:exp tParC tPuntoComa{: RESULT=new Imprimir(exp);:};
 
 DECLARACION ::= tId:id tIgual E:exp tPuntoComa{:RESULT= new Declaracion(id,exp);:}

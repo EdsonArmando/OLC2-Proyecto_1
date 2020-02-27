@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.LinkedList;
 import javax.swing.JFileChooser;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -27,6 +29,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class Inicio extends javax.swing.JFrame {
      javax.swing.JTextArea tex1;
+     
+     
      Font fuente=new Font("Monospaced", Font.BOLD, 25);
      int cont=0;
     /**
@@ -110,7 +114,8 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
-       String aux = "";
+      
+        String aux = "";
 				String texto = "";
 				JFileChooser chooser = new JFileChooser("CargaMasiva");
 				FileNameExtensionFilter filter = new FileNameExtensionFilter(  "dat",
@@ -141,20 +146,21 @@ public class Inicio extends javax.swing.JFrame {
 						}
 				     
 				}
-        
         tex1 = new javax.swing.JTextArea();
+        JScrollPane scroll = new JScrollPane(tex1);
         tex1.setFont(fuente);
         tex1.setText(texto);
         tex1.isEditable();
         tex1.isEnabled();
-        jTabbedPane1.addTab("Archivo"+(cont+1), tex1);
+        jTabbedPane1.addTab("Archivo"+(cont+1), scroll);
         cont++;
     }//GEN-LAST:event_jMenu1MouseClicked
 
     private void idAnalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idAnalizarActionPerformed
+        JScrollPane scroll = new JScrollPane();
         salidaConsola.setText("");
         Component comp = jTabbedPane1.getComponentAt(jTabbedPane1.getSelectedIndex());
-        tex1=(javax.swing.JTextArea) comp;
+        scroll=(javax.swing.JScrollPane) comp;
         String datos = tex1.getText();
         LinkedList<Instruccion> resultados;
         LexicoArit lexico = new LexicoArit(new BufferedReader(new StringReader(datos)));

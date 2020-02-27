@@ -22,7 +22,7 @@ public class Imprimir implements Instruccion  {
     public Retornar ejecutar(Entorno ent) {
         Expresion resultado = this.expresion.obtenerValor(ent);
         if(resultado!=null){
-            Inicio.salidaConsola.setText(resultado.valor.toString()+"\n");
+            Inicio.salidaConsola.append(resultado.valor.toString()+"\n");
         }else{
             Inicio.salidaConsola.setText("Existio un error");
         }

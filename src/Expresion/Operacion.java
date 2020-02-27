@@ -113,17 +113,22 @@ public class Operacion extends Expresion{
         else if(tipo == Tipo_operacion.NUMERO){
             return new Literal(Simbolo.EnumTipoDato.INT,new Double(valor.toString()));
         }else if(tipo == Tipo_operacion.IDENTIFICADOR){
-            Simbolo sim = ent.obtener(valor.toString());
+            Simbolo sim = ent.obtener(valor.toString(),ent);
             Expresion temp;
             String cadena="";
+            if(sim==null){return null;};
             vector = (Object[])sim.valor;
             for(int i=0;i<vector.length;i++){
-                temp=(Expresion)vector[i];
-                cadena+=temp.obtenerValor(ent).valor.toString() + " ";
-            }
+           temp=(Expresion)vector[i];
+           if(temp==null){
+               cadena+=",null,";
+           }else{
+               cadena+=temp.obtenerValor(ent).valor.toString() + " ";
+           }
+       }
             return new Literal(Simbolo.EnumTipoDato.ARREGLO,cadena);
         }else if(tipo == Tipo_operacion.IDENTIFICADOR_POS_ARRAY){
-            Simbolo sim = ent.obtener(valor.toString());
+            Simbolo sim = ent.obtener(valor.toString(),ent);
             vector = (Object[])sim.valor;
             if(vector.length==1){
                 return (Expresion)vector[0];

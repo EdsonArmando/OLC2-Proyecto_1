@@ -5,6 +5,7 @@
  */
 package Entorno;
 
+import Views.Inicio;
 import java.util.HashMap;
 
 /**
@@ -25,16 +26,27 @@ public class Entorno {
         }
         this.tabla.put(nombre, valor);
     }
-    public boolean existeVariable(String nombre){
-        return this.tabla.containsKey(nombre);
-    }
-    public Simbolo obtener(String nombre){
-        if (tabla.containsKey(nombre)) {
-            Simbolo sim = tabla.get(nombre);
-            return sim;
+    public boolean existeVariable(String nombre,Entorno ent){
+        boolean existe = false;
+        if(ent.tabla.containsKey(nombre)){
+            return true;
+        }else if(ent.anterior!=null){
+            existe = existeVariable(nombre,ent.anterior);
+            return existe;
         }
-        //salidaConsola.append("La variable '" + nombre + "' NO existe");
-        return null;
+        return existe;
+    }
+    public Simbolo obtener(String nombre,Entorno ent){
+        Simbolo sim =null;
+        if (ent.tabla.containsKey(nombre)) {
+            sim = ent.tabla.get(nombre);
+            return sim;
+        }else if(ent.anterior!=null){
+            sim =obtener(nombre,ent.anterior);
+        }else{
+            Inicio.salidaConsola.append("No existe la variable");
+        }
+        return sim;
     }
     public void modificarVariable(String nombre, Simbolo valor){
           tabla.put(nombre, valor);

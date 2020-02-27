@@ -32,18 +32,18 @@ public class Declaracion implements Instruccion {
     }
     @Override
     public Retornar ejecutar(Entorno ent) {
-        boolean existe = ent.existeVariable(id);
+        boolean existe = ent.existeVariable(id,ent);
         Expresion exprValor = valor.obtenerValor(ent);
         if(tamanioVector==0){
             listVar[0] = exprValor;
         }else{
-            listVar[tamanioVector-1]=exprValor;
                 if(existe){
-                Simbolo sim = ent.obtener(id);
+                Simbolo sim = ent.obtener(id,ent);
                 Object temp[]=(Object[])sim.valor;  
                 for(int i=0;i<temp.length;i++){
                     listVar[i]=temp[i];
                 }
+                listVar[tamanioVector-1]=exprValor;
                 ent.modificarVariable(id, new Simbolo(exprValor.tipo,listVar,id));
                 return new Retornar();
             }

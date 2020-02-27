@@ -19,7 +19,7 @@ public class Id extends Expresion {
     }
     @Override
     public Expresion obtenerValor(Entorno ent) {
-        Simbolo sim = ent.obtener(id);
+        Simbolo sim = ent.obtener(id,ent);
          if(sim!=null){
             // Devolver un objeto con el valor
             return new Literal(sim.getTipo(), sim.getValor());
