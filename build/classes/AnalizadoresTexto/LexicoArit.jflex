@@ -95,6 +95,7 @@ espacio = \t|\f|" "|\r|\n
     "do"            {return addSymbol(new Symbol(Syma.tDo,yycolumn,yyline,yytext()));}
     "while"         {return addSymbol(new Symbol(Syma.tWhile,yycolumn,yyline,yytext()));}
     "for"           {return addSymbol(new Symbol(Syma.tFor,yycolumn,yyline,yytext()));}
+    "return"        {return addSymbol(new Symbol(Syma.tReturn,yycolumn,yyline,yytext()));}
 
     {id}            {return addSymbol(new Symbol(Syma.tId,yycolumn,yyline,yytext()));}
     {caracter}      {return addSymbol(new Symbol(Syma.tCaracter,yycolumn,yyline,yytext()));}

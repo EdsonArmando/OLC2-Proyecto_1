@@ -13,19 +13,19 @@ import java.util.LinkedList;
  *
  * @author EG
  */
-public abstract class Funcion extends Expresion {
-    private String id;
+public abstract class Funcion extends Expresion implements Instruccion{
+    public String id;
     Simbolo.EnumTipoDato tipo;
     Expresion valor;
     LinkedList<Instruccion> codigo;
-    LinkedList<String> param_Formales;
+    LinkedList<Expresion> param_Formales;
     LinkedList<Expresion> param_Actuales;
     int fila,columna;
     public Funcion(String id, Simbolo.EnumTipoDato tipo) {
         this.id = id;
         this.tipo = tipo;        
     }
-        public Funcion(String id, Simbolo.EnumTipoDato tipo, LinkedList<Instruccion> codigo, LinkedList<String> param_Formales) {
+        public Funcion(String id, Simbolo.EnumTipoDato tipo, LinkedList<Instruccion> codigo, LinkedList<Expresion> param_Formales) {
         this.id = id;
         this.tipo = tipo;
         this.codigo = codigo;

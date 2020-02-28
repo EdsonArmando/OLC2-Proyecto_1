@@ -41,8 +41,11 @@ public class If implements Instruccion{
         boolean isTrue=false;
         for(Instruccion in: subIf){
             if(isTrue==false){
-                in.ejecutar(ent);
+                Retornar retorn = in.ejecutar(ent);
                 isTrue=((SubIf)in).getValorCondicion();
+                if(retorn.isReturn){
+                    return retorn;
+                }
             }
             //if(((SubSi)in).getValorCondicion());
         }

@@ -33,6 +33,11 @@ public class To_Upper extends Funcion{
     public Simbolo.EnumTipoDato getTipo() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public Retornar ejecutar(Entorno ent) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 }

@@ -6,6 +6,7 @@
 package Instruccion;
 
 import Entorno.Entorno;
+import Expresion.Expresion;
 import Expresion.Literal;
 import Expresion.Operacion;
 import java.util.LinkedList;
@@ -46,19 +47,25 @@ public class SubIf implements Instruccion{
         }
         if(valorCondicion==true){
             SiEjecutado=true;
-            Entorno tablaLocal=new Entorno(ent);
-            //tablaLocal.tabla.putAll(ent.tabla);
+            Entorno tablaLocal=new Entorno(null);
+            tablaLocal.tabla.putAll(ent.tabla);
             for(Instruccion in: listaInstrucciones){
-                in.ejecutar(tablaLocal);
+                Retornar retorn= in.ejecutar(tablaLocal);
+                if(retorn.isReturn){
+                return retorn;
+                }
             }
-            ent.tabla.putAll(tablaLocal.tabla);
+            //ent.tabla.putAll(tablaLocal.tabla);
         }else if(isElse==true && SiEjecutado==false){
-            Entorno tablaLocal=new Entorno(ent);
-            //tablaLocal.tabla.putAll(ent.tabla);
+            Entorno tablaLocal=new Entorno(null);
+            tablaLocal.tabla.putAll(ent.tabla);
             for(Instruccion in: listaInstrucciones){
-                in.ejecutar(tablaLocal);
+                Retornar retorn=in.ejecutar(tablaLocal);
+                if(retorn.isReturn){
+                return retorn;
+                }
             }
-            ent.tabla.putAll(tablaLocal.tabla);
+            //ent.tabla.putAll(tablaLocal.tabla);
         }
         return new Retornar();
     }

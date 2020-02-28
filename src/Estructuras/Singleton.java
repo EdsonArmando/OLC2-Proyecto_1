@@ -10,6 +10,7 @@ import Instruccion.Funcion;
 import Instruccion.Instruccion;
 import Instruccion.To_Lower;
 import Instruccion.To_Upper;
+import Views.Inicio;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -31,6 +32,16 @@ public class Singleton {
             singleton= new Singleton();
         }
         return singleton;
+    }
+    public void limpiarEntorno(){
+        funciones.clear();
+    }
+    public void putFuncion(Funcion funcion,String id){
+        if(funciones.containsKey(id)){
+            Inicio.salidaConsola.append("La funcion ya existe\n");
+            return ;
+        }
+        funciones.put(id, funcion);
     }
     public Funcion getFuncion(String id){
         if(funciones.containsKey(id)){

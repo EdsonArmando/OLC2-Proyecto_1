@@ -17,7 +17,7 @@ import java.util.LinkedList;
  *
  * @author EG
  */
-public class LlamadaFuncion extends Expresion{
+public class LlamadaFuncion extends Expresion implements Instruccion{
     String id;
     LinkedList<Expresion> parametros;
     int fila,columna;
@@ -30,8 +30,7 @@ public class LlamadaFuncion extends Expresion{
         Funcion f = Singleton.getInstance().getFuncion(id);
          if(f!=null){
             f.setParametros(parametros);
-            Entorno tablaLocal = new Entorno(ent);
-            Expresion o = f.obtenerValor(tablaLocal);
+            Expresion o = f.obtenerValor(ent);
             return (Expresion)o;
         }
         return null;
@@ -40,6 +39,17 @@ public class LlamadaFuncion extends Expresion{
     @Override
     public Simbolo.EnumTipoDato getTipo() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Retornar ejecutar(Entorno ent) {
+        Funcion f = Singleton.getInstance().getFuncion(id);
+         if(f!=null){
+            f.setParametros(parametros);
+            Entorno tablaLocal = new Entorno(ent);
+            f.obtenerValor(tablaLocal);
+        }
+         return new Retornar();
     }
     
 }

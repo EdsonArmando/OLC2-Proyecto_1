@@ -9,6 +9,7 @@ import Entorno.Entorno;
 import Entorno.Simbolo;
 import Expresion.Expresion;
 import Expresion.Literal;
+import Views.Inicio;
 
 /**
  *
@@ -33,6 +34,17 @@ public class To_Lower extends Funcion {
     @Override
     public Simbolo.EnumTipoDato getTipo() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Retornar ejecutar(Entorno ent) {
+        if(this.param_Actuales.size()==1){
+            Expresion res = param_Actuales.get(0).obtenerValor(ent);
+            if(res.valor instanceof String){
+                Inicio.salidaConsola.append(((String) res.valor).toLowerCase()+"\n");
+            }
+        }
+        return new Retornar();
     }
    
 }

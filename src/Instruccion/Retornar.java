@@ -17,4 +17,5 @@ public class Retornar {
     public boolean isBreak = false;
     public boolean isContinue = false;
     public Object val;
+    public Retornar(){};
 }

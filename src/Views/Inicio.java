@@ -8,6 +8,7 @@ package Views;
 import Analizadores.LexicoArit;
 import Analizadores.SintacticoArit;
 import Entorno.Entorno;
+import Estructuras.Singleton;
 import Instruccion.Instruccion;
 import java.awt.Component;
 import java.awt.Font;
@@ -89,12 +90,12 @@ public class Inicio extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jTabbedPane1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 823, Short.MAX_VALUE)
+                    .addComponent(jTabbedPane1))
+                .addGap(18, 18, 18)
                 .addComponent(idAnalizar)
-                .addContainerGap(202, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,7 +105,7 @@ public class Inicio extends javax.swing.JFrame {
                     .addComponent(jTabbedPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(idAnalizar)
-                        .addGap(0, 369, Short.MAX_VALUE)))
+                        .addGap(0, 617, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
@@ -159,6 +160,7 @@ public class Inicio extends javax.swing.JFrame {
     private void idAnalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idAnalizarActionPerformed
         JScrollPane scroll = new JScrollPane();
         salidaConsola.setText("");
+        Singleton.getInstance().limpiarEntorno();
         Component comp = jTabbedPane1.getComponentAt(jTabbedPane1.getSelectedIndex());
         scroll=(javax.swing.JScrollPane) comp;
         String datos = tex1.getText();

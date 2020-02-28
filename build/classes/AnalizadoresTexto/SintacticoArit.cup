@@ -66,14 +66,15 @@ action code
 {:
 
 :} 
-terminal String tId,tDo,tWhile,tFor,tIf,tElse,tModulo,tDosPuntos,tPunto,tLlaveA,tPuntoComa,tLlaveC,tCadena,tCorcheA,tCorcheC;
+terminal String tId,tDo,tWhile,tReturn,tFor,tIf,tElse,tModulo,tDosPuntos,tPunto,tLlaveA,tPuntoComa,tLlaveC,tCadena,tCorcheA,tCorcheC;
 terminal String UMENOS,tDoble,tIgualIgual,tEntero,tTrue,tFalse,tParA,tParC,tCaracter,tIgual,tDifQ,tOr,tAnd,tXor,tComa,tSuma,tResta,tMult,tDiv,tPow,tMayorQ,tMenorQ; 
 terminal String tPrint;
 
-non terminal Expresion E;
+non terminal Expresion E,FUNCION;
 non terminal Instruccion INSTRUCCION;
+non terminal LinkedList<Expresion> LISTAEXPR;
 non terminal LinkedList<Instruccion> LISTA,LISTAINSTRUCCIONES;
-non terminal Instruccion DECLARACION,IMPRIMIR,SI,SUBIF,WHILE,DO_WHILE;
+non terminal Instruccion DECLARACION,IMPRIMIR,SI,SUBIF,WHILE,DO_WHILE,FUNCION_DEFINIDA,RETURN;
 non terminal LinkedList<SubIf> instrucciones_elseif;
 non terminal SubIf instruccion_elseif;
 non terminal SubIf instruccion_else;
@@ -106,8 +107,23 @@ INSTRUCCION ::= DECLARACION:a {:RESULT=a;:}
                 | SI:a {:RESULT=a;:}
                 | WHILE:a {:RESULT=a;:}
                 | DO_WHILE:a {:RESULT=a;:}
+                | FUNCION:exp {:RESULT=(Instruccion) exp;:}
+                | FUNCION_DEFINIDA: a {:RESULT=(Instruccion) a;:}
+                | RETURN:a {:RESULT=a;:}
             ;
+RETURN ::= tReturn E:a tPuntoComa {:RESULT=new Return(a);:};
+LISTAEXPR ::= LISTAEXPR:li tComa E:a {:
+                    RESULT=li;
+                    RESULT.add(a);
+                :}
+                | E:a {:
+                    RESULT = new LinkedList<>();
+                    RESULT.add(a);
+                :}
+                ;
 
+FUNCION ::= tId:id tParA LISTAEXPR:e1 tParC {:RESULT = new LlamadaFuncion(id,e1);:};
+FUNCION_DEFINIDA ::= tId:id tParA  LISTAEXPR:exp tParC tLlaveA LISTAINSTRUCCIONES:li tLlaveC {:RESULT=new FuncionPropia(id,Simbolo.EnumTipoDato.FUNCION,li,exp);:};
 WHILE ::= tWhile tParA E:a tParC tLlaveA LISTAINSTRUCCIONES:li tLlaveC {:RESULT=new While((Operacion)a,li);:};
 
 DO_WHILE ::= tDo tLlaveA LISTAINSTRUCCIONES:li tLlaveC tWhile tParA E:a tParC tPuntoComa {:RESULT=new While((Operacion)a,li);:};
@@ -155,7 +171,7 @@ E ::= tResta E:a{:RESULT=new Operacion(a,Operacion.Tipo_operacion.NEGATIVO);:}%p
     | E:a tMenorQ tIgual E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.MENOR_IGUAL_QUE);:}  
     | E:a tMayorQ tIgual E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.MAYOR_IGUAL_QUE);:}
     | E:a tDifQ tIgual E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.DIFERENTE_QUE);:} 
-    | E:a tAnd E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.AND);:}
+    | E:a tAnd tAnd E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.AND);:}
     | E:a tOr E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.OR);:}
     | E:a tDifQ E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.NOT);:}
     | E:a tXor E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.XOR);:}
@@ -167,5 +183,6 @@ E ::= tResta E:a{:RESULT=new Operacion(a,Operacion.Tipo_operacion.NEGATIVO);:}%p
     | tFalse {:RESULT=new Operacion("false",Tipo_operacion.FALSE);:}
     | tDoble:a {:RESULT=new Operacion(a,Tipo_operacion.NUMERO);:}
     | tCadena:a {:RESULT=new Operacion(a,Tipo_operacion.CADENA);:}
-    | tId:id tParA E:e1 tParC {: LinkedList<Expresion> e = new LinkedList(); e.add(e1); RESULT = new LlamadaFuncion(id,e); :}
+    | FUNCION:a {:RESULT=a;:}
+    | FUNCION_DEFINIDA:a {:RESULT=(Expresion)a;:}
     ;

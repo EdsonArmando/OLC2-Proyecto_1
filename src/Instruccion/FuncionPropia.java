@@ -7,15 +7,18 @@ package Instruccion;
 
 import Entorno.Entorno;
 import Entorno.Simbolo;
+import Estructuras.Singleton;
 import Expresion.Expresion;
+import Expresion.Literal;
+import Expresion.Operacion;
 import java.util.LinkedList;
 
 /**
  *
  * @author EG
  */
-public class FuncionPropia extends Funcion {
-     public FuncionPropia(String id, Simbolo.EnumTipoDato tipo, LinkedList<Instruccion> codigo, LinkedList<String> parametros) {
+public class FuncionPropia extends Funcion implements Instruccion {
+     public FuncionPropia(String id, Simbolo.EnumTipoDato tipo, LinkedList<Instruccion> codigo, LinkedList<Expresion> parametros) {
         super(id, tipo, codigo, parametros);
     }
 
@@ -23,19 +26,18 @@ public class FuncionPropia extends Funcion {
     public Expresion obtenerValor(Entorno ent) {
         Entorno tablaLocal = new Entorno(ent);
         if(param_Actuales.size()==param_Formales.size()){
-            //agregar nueva declaracion a lista
+            for(int i=0;i<param_Formales.size();i++){
+                Operacion op= (Operacion) param_Formales.get(i);
+                Declaracion declaracion = new Declaracion(op.valor.toString(),param_Actuales.get(i));
+                declaracion.ejecutar(tablaLocal);
+            }
                     
         }
-        /*
-            for(Declaracion in declaraciones){
-                declaracion.ejecutar(e,mensajes);
-            }
-        */
-        //error
-        
-        
         for (Instruccion instr : codigo) {
-            instr.ejecutar(tablaLocal);
+            Retornar ret=instr.ejecutar(tablaLocal);
+            if(ret.isReturn){
+                return ret.valor;
+            }
         }
         return null;
     }
@@ -43,5 +45,12 @@ public class FuncionPropia extends Funcion {
     @Override
     public Simbolo.EnumTipoDato getTipo() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Retornar ejecutar(Entorno ent) {
+        Funcion fun=this;
+        Singleton.getInstance().putFuncion(fun, id);
+        return new Retornar();
     }
 }
