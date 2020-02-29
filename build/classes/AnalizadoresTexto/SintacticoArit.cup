@@ -155,7 +155,7 @@ IMPRIMIR ::= tPrint tParA E:exp tParC tPuntoComa{: RESULT=new Imprimir(exp);:};
 
 DECLARACION ::= tId:id tIgual E:exp tPuntoComa{:RESULT= new Declaracion(id,exp);:}
               | tPunto tId:id tIgual E:exp tPuntoComa{:RESULT= new Declaracion(id,exp);:}
-              | tId:id tCorcheA tEntero:num tCorcheC tIgual E:exp tPuntoComa{:RESULT=new Declaracion(id,Integer.parseInt(num),exp);:}
+              | tId:id tCorcheA E:a tCorcheC tIgual E:exp tPuntoComa{:RESULT=new Declaracion(id,a,exp);:}
             ;
 
 E ::= tResta E:a{:RESULT=new Operacion(a,Operacion.Tipo_operacion.NEGATIVO);:}%prec UMENOS 
@@ -175,8 +175,9 @@ E ::= tResta E:a{:RESULT=new Operacion(a,Operacion.Tipo_operacion.NEGATIVO);:}%p
     | E:a tOr E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.OR);:}
     | E:a tDifQ E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.NOT);:}
     | E:a tXor E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.XOR);:}
+    //| tCorcheA E:a tCorcheC {:RESULT=a;:}
     | tParA E:a tParC {:RESULT=a;:}
-    | tId:a tCorcheA tEntero:b tCorcheC {:RESULT=new Operacion(a,Tipo_operacion.IDENTIFICADOR_POS_ARRAY,Integer.parseInt(b));:}
+    | tId:a tCorcheA E:b tCorcheC {:RESULT=new Operacion(a,Tipo_operacion.IDENTIFICADOR_POS_ARRAY,b);:}
     | tId:a {:RESULT=new Operacion(a,Tipo_operacion.IDENTIFICADOR);:}
     | tEntero:a {:RESULT=new Operacion(a,Tipo_operacion.NUMERO);:}
     | tTrue {:RESULT=new Operacion("true",Tipo_operacion.TRUE);:}

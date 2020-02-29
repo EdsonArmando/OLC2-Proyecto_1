@@ -32,7 +32,7 @@ public class Inicio extends javax.swing.JFrame {
      javax.swing.JTextArea tex1;
      
      
-     Font fuente=new Font("Monospaced", Font.BOLD, 25);
+     Font fuente=new Font("Monospaced", Font.PLAIN, 15);
      int cont=0;
     /**
      * Creates new form Inicio
@@ -105,9 +105,9 @@ public class Inicio extends javax.swing.JFrame {
                     .addComponent(jTabbedPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(idAnalizar)
-                        .addGap(0, 617, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 550, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
 

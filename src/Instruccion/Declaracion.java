@@ -20,19 +20,27 @@ public class Declaracion implements Instruccion {
     Expresion valor;
     Object listVar[];
     int tamanioVector=0;
+    Expresion posValor;
     public Declaracion(String id,Expresion expr){
         this.id = id;
         this.valor = expr;
         this.listVar = new Object[1];
     }
-    public Declaracion(String id,int tamanioVector,Expresion expr){
+    public Declaracion(String id,Expresion tamanioVector,Expresion expr){
         this.id = id;
         this.valor = expr;
-        this.tamanioVector=tamanioVector;
-        this.listVar = new Object[tamanioVector];
+        this.posValor=tamanioVector;
+        //this.listVar = new Object[];
     }
     @Override
     public Retornar ejecutar(Entorno ent) {
+        int tamanio=0;
+        if(this.posValor!=null){
+            Double val = (Double) this.posValor.obtenerValor(ent).valor;
+            this.listVar = new Object[val.intValue()];
+            tamanio=val.intValue();
+            tamanioVector = tamanio;
+        }
         boolean existe = ent.existeVariable(id,ent);
         Expresion exprValor = valor.obtenerValor(ent);
         if(tamanioVector==0){
@@ -44,7 +52,8 @@ public class Declaracion implements Instruccion {
                 for(int i=0;i<temp.length;i++){
                     listVar[i]=temp[i];
                 }
-                listVar[tamanioVector-1]=exprValor;
+                
+                listVar[tamanio-1]=exprValor;
                 ent.modificarVariable(id, new Simbolo(exprValor.tipo,listVar,id));
                 return new Retornar();
             }

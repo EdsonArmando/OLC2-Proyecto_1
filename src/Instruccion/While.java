@@ -29,6 +29,7 @@ public class While implements Instruccion{
                 ins.ejecutar(tablaLocal);
             }
         }
+        ent.tabla.putAll(tablaLocal.tabla);
         return new Retornar();
     }
 }

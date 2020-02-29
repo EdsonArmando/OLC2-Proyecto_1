@@ -28,7 +28,8 @@ public class FuncionPropia extends Funcion implements Instruccion {
         if(param_Actuales.size()==param_Formales.size()){
             for(int i=0;i<param_Formales.size();i++){
                 Operacion op= (Operacion) param_Formales.get(i);
-                Declaracion declaracion = new Declaracion(op.valor.toString(),param_Actuales.get(i));
+                Expresion val = param_Actuales.get(i).obtenerValor(ent);
+                Declaracion declaracion = new Declaracion(op.valor.toString(),val);
                 declaracion.ejecutar(tablaLocal);
             }
                     

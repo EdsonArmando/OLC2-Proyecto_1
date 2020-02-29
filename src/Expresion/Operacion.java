@@ -49,7 +49,7 @@ public class Operacion extends Expresion{
      private final Tipo_operacion tipo;
      public Expresion operadorIzq;
      public Expresion operadorDer;
-     private int posVariable=0;
+     private Expresion posVariable;
      public Object valor;
      public Operacion(Expresion operadorIzq, Expresion operadorDer, Tipo_operacion tipo) {
         this.tipo = tipo;
@@ -65,7 +65,7 @@ public class Operacion extends Expresion{
         this.valor=a;
         this.tipo = tipo;
     }
-    public Operacion(String a, Tipo_operacion tipo,int pos) {
+    public Operacion(String a, Tipo_operacion tipo,Expresion pos) {
         this.valor=a;
         this.tipo = tipo;
         this.posVariable = pos;
@@ -132,7 +132,8 @@ public class Operacion extends Expresion{
             if(vector.length==1){
                 return (Expresion)vector[0];
             }else{
-                return (Expresion)vector[posVariable-1];
+                Double uno = (Double)posVariable.obtenerValor(ent).valor;
+                return (Expresion)vector[uno.intValue()-1];
             }
         }else if(tipo == Tipo_operacion.CADENA){
             return new Literal(Simbolo.EnumTipoDato.STRING,valor.toString());

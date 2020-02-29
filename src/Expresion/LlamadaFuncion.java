@@ -46,8 +46,7 @@ public class LlamadaFuncion extends Expresion implements Instruccion{
         Funcion f = Singleton.getInstance().getFuncion(id);
          if(f!=null){
             f.setParametros(parametros);
-            Entorno tablaLocal = new Entorno(ent);
-            f.obtenerValor(tablaLocal);
+            f.obtenerValor(ent);
         }
          return new Retornar();
     }

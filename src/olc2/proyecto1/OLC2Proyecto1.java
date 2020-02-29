@@ -20,6 +20,16 @@ public class OLC2Proyecto1 {
        Inicio inicio = new Inicio();
        inicio.setVisible(true);
        inicio.setLocale(null);
+       Hanoi(3,1,2,3);    
+    }
+    public static void Hanoi(int n,int origen,int auxiliar,int destino){
+    if(n==1){
+    System.out.println("mover disco de " + origen+ " a " + destino);
+    }else{
+    Hanoi(n-1, origen, destino, auxiliar);
+    System.out.println("mover disco de "+ origen+ " a " + destino);
+    Hanoi(n-1, auxiliar, origen, destino);
+    }
     }
     public static int ackermann(int m,int n){
         if(m==0){
