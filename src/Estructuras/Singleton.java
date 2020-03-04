@@ -7,6 +7,7 @@ package Estructuras;
 
 import Entorno.Simbolo;
 import Instruccion.Funcion;
+import Instruccion.Function_C;
 import Instruccion.Instruccion;
 import Instruccion.To_Lower;
 import Instruccion.To_Upper;
@@ -24,8 +25,11 @@ public class Singleton {
     private Singleton(){
         funciones = new HashMap<>();
         /*Meter todos mis metodos propios del lenguaje*/
+    }
+    public void funcionesSistema(){
         funciones.put("toLower",new To_Lower("tolower",Simbolo.EnumTipoDato.STRING));
         funciones.put("toUpper",new To_Upper("toUpper",Simbolo.EnumTipoDato.STRING));
+        funciones.put("c",new Function_C("c",Simbolo.EnumTipoDato.STRING));
     }
     public static Singleton getInstance(){
         if(singleton== null){

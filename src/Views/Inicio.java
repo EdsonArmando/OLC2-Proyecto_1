@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package Views;
-
 import Analizadores.LexicoArit;
 import Analizadores.SintacticoArit;
 import Entorno.Entorno;
@@ -120,7 +119,7 @@ public class Inicio extends javax.swing.JFrame {
 				String texto = "";
 				JFileChooser chooser = new JFileChooser("CargaMasiva");
 				FileNameExtensionFilter filter = new FileNameExtensionFilter(  "dat",
-						"SWAG");
+						"SWAG","txt","arit");
 				chooser.setFileFilter(filter);
 				int returnVal = chooser.showOpenDialog(getContentPane());
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -161,6 +160,7 @@ public class Inicio extends javax.swing.JFrame {
         JScrollPane scroll = new JScrollPane();
         salidaConsola.setText("");
         Singleton.getInstance().limpiarEntorno();
+        Singleton.getInstance().funcionesSistema();
         Component comp = jTabbedPane1.getComponentAt(jTabbedPane1.getSelectedIndex());
         scroll=(javax.swing.JScrollPane) comp;
         String datos = tex1.getText();
@@ -173,7 +173,7 @@ public class Inicio extends javax.swing.JFrame {
         }catch(Exception e){
             System.out.println(e);
         }
-        resultados=sintactico.resultado;
+        resultados=sintactico.resultado;    
         Entorno ent = new Entorno(null);
         for(Instruccion ins : resultados){
             ins.ejecutar(ent);

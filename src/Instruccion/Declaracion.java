@@ -8,7 +8,6 @@ package Instruccion;
 import Entorno.Entorno;
 import Entorno.Simbolo;
 import Expresion.Expresion;
-import Expresion.LlamadaFuncion;
 import java.util.Vector;
 
 /**
@@ -18,13 +17,14 @@ import java.util.Vector;
 public class Declaracion implements Instruccion {
     String id;
     Expresion valor;
-    Object listVar[];
+    Vector listVar;
     int tamanioVector=0;
     Expresion posValor;
     public Declaracion(String id,Expresion expr){
         this.id = id;
         this.valor = expr;
-        this.listVar = new Object[1];
+        this.listVar = new Vector();
+        this.listVar.setSize(1);
     }
     public Declaracion(String id,Expresion tamanioVector,Expresion expr){
         this.id = id;
@@ -37,23 +37,33 @@ public class Declaracion implements Instruccion {
         int tamanio=0;
         if(this.posValor!=null){
             Double val = (Double) this.posValor.obtenerValor(ent).valor;
-            this.listVar = new Object[val.intValue()];
+            this.listVar = new Vector();
+            this.listVar.setSize(val.intValue());
             tamanio=val.intValue();
             tamanioVector = tamanio;
         }
         boolean existe = ent.existeVariable(id,ent);
         Expresion exprValor = valor.obtenerValor(ent);
         if(tamanioVector==0){
-            listVar[0] = exprValor;
+            if(exprValor.valor instanceof Vector){
+                listVar = (Vector)exprValor.valor;
+            }else{
+                listVar.setElementAt(exprValor,0);
+            }
         }else{
                 if(existe){
                 Simbolo sim = ent.obtener(id,ent);
-                Object temp[]=(Object[])sim.valor;  
-                for(int i=0;i<temp.length;i++){
-                    listVar[i]=temp[i];
+                Vector temp=(Vector)sim.valor;  
+                if(tamanio<=temp.size()){
+                    temp.setElementAt(exprValor,tamanio-1);
+                    ent.modificarVariable(id, new Simbolo(exprValor.tipo,temp,id));
+                    return new Retornar();
+                }    
+                for(int i=0;i<temp.size();i++){
+                    listVar.setElementAt(temp.get(i),i);
                 }
                 
-                listVar[tamanio-1]=exprValor;
+                listVar.setElementAt(exprValor,tamanio-1);
                 ent.modificarVariable(id, new Simbolo(exprValor.tipo,listVar,id));
                 return new Retornar();
             }

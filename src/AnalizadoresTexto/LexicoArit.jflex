@@ -88,6 +88,7 @@ espacio = \t|\f|" "|\r|\n
     "*"             {return addSymbol(new Symbol(Syma.tMult,yycolumn,yyline,yytext()));}
     "/"             {return addSymbol(new Symbol(Syma.tDiv,yycolumn,yyline,yytext()));}
     "print"         {return addSymbol(new Symbol(Syma.tPrint,yycolumn,yyline,yytext()));}
+    "function"      {return addSymbol(new Symbol(Syma.tFunction,yycolumn,yyline,yytext()));}
     "true"          {return addSymbol(new Symbol(Syma.tTrue,yycolumn,yyline,yytext()));}
     "false"         {return addSymbol(new Symbol(Syma.tFalse,yycolumn,yyline,yytext()));}
     "if"            {return addSymbol(new Symbol(Syma.tIf,yycolumn,yyline,yytext()));}
@@ -96,6 +97,7 @@ espacio = \t|\f|" "|\r|\n
     "while"         {return addSymbol(new Symbol(Syma.tWhile,yycolumn,yyline,yytext()));}
     "for"           {return addSymbol(new Symbol(Syma.tFor,yycolumn,yyline,yytext()));}
     "return"        {return addSymbol(new Symbol(Syma.tReturn,yycolumn,yyline,yytext()));}
+    "c"             {return addSymbol(new Symbol(Syma.tC,yycolumn,yyline,yytext()));}
 
     {id}            {return addSymbol(new Symbol(Syma.tId,yycolumn,yyline,yytext()));}
     {caracter}      {return addSymbol(new Symbol(Syma.tCaracter,yycolumn,yyline,yytext()));}

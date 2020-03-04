@@ -8,10 +8,8 @@ package Expresion;
 import Entorno.Entorno;
 import Entorno.Simbolo;
 import Entorno.Simbolo.EnumTipoDato;
-import Instruccion.Retornar;
 import Views.Inicio;
 import java.util.Vector;
-
 /**
  *
  * @author EG
@@ -45,7 +43,7 @@ public class Operacion extends Expresion{
         CONCATENACION,
         ARRAYPOSICION
     }
-     private Object vector[];
+     private Vector vector;
      private final Tipo_operacion tipo;
      public Expresion operadorIzq;
      public Expresion operadorDer;
@@ -114,26 +112,20 @@ public class Operacion extends Expresion{
         }else if(tipo == Tipo_operacion.IDENTIFICADOR){
             Simbolo sim = ent.obtener(valor.toString(),ent);
             Expresion temp;
-            String cadena="";
             if(sim==null){return null;};
-            vector = (Object[])sim.valor;
-            for(int i=0;i<vector.length;i++){
-           temp=(Expresion)vector[i];
-           if(temp==null){
-               cadena+=",null,";
-           }else{
-               cadena+=temp.obtenerValor(ent).valor.toString() + " ";
-           }
-       }
-            return new Literal(Simbolo.EnumTipoDato.ARREGLO,cadena);
+            vector = (Vector)sim.valor;
+            return new Literal(Simbolo.EnumTipoDato.ARREGLO,vector);
         }else if(tipo == Tipo_operacion.IDENTIFICADOR_POS_ARRAY){
             Simbolo sim = ent.obtener(valor.toString(),ent);
-            vector = (Object[])sim.valor;
-            if(vector.length==1){
-                return (Expresion)vector[0];
+            vector = (Vector)sim.valor;
+            if(vector.size()==1){
+                return (Expresion)vector.get(0);
             }else{
                 Double uno = (Double)posVariable.obtenerValor(ent).valor;
-                return (Expresion)vector[uno.intValue()-1];
+                if(uno.intValue()>vector.size()){
+                    return new Literal(Simbolo.EnumTipoDato.ERROR,null);
+                }
+                return (Expresion)vector.get(uno.intValue()-1);
             }
         }else if(tipo == Tipo_operacion.CADENA){
             return new Literal(Simbolo.EnumTipoDato.STRING,valor.toString());

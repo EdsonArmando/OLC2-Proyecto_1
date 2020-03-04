@@ -6,8 +6,10 @@
 package Instruccion;
 
 import Entorno.Entorno;
+import Entorno.Simbolo;
 import Expresion.Expresion;
 import Views.Inicio;
+import java.util.Vector;
 
 /**
  *
@@ -21,8 +23,20 @@ public class Imprimir implements Instruccion  {
     @Override
     public Retornar ejecutar(Entorno ent) {
         Expresion resultado = this.expresion.obtenerValor(ent);
-        if(resultado!=null){
-            Inicio.salidaConsola.append(resultado.valor.toString()+"\n");
+        if(resultado.tipo!=Simbolo.EnumTipoDato.ERROR){
+            if(resultado.valor instanceof Vector){
+                Vector temp = (Vector)resultado.valor;
+                for(Object expr: temp){
+                    if(expr==null){
+                        Inicio.salidaConsola.append(" null ,");
+                    }else{
+                        Expresion exp = (Expresion) expr;
+                        Inicio.salidaConsola.append(exp.valor.toString()+" , ");
+                    }
+                }
+            }else{
+                Inicio.salidaConsola.append(resultado.valor.toString()+"\n");
+            }
         }else{
             Inicio.salidaConsola.setText("Existio un error");
         }

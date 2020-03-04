@@ -8,52 +8,55 @@ package Analizadores;
 /** CUP generated class containing symbol constants. */
 public class Syma {
   /* terminals */
-  public static final int tXor = 31;
-  public static final int tFor = 6;
-  public static final int tAnd = 30;
-  public static final int tDoble = 19;
-  public static final int tPuntoComa = 13;
-  public static final int tSuma = 33;
+  public static final int tXor = 33;
+  public static final int tFor = 7;
+  public static final int tAnd = 32;
+  public static final int tDoble = 20;
+  public static final int tPuntoComa = 14;
+  public static final int tSuma = 35;
   public static final int tDo = 3;
-  public static final int tDiv = 36;
-  public static final int tPunto = 11;
-  public static final int tCaracter = 26;
-  public static final int tMayorQ = 38;
-  public static final int tCorcheC = 17;
-  public static final int tWhile = 4;
-  public static final int tCorcheA = 16;
-  public static final int tTrue = 22;
-  public static final int tComa = 32;
-  public static final int tEntero = 21;
-  public static final int tFalse = 23;
-  public static final int UMENOS = 18;
-  public static final int tLlaveC = 14;
-  public static final int tElse = 8;
-  public static final int tLlaveA = 12;
-  public static final int tPrint = 40;
+  public static final int tDiv = 38;
+  public static final int tPunto = 12;
+  public static final int tCaracter = 28;
+  public static final int tMayorQ = 40;
+  public static final int tCorcheC = 18;
+  public static final int tWhile = 5;
+  public static final int tCorcheA = 17;
+  public static final int tTrue = 24;
+  public static final int tComa = 34;
+  public static final int tEntero = 23;
+  public static final int tFalse = 25;
+  public static final int UMENOS = 19;
+  public static final int tC = 4;
+  public static final int tLlaveC = 15;
+  public static final int tElse = 9;
+  public static final int tLlaveA = 13;
+  public static final int tPrint = 42;
   public static final int EOF = 0;
   public static final int error = 1;
-  public static final int tDosPuntos = 10;
-  public static final int tOr = 29;
-  public static final int tMenorQ = 39;
-  public static final int tIf = 7;
-  public static final int tResta = 34;
+  public static final int tDosPuntos = 11;
+  public static final int tOr = 31;
+  public static final int tMenorQ = 41;
+  public static final int tIf = 8;
+  public static final int tResta = 36;
   public static final int tId = 2;
-  public static final int tReturn = 5;
-  public static final int tCadena = 15;
-  public static final int tModulo = 9;
-  public static final int tIgualIgual = 20;
-  public static final int tIgual = 27;
-  public static final int tMult = 35;
-  public static final int tDifQ = 28;
-  public static final int tPow = 37;
-  public static final int tParC = 25;
-  public static final int tParA = 24;
+  public static final int tReturn = 6;
+  public static final int tCadena = 16;
+  public static final int tModulo = 10;
+  public static final int tIgualIgual = 22;
+  public static final int tIgual = 29;
+  public static final int tMult = 37;
+  public static final int tDifQ = 30;
+  public static final int tPow = 39;
+  public static final int tParC = 27;
+  public static final int tFunction = 21;
+  public static final int tParA = 26;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
   "tId",
   "tDo",
+  "tC",
   "tWhile",
   "tReturn",
   "tFor",
@@ -70,6 +73,7 @@ public class Syma {
   "tCorcheC",
   "UMENOS",
   "tDoble",
+  "tFunction",
   "tIgualIgual",
   "tEntero",
   "tTrue",

@@ -20,7 +20,7 @@ public class OLC2Proyecto1 {
        Inicio inicio = new Inicio();
        inicio.setVisible(true);
        inicio.setLocale(null);
-       Hanoi(3,1,2,3);    
+       //Hanoi(3,1,2,3);    
     }
     public static void Hanoi(int n,int origen,int auxiliar,int destino){
     if(n==1){
