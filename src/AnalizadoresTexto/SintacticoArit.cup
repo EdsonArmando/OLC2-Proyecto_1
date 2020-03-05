@@ -66,7 +66,7 @@ action code
 {:
 
 :} 
-terminal String tId,tDo,tC,tWhile,tReturn,tFor,tIf,tElse,tModulo,tDosPuntos,tPunto,tLlaveA,tPuntoComa,tLlaveC,tCadena,tCorcheA,tCorcheC;
+terminal String tId,tMatrix,tList,tDo,tC,tWhile,tReturn,tFor,tIf,tElse,tModulo,tDosPuntos,tPunto,tLlaveA,tPuntoComa,tLlaveC,tCadena,tCorcheA,tCorcheC;
 terminal String UMENOS,tDoble,tFunction,tIgualIgual,tEntero,tTrue,tFalse,tParA,tParC,tCaracter,tIgual,tDifQ,tOr,tAnd,tXor,tComa,tSuma,tResta,tMult,tDiv,tPow,tMayorQ,tMenorQ; 
 terminal String tPrint;
 
@@ -123,6 +123,8 @@ LISTAEXPR ::= LISTAEXPR:li tComa E:a {:
                 ;
 LLAMADA_FUNCION  ::= tId:id tParA LISTAEXPR:e1 tParC {:RESULT = new LlamadaFuncion(id,e1);:}
                    | tC tParA LISTAEXPR:el tParC {:RESULT = new LlamadaFuncion("c",el);:}
+                   | tList tParA LISTAEXPR:el tParC {:RESULT = new LlamadaFuncion("list",el);:}
+                   | tMatrix tParA LISTAEXPR:el tParC {:RESULT = new LlamadaFuncion("matrix",el);:}
                 ;
 FUNCION_DEFINIDA ::= tId:id tIgual tFunction tParA  LISTAEXPR:exp tParC tLlaveA LISTAINSTRUCCIONES:li tLlaveC  {:RESULT=new FuncionPropia(id,Simbolo.EnumTipoDato.FUNCION,li,exp);:}
                     ;

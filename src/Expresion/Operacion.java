@@ -9,6 +9,7 @@ import Entorno.Entorno;
 import Entorno.Simbolo;
 import Entorno.Simbolo.EnumTipoDato;
 import Views.Inicio;
+import java.util.LinkedList;
 import java.util.Vector;
 /**
  *
@@ -113,20 +114,42 @@ public class Operacion extends Expresion{
             Simbolo sim = ent.obtener(valor.toString(),ent);
             Expresion temp;
             if(sim==null){return null;};
-            vector = (Vector)sim.valor;
-            return new Literal(Simbolo.EnumTipoDato.ARREGLO,vector);
+            if(sim.tipo==Simbolo.EnumTipoDato.VECTOR){
+                vector = (Vector)sim.valor;
+                return new Literal(Simbolo.EnumTipoDato.VECTOR,vector);
+            }else if(sim.tipo==Simbolo.EnumTipoDato.LIST){
+                LinkedList lista = (LinkedList) sim.valor;
+                return new Literal(Simbolo.EnumTipoDato.LIST,lista);
+            }else if(sim.tipo==Simbolo.EnumTipoDato.MATRIX){
+                return new Literal(Simbolo.EnumTipoDato.MATRIX,sim.valor);
+            }
+            return null;
         }else if(tipo == Tipo_operacion.IDENTIFICADOR_POS_ARRAY){
             Simbolo sim = ent.obtener(valor.toString(),ent);
-            vector = (Vector)sim.valor;
-            if(vector.size()==1){
-                return (Expresion)vector.get(0);
-            }else{
-                Double uno = (Double)posVariable.obtenerValor(ent).valor;
-                if(uno.intValue()>vector.size()){
-                    return new Literal(Simbolo.EnumTipoDato.ERROR,null);
+            if(sim.tipo==Simbolo.EnumTipoDato.VECTOR)
+            {
+                 vector = (Vector)sim.valor;
+                if(vector.size()==1){
+                    return (Expresion)vector.get(0);
+                }else{
+                    Double uno = (Double)posVariable.obtenerValor(ent).valor;
+                    if(uno.intValue()>vector.size()){
+                        return new Literal(Simbolo.EnumTipoDato.ERROR,null);
+                    }
+                    return (Expresion)vector.get(uno.intValue()-1);
                 }
-                return (Expresion)vector.get(uno.intValue()-1);
+            }else if(sim.tipo == Simbolo.EnumTipoDato.LIST){
+                LinkedList lista = (LinkedList)sim.valor;
+                LinkedList temp = new LinkedList();
+                Double uno = (Double)posVariable.obtenerValor(ent).valor;
+                
+                if(lista.size()==1){
+                    return (Expresion)lista.get(0);
+                }else{
+                    return (Expresion)lista.get(uno.intValue()-1);
+                }
             }
+           return null;
         }else if(tipo == Tipo_operacion.CADENA){
             return new Literal(Simbolo.EnumTipoDato.STRING,valor.toString());
         }

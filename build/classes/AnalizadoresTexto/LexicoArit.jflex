@@ -98,6 +98,8 @@ espacio = \t|\f|" "|\r|\n
     "for"           {return addSymbol(new Symbol(Syma.tFor,yycolumn,yyline,yytext()));}
     "return"        {return addSymbol(new Symbol(Syma.tReturn,yycolumn,yyline,yytext()));}
     "c"             {return addSymbol(new Symbol(Syma.tC,yycolumn,yyline,yytext()));}
+    "list"          {return addSymbol(new Symbol(Syma.tList,yycolumn,yyline,yytext()));}
+    "matrix"        {return addSymbol(new Symbol(Syma.tMatrix,yycolumn,yyline,yytext()));}
 
     {id}            {return addSymbol(new Symbol(Syma.tId,yycolumn,yyline,yytext()));}
     {caracter}      {return addSymbol(new Symbol(Syma.tCaracter,yycolumn,yyline,yytext()));}

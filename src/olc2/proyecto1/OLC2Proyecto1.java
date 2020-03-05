@@ -16,11 +16,13 @@ public class OLC2Proyecto1 {
     /**
      * @param args the command line arguments
      */
+    static int  cont;
     public static void main(String[] args) {
        Inicio inicio = new Inicio();
        inicio.setVisible(true);
        inicio.setLocale(null);
-       //Hanoi(3,1,2,3);    
+       /*System.out.println(ackermann(3,10));    
+       System.out.println("El contador es"+cont);*/
     }
     public static void Hanoi(int n,int origen,int auxiliar,int destino){
     if(n==1){
@@ -31,7 +33,9 @@ public class OLC2Proyecto1 {
     Hanoi(n-1, auxiliar, origen, destino);
     }
     }
+
     public static int ackermann(int m,int n){
+        cont++;
         if(m==0){
         return (n+1);
         }else{

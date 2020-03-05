@@ -9,6 +9,7 @@ import Entorno.Entorno;
 import Entorno.Simbolo;
 import Expresion.Expresion;
 import Views.Inicio;
+import java.util.LinkedList;
 import java.util.Vector;
 
 /**
@@ -24,7 +25,7 @@ public class Imprimir implements Instruccion  {
     public Retornar ejecutar(Entorno ent) {
         Expresion resultado = this.expresion.obtenerValor(ent);
         if(resultado.tipo!=Simbolo.EnumTipoDato.ERROR){
-            if(resultado.valor instanceof Vector){
+            if(resultado.tipo == Simbolo.EnumTipoDato.VECTOR){
                 Vector temp = (Vector)resultado.valor;
                 for(Object expr: temp){
                     if(expr==null){
@@ -34,6 +35,27 @@ public class Imprimir implements Instruccion  {
                         Inicio.salidaConsola.append(exp.valor.toString()+" , ");
                     }
                 }
+                 Inicio.salidaConsola.append("\n");
+            }else if(resultado.tipo == Simbolo.EnumTipoDato.LIST){
+                LinkedList temp = (LinkedList)resultado.valor;
+                for(Object expr: temp){
+                    if(expr==null){
+                        Inicio.salidaConsola.append(" null ,");
+                    }else{
+                        Expresion exp = (Expresion) expr;
+                        Inicio.salidaConsola.append(exp.valor.toString()+" , ");
+                    }
+                }
+            }else if(resultado.tipo==Simbolo.EnumTipoDato.MATRIX){
+                Object[][] temp = (Object[][])resultado.valor;
+                int filas = temp.length;
+                for(int i=0;i<filas;i++){
+                    for(int j=0;j<temp[i].length;j++){
+                        Inicio.salidaConsola.append("[ " + i + "]"+ "[ " + j + "]");
+                    }
+                        Inicio.salidaConsola.append("\n");
+                }
+                Inicio.salidaConsola.append(resultado.tipo.toString()+"\n");
             }else{
                 Inicio.salidaConsola.append(resultado.valor.toString()+"\n");
             }

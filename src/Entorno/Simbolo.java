@@ -37,6 +37,9 @@ public class Simbolo {
         NULL,
         ERROR,
         OBJETO,
-        FUNCION
+        FUNCION,
+        LIST,
+        VECTOR, 
+        MATRIX
     }
 }

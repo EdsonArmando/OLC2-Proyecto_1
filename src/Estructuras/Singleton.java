@@ -8,6 +8,8 @@ package Estructuras;
 import Entorno.Simbolo;
 import Instruccion.Funcion;
 import Instruccion.Function_C;
+import Instruccion.Function_List;
+import Instruccion.Function_Matrix;
 import Instruccion.Instruccion;
 import Instruccion.To_Lower;
 import Instruccion.To_Upper;
@@ -30,6 +32,8 @@ public class Singleton {
         funciones.put("toLower",new To_Lower("tolower",Simbolo.EnumTipoDato.STRING));
         funciones.put("toUpper",new To_Upper("toUpper",Simbolo.EnumTipoDato.STRING));
         funciones.put("c",new Function_C("c",Simbolo.EnumTipoDato.STRING));
+        funciones.put("list",new Function_List("list",Simbolo.EnumTipoDato.STRING));
+        funciones.put("matrix",new Function_Matrix("matrix",Simbolo.EnumTipoDato.STRING));
     }
     public static Singleton getInstance(){
         if(singleton== null){

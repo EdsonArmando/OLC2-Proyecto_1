@@ -22,6 +22,7 @@ public class Entorno {
     public void insertar(String nombre, Simbolo valor){   
         if (this.tabla.containsKey(nombre)) {
             System.out.println("La variable ya existe");
+            tabla.put(nombre, valor);
             return;
         }
         this.tabla.put(nombre, valor);

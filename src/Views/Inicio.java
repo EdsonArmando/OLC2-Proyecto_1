@@ -169,7 +169,6 @@ public class Inicio extends javax.swing.JFrame {
         SintacticoArit sintactico = new SintacticoArit(lexico);
           try{
             sintactico.parse();
-           
         }catch(Exception e){
             System.out.println(e);
         }

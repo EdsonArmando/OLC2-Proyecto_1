@@ -35,12 +35,10 @@ public class LlamadaFuncion extends Expresion implements Instruccion{
         }
         return null;
     }
-
     @Override
     public Simbolo.EnumTipoDato getTipo() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
     @Override
     public Retornar ejecutar(Entorno ent) {
         Funcion f = Singleton.getInstance().getFuncion(id);

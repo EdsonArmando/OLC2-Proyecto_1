@@ -35,6 +35,8 @@ public class Declaracion implements Instruccion {
     @Override
     public Retornar ejecutar(Entorno ent) {
         int tamanio=0;
+        boolean existe = ent.existeVariable(id,ent);
+        Expresion exprValor = valor.obtenerValor(ent);
         if(this.posValor!=null){
             Double val = (Double) this.posValor.obtenerValor(ent).valor;
             this.listVar = new Vector();
@@ -42,11 +44,15 @@ public class Declaracion implements Instruccion {
             tamanio=val.intValue();
             tamanioVector = tamanio;
         }
-        boolean existe = ent.existeVariable(id,ent);
-        Expresion exprValor = valor.obtenerValor(ent);
         if(tamanioVector==0){
-            if(exprValor.valor instanceof Vector){
+            if(exprValor.tipo==Simbolo.EnumTipoDato.VECTOR){
                 listVar = (Vector)exprValor.valor;
+            }else if(exprValor.tipo == Simbolo.EnumTipoDato.LIST){      
+                ent.insertar(id, new Simbolo(exprValor.tipo,exprValor.valor,id));
+                return new Retornar();
+            }else if(exprValor.tipo==Simbolo.EnumTipoDato.MATRIX){
+                ent.insertar(id, new Simbolo(exprValor.tipo,exprValor.valor,id));
+                return new Retornar();
             }else{
                 listVar.setElementAt(exprValor,0);
             }
@@ -56,19 +62,26 @@ public class Declaracion implements Instruccion {
                 Vector temp=(Vector)sim.valor;  
                 if(tamanio<=temp.size()){
                     temp.setElementAt(exprValor,tamanio-1);
-                    ent.modificarVariable(id, new Simbolo(exprValor.tipo,temp,id));
+                    if(sim.tipo==Simbolo.EnumTipoDato.VECTOR){
+                        ent.modificarVariable(id, new Simbolo(Simbolo.EnumTipoDato.VECTOR,temp,id));
+                    }else if(sim.tipo==Simbolo.EnumTipoDato.LIST){
+                        ent.modificarVariable(id, new Simbolo(Simbolo.EnumTipoDato.LIST,temp,id));
+                    }
                     return new Retornar();
                 }    
                 for(int i=0;i<temp.size();i++){
                     listVar.setElementAt(temp.get(i),i);
                 }
-                
                 listVar.setElementAt(exprValor,tamanio-1);
-                ent.modificarVariable(id, new Simbolo(exprValor.tipo,listVar,id));
+                if(sim.tipo==Simbolo.EnumTipoDato.VECTOR){
+                        ent.modificarVariable(id, new Simbolo(Simbolo.EnumTipoDato.VECTOR,listVar,id));
+                    }else if(sim.tipo==Simbolo.EnumTipoDato.LIST){
+                        ent.modificarVariable(id, new Simbolo(Simbolo.EnumTipoDato.LIST,listVar,id));
+                    }   
                 return new Retornar();
             }
         }
-        ent.insertar(id, new Simbolo(exprValor.tipo,listVar,id));
+        ent.insertar(id, new Simbolo(Simbolo.EnumTipoDato.VECTOR,listVar,id));
         return new Retornar();
     }
     

@@ -16,34 +16,24 @@ import java.util.Vector;
  *
  * @author EG
  */
-public class Function_C extends Funcion {
-    LinkedList var = new LinkedList();
-    public Function_C(String id,Simbolo.EnumTipoDato tipo){
+public class Function_List extends Funcion{
+
+    public Function_List(String id, Simbolo.EnumTipoDato tipo) {
         super(id, tipo);
     }
-    
+
     @Override
     public Expresion obtenerValor(Entorno ent) {
-       Vector vecto = new Vector();
+        LinkedList<Object> list = new LinkedList();
         for(Expresion exp : param_Actuales){
             Expresion resultado = exp.obtenerValor(ent);
-            if(resultado.valor instanceof Vector){
-                vecto.addAll((Vector)resultado.valor);
-            }else if(resultado.tipo==Simbolo.EnumTipoDato.LIST){
-                LinkedList nueva=(LinkedList)resultado.valor;
-                var.addAll(nueva);
+            if(resultado.valor instanceof LinkedList){
+                list.addAll((LinkedList)resultado.valor);
             }else{
-                
-                vecto.add(resultado);
+                list.add(resultado);
             }
         }
-        if(var.size()!=0){
-            if(vecto.size()!=0){
-                var.addAll(vecto);
-            }
-            return new Literal(Simbolo.EnumTipoDato.LIST,var);
-        }
-        return new Literal(Simbolo.EnumTipoDato.VECTOR,vecto);
+        return new Literal(Simbolo.EnumTipoDato.LIST,list);
     }
 
     @Override
@@ -55,7 +45,5 @@ public class Function_C extends Funcion {
     public Retornar ejecutar(Entorno ent) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
     
 }
