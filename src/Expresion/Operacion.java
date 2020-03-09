@@ -31,6 +31,9 @@ public class Operacion extends Expresion{
         MAYOR_IGUAL_QUE,
         MENOR_IGUAL_QUE,
         IDENTIFICADOR_POS_ARRAY,
+        IDENTIFICADOR_POS_ARRAY_MATRIX,
+        DEV_FILA,
+        DEV_COLUMNA,
         DIFERENTE_QUE,
         IGUAL_QUE,
         NOT,
@@ -42,6 +45,9 @@ public class Operacion extends Expresion{
         FALSE,
         POTENCIA,
         CONCATENACION,
+        MODIFICACION_FILA_MATRIZ,
+        MODIFICACION_COLUMNA_MATRIZ,
+        MODIFICACION_MATRIZ,
         ARRAYPOSICION
     }
      private Vector vector;
@@ -49,6 +55,8 @@ public class Operacion extends Expresion{
      public Expresion operadorIzq;
      public Expresion operadorDer;
      private Expresion posVariable;
+     private Expresion posFila;
+     private Expresion posColumna;
      public Object valor;
      public Operacion(Expresion operadorIzq, Expresion operadorDer, Tipo_operacion tipo) {
         this.tipo = tipo;
@@ -68,6 +76,12 @@ public class Operacion extends Expresion{
         this.valor=a;
         this.tipo = tipo;
         this.posVariable = pos;
+    }
+     public Operacion(String a, Tipo_operacion tipo,Expresion posx,Expresion posy) {
+        this.valor=a;
+        this.tipo = tipo;
+        this.posFila = posx;
+        this.posColumna = posx;
     }
     public Operacion(Double a) {
         this.valor=a;
@@ -124,11 +138,12 @@ public class Operacion extends Expresion{
                 return new Literal(Simbolo.EnumTipoDato.MATRIX,sim.valor);
             }
             return null;
+             /* ======== Dev POSICION ARRAY,MATRIZ,LISTA ======== */
         }else if(tipo == Tipo_operacion.IDENTIFICADOR_POS_ARRAY){
             Simbolo sim = ent.obtener(valor.toString(),ent);
             if(sim.tipo==Simbolo.EnumTipoDato.VECTOR)
             {
-                 vector = (Vector)sim.valor;
+                vector = (Vector)sim.valor;
                 if(vector.size()==1){
                     return (Expresion)vector.get(0);
                 }else{
@@ -148,6 +163,19 @@ public class Operacion extends Expresion{
                 }else{
                     return (Expresion)lista.get(uno.intValue()-1);
                 }
+            }else if(sim.tipo == Simbolo.EnumTipoDato.MATRIX){
+                Object[][] matrix = (Object[][])sim.valor;
+                Double pos = (Double)posVariable.obtenerValor(ent).valor;
+                int cont=0;
+                for(int i=0;i<matrix[0].length;i++){
+                    for(int j=0;j<matrix.length;j++){
+                        if(cont==pos.intValue()-1){
+                            return (Expresion)matrix[j][i];
+                        }
+                        cont++;
+                    }
+                }
+                return null;
             }
            return null;
         }else if(tipo == Tipo_operacion.CADENA){

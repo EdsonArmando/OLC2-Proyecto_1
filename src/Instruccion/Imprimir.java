@@ -48,14 +48,16 @@ public class Imprimir implements Instruccion  {
                 }
             }else if(resultado.tipo==Simbolo.EnumTipoDato.MATRIX){
                 Object[][] temp = (Object[][])resultado.valor;
+                Expresion expr;
                 int filas = temp.length;
                 for(int i=0;i<filas;i++){
+                    Inicio.salidaConsola.append("["+(i+1)+"]     ");
                     for(int j=0;j<temp[i].length;j++){
-                        Inicio.salidaConsola.append("[ " + i + "]"+ "[ " + j + "]");
+                        expr=(Expresion)temp[i][j];
+                        Inicio.salidaConsola.append(expr.obtenerValor(ent).valor.toString() +"  ");
                     }
                         Inicio.salidaConsola.append("\n");
                 }
-                Inicio.salidaConsola.append(resultado.tipo.toString()+"\n");
             }else{
                 Inicio.salidaConsola.append(resultado.valor.toString()+"\n");
             }
