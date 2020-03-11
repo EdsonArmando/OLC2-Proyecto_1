@@ -8,55 +8,63 @@ package Analizadores;
 /** CUP generated class containing symbol constants. */
 public class Syma {
   /* terminals */
-  public static final int tXor = 35;
-  public static final int tFor = 9;
-  public static final int tAnd = 34;
-  public static final int tDoble = 22;
-  public static final int tPuntoComa = 16;
-  public static final int tSuma = 37;
-  public static final int tDo = 5;
-  public static final int tDiv = 40;
-  public static final int tPunto = 14;
-  public static final int tCaracter = 30;
-  public static final int tMayorQ = 42;
-  public static final int tCorcheC = 20;
-  public static final int tWhile = 7;
-  public static final int tCorcheA = 19;
-  public static final int tTrue = 26;
-  public static final int tComa = 36;
-  public static final int tEntero = 25;
-  public static final int tMatrix = 3;
-  public static final int tFalse = 27;
-  public static final int UMENOS = 21;
-  public static final int tC = 6;
-  public static final int tLlaveC = 17;
-  public static final int tElse = 11;
-  public static final int tLlaveA = 15;
-  public static final int tPrint = 44;
+  public static final int tXor = 39;
+  public static final int tPie = 5;
+  public static final int tFor = 13;
+  public static final int tBarplot = 6;
+  public static final int tAnd = 38;
+  public static final int tPlot = 4;
+  public static final int tDoble = 26;
+  public static final int tPuntoComa = 20;
+  public static final int tSuma = 41;
+  public static final int tDo = 9;
+  public static final int tDiv = 44;
+  public static final int tPunto = 18;
+  public static final int tCaracter = 34;
+  public static final int tMayorQ = 46;
+  public static final int tCorcheC = 24;
+  public static final int tWhile = 11;
+  public static final int tCorcheA = 23;
+  public static final int tTrue = 30;
+  public static final int tComa = 40;
+  public static final int tEntero = 29;
+  public static final int tMatrix = 7;
+  public static final int tFalse = 31;
+  public static final int UMENOS = 25;
+  public static final int tC = 10;
+  public static final int tLlaveC = 21;
+  public static final int tElse = 15;
+  public static final int tLlaveA = 19;
+  public static final int tPrint = 48;
   public static final int EOF = 0;
   public static final int error = 1;
-  public static final int tList = 4;
-  public static final int tDosPuntos = 13;
-  public static final int tOr = 33;
-  public static final int tMenorQ = 43;
-  public static final int tIf = 10;
-  public static final int tResta = 38;
+  public static final int tList = 8;
+  public static final int tDosPuntos = 17;
+  public static final int tOr = 37;
+  public static final int tMenorQ = 47;
+  public static final int tIf = 14;
+  public static final int tResta = 42;
   public static final int tId = 2;
-  public static final int tReturn = 8;
-  public static final int tCadena = 18;
-  public static final int tModulo = 12;
-  public static final int tIgualIgual = 24;
-  public static final int tIgual = 31;
-  public static final int tMult = 39;
-  public static final int tDifQ = 32;
-  public static final int tPow = 41;
-  public static final int tParC = 29;
-  public static final int tFunction = 23;
-  public static final int tParA = 28;
+  public static final int tReturn = 12;
+  public static final int tCadena = 22;
+  public static final int tModulo = 16;
+  public static final int tIgualIgual = 28;
+  public static final int tIgual = 35;
+  public static final int tMult = 43;
+  public static final int tDifQ = 36;
+  public static final int tPow = 45;
+  public static final int tHist = 3;
+  public static final int tParC = 33;
+  public static final int tFunction = 27;
+  public static final int tParA = 32;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
   "tId",
+  "tHist",
+  "tPlot",
+  "tPie",
+  "tBarplot",
   "tMatrix",
   "tList",
   "tDo",

@@ -10,6 +10,11 @@ import Instruccion.Funcion;
 import Instruccion.Function_C;
 import Instruccion.Function_List;
 import Instruccion.Function_Matrix;
+import Instruccion.Grafica_Barras;
+import Instruccion.Grafica_Dispersion;
+import Instruccion.Grafica_Histograma;
+import Instruccion.Grafica_Linea;
+import Instruccion.Grafica_Pie;
 import Instruccion.Instruccion;
 import Instruccion.To_Lower;
 import Instruccion.To_Upper;
@@ -34,6 +39,11 @@ public class Singleton {
         funciones.put("c",new Function_C("c",Simbolo.EnumTipoDato.STRING));
         funciones.put("list",new Function_List("list",Simbolo.EnumTipoDato.STRING));
         funciones.put("matrix",new Function_Matrix("matrix",Simbolo.EnumTipoDato.STRING));
+        funciones.put("pie",new Grafica_Pie("pie",Simbolo.EnumTipoDato.STRING));
+        funciones.put("barplot",new Grafica_Barras("barras",Simbolo.EnumTipoDato.STRING));
+        funciones.put("plot",new Grafica_Linea("plot",Simbolo.EnumTipoDato.STRING));
+        funciones.put("hist",new Grafica_Histograma("hist",Simbolo.EnumTipoDato.STRING));
+        funciones.put("plot1",new Grafica_Dispersion("plot",Simbolo.EnumTipoDato.STRING));
     }
     public static Singleton getInstance(){
         if(singleton== null){
@@ -44,17 +54,25 @@ public class Singleton {
     public void limpiarEntorno(){
         funciones.clear();
     }
-    public void putFuncion(Funcion funcion,String id){
+    public boolean putFuncion(Funcion funcion,String id){
         if(funciones.containsKey(id)){
             Inicio.salidaConsola.append("La funcion ya existe\n");
-            return ;
+            return false ;
         }
         funciones.put(id, funcion);
+        return true;
     }
     public Funcion getFuncion(String id){
         if(funciones.containsKey(id)){
             return funciones.get(id);
         }
         return null;
+    }
+    public Funcion getFuncion(String id,int param){
+        if(funciones.containsKey(id)&&param==8){
+            return funciones.get("plot1");
+        }else{
+            return funciones.get(id);
+        }
     }
 }

@@ -100,6 +100,10 @@ espacio = \t|\f|" "|\r|\n
     "c"             {return addSymbol(new Symbol(Syma.tC,yycolumn,yyline,yytext()));}
     "list"          {return addSymbol(new Symbol(Syma.tList,yycolumn,yyline,yytext()));}
     "matrix"        {return addSymbol(new Symbol(Syma.tMatrix,yycolumn,yyline,yytext()));}
+    "pie"           {return addSymbol(new Symbol(Syma.tPie,yycolumn,yyline,yytext()));}
+    "barplot"       {return addSymbol(new Symbol(Syma.tBarplot,yycolumn,yyline,yytext()));}
+    "plot"          {return addSymbol(new Symbol(Syma.tPlot,yycolumn,yyline,yytext()));}
+    "hist"          {return addSymbol(new Symbol(Syma.tHist,yycolumn,yyline,yytext()));}
 
     {id}            {return addSymbol(new Symbol(Syma.tId,yycolumn,yyline,yytext()));}
     {caracter}      {return addSymbol(new Symbol(Syma.tCaracter,yycolumn,yyline,yytext()));}

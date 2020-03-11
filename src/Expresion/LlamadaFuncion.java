@@ -41,7 +41,7 @@ public class LlamadaFuncion extends Expresion implements Instruccion{
     }
     @Override
     public Retornar ejecutar(Entorno ent) {
-        Funcion f = Singleton.getInstance().getFuncion(id);
+        Funcion f = Singleton.getInstance().getFuncion(id,parametros.size());
          if(f!=null){
             f.setParametros(parametros);
             f.obtenerValor(ent);
