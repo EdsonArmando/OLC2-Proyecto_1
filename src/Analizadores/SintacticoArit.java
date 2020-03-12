@@ -13,6 +13,7 @@ import Expresion.Operacion.Tipo_operacion;
 import Expresion.*;
 import Instruccion.*;
 import Entorno.Simbolo;
+import Estructuras.NodoAST;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -626,7 +627,7 @@ public class SintacticoArit extends java_cup.runtime.lr_parser {
 
     //public Panel resultado;
     public LinkedList<Instruccion> resultado = new LinkedList<>();
-    
+    NodoAST raiz;
 
     //Metodo al que se llama automaticamente ante algun error sintactico
     public void syntax_error(Symbol s)

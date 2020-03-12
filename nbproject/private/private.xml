@@ -3,10 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/EG/Documents/NetBeansProjects/%5BOLC2%5DProyecto1/src/Expresion/LlamadaFuncion.java</file>
-            <file>file:/C:/Users/EG/Documents/NetBeansProjects/%5BOLC2%5DProyecto1/src/Instruccion/Grafica_Linea.java</file>
-            <file>file:/C:/Users/EG/Documents/NetBeansProjects/%5BOLC2%5DProyecto1/src/Instruccion/To_Lower.java</file>
-            <file>file:/C:/Users/EG/Documents/NetBeansProjects/%5BOLC2%5DProyecto1/src/Instruccion/Grafica_Pie.java</file>
+            <file>file:/C:/Users/EG/Documents/NetBeansProjects/%5BOLC2%5DProyecto1/src/Expresion/Operacion.java</file>
+            <file>file:/C:/Users/EG/Documents/NetBeansProjects/%5BOLC2%5DProyecto1/src/Views/Inicio.java</file>
+            <file>file:/C:/Users/EG/Documents/NetBeansProjects/%5BOLC2%5DProyecto1/src/Expresion/Expresion.java</file>
+            <file>file:/C:/Users/EG/Documents/NetBeansProjects/%5BOLC2%5DProyecto1/src/Estructuras/Singleton.java</file>
+            <file>file:/C:/Users/EG/Documents/NetBeansProjects/%5BOLC2%5DProyecto1/src/Entorno/Entorno.java</file>
+            <file>file:/C:/Users/EG/Documents/NetBeansProjects/%5BOLC2%5DProyecto1/src/AnalizadoresTexto/SintacticoAST.cup</file>
+            <file>file:/C:/Users/EG/Documents/NetBeansProjects/%5BOLC2%5DProyecto1/src/Estructuras/NodoAST.java</file>
+            <file>file:/C:/Users/EG/Documents/NetBeansProjects/%5BOLC2%5DProyecto1/src/Analizadores/analisis_sintactico_AST.java</file>
         </group>
     </open-files>
 </project-private>

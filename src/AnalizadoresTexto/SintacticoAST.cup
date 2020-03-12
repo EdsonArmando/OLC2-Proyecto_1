@@ -1,0 +1,206 @@
+package Analizadores;
+
+import java.util.*; 
+import java_cup.runtime.Symbol;
+import Views.*;
+import Entorno.Simbolo.EnumTipoDato;
+import Expresion.Operacion.Tipo_operacion;
+import Expresion.*;
+import Instruccion.*;
+import Entorno.Simbolo;
+import Estructuras.NodoAST;
+
+parser code
+{:  
+    /*public static LinkedList<AcepErr> TablaErr=new LinkedList<AcepErr>();*/
+
+    //public Panel resultado;
+    public NodoAST raiz;
+
+    //Metodo al que se llama automaticamente ante algun error sintactico
+    public void syntax_error(Symbol s)
+    {        
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
+        
+        System.out.println("!!!!!!! Error Sintactico Recuperado !!!!!!!");
+        System.out.println("\t\tLexema: "+lexema);
+        System.out.println("\t\tFila: "+fila);
+        System.out.println("\t\tColumna: "+columna);
+
+        //lista_errores.add(new ErrorT(lexema, fila, columna,"sintactico" ,"Simbolo no esperado"));
+        /*AcepErr datos =new AcepErr(lexema, "ERROR SINTACTICO" ,fila,columna,"Simbolo no esperado");
+            TablaErr.add(datos);
+            */
+    }
+
+    //Metodo al que se llama en el momento en que ya no es posible una recuperacion de errores
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
+    {        
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
+        
+        System.out.println("!!!!!!! Error Sintactico, Panic Mode !!!!!!! ");
+        System.out.println("\t\tLexema: "+lexema);
+        System.out.println("\t\tFila: "+fila);
+        System.out.println("\t\tColumna: "+columna);
+
+       /*AcepErr datos =new AcepErr(lexema, "ERROR SINTACTICO" ,fila,columna,"Simbolo no esperado Error Fatal");
+                   TablaErr.add(datos);
+                  */
+        //lista_errores.add(new ErrorT(lexema, fila, columna,"sintactico" ,"Simbolo no esperado, Panic Mode"));
+    }
+
+    public void semantic(Symbol cur_token, String n) 
+    {
+        System.out.println("error semantico ");
+    }
+
+    public void semantic(String msg, Object obj) {}
+
+:}
+
+action code
+{:
+
+:} 
+terminal String tId,tHist,tPlot,tPie,tBarplot,tMatrix,tList,tDo,tC,tWhile,tReturn,tFor,tIf,tElse,tModulo,tDosPuntos,tPunto,tLlaveA,tPuntoComa,tLlaveC,tCadena,tCorcheA,tCorcheC;
+terminal String UMENOS,tDoble,tFunction,tIgualIgual,tEntero,tTrue,tFalse,tParA,tParC,tCaracter,tIgual,tDifQ,tOr,tAnd,tXor,tComa,tSuma,tResta,tMult,tDiv,tPow,tMayorQ,tMenorQ; 
+terminal String tPrint;
+
+non terminal NodoAST E,LLAMADA_FUNCION;
+non terminal NodoAST INSTRUCCION;
+non terminal NodoAST LISTAEXPR;
+non terminal NodoAST LISTA,LISTAINSTRUCCIONES;
+non terminal NodoAST ASIGNACION,DECLARACION,IMPRIMIR,SI,SUBIF,WHILE,DO_WHILE,FUNCION_DEFINIDA,RETURN;
+non terminal NodoAST instrucciones_elseif;
+non terminal NodoAST instruccion_elseif;
+non terminal NodoAST instruccion_else;
+non terminal NodoAST instruccion_if;
+
+precedence left tSuma, tResta,UMENOS;
+precedence left tMult, tDiv,tModulo, tIgualIgual;
+precedence left tPow, tMayorQ,tMenorQ;
+precedence left tAnd, tOr,tXor,tDifQ;
+precedence right UMENOS,tIgual; 
+
+start with LISTA;
+
+LISTA ::= LISTAINSTRUCCIONES:li {:
+            NodoAST padre = new NodoAST("LISTA");
+            padre.add(li);
+            parser.raiz=padre;
+        :}
+        ;
+
+LISTAINSTRUCCIONES ::= LISTAINSTRUCCIONES:li INSTRUCCION:ins {:
+                        NodoAST nodo = new NodoAST("LISTAINSTRUCCIONES");
+                        nodo.add(li);
+                        nodo.add(ins);
+                        RESULT=nodo;
+                    :}
+                    | INSTRUCCION:ins {:
+                        RESULT=ins;
+                    :}
+                    ;
+INSTRUCCION ::= DECLARACION:a {:NodoAST nodo = new NodoAST("INSTRUCCION");nodo.add(a);RESULT=nodo;:}    
+                | IMPRIMIR:a {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}    
+                | SI:a {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}   
+                | ASIGNACION:a {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}   
+                | WHILE:a {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}   
+                | DO_WHILE:a {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}    
+                | LLAMADA_FUNCION:exp {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}       
+                | FUNCION_DEFINIDA: a {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}      
+                | RETURN:a {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}     
+            ;
+RETURN ::= tReturn E:a tPuntoComa {:NodoAST nodo = new NodoAST("RETURN");RESULT=nodo;:};
+LISTAEXPR ::= LISTAEXPR:li tComa E:a {:
+                   NodoAST nodo = new NodoAST("LISTAEXPR");
+                        nodo.add(li);
+                        nodo.add(a);
+                        RESULT=nodo; 
+                :}
+                | E:a {:
+                    RESULT=a;
+                :}
+                ;
+LLAMADA_FUNCION  ::= tId:id tParA LISTAEXPR:e1 tParC {:NodoAST nodo = new NodoAST("LLAMADA_FUNCION");RESULT=nodo;:}     
+                    | tC tParA LISTAEXPR:el tParC  {:NodoAST nodo = new NodoAST("LLAMADA_FUNCION");RESULT=nodo;:}    
+                    | tPie tParA LISTAEXPR:el tParC  {:NodoAST nodo = new NodoAST("LLAMADA_FUNCION");RESULT=nodo;:}    
+                    | tBarplot tParA LISTAEXPR:el tParC  {:NodoAST nodo = new NodoAST("LLAMADA_FUNCION");RESULT=nodo;:}    
+                    | tList tParA LISTAEXPR:el tParC  {:NodoAST nodo = new NodoAST("LLAMADA_FUNCION");RESULT=nodo;:}    
+                    | tMatrix tParA LISTAEXPR:el tParC  {:NodoAST nodo = new NodoAST("LLAMADA_FUNCION");RESULT=nodo;:}   
+                ;
+FUNCION_DEFINIDA ::= tId:id tIgual tFunction tParA  LISTAEXPR:exp tParC tLlaveA LISTAINSTRUCCIONES:li tLlaveC  {:NodoAST nodo = new NodoAST("FUNCION_DEFINIDA");RESULT=nodo;:}    
+                     
+;
+WHILE ::= tWhile tParA E:a tParC tLlaveA LISTAINSTRUCCIONES:li tLlaveC {:NodoAST nodo = new NodoAST("WHILE");RESULT=nodo;:}  ;
+
+DO_WHILE ::= tDo tLlaveA LISTAINSTRUCCIONES:li tLlaveC tWhile tParA E:a tParC tPuntoComa {:NodoAST nodo = new NodoAST("DO_WHILE");RESULT=nodo;:} ;    
+
+SI ::= 
+        instruccion_if:a {:NodoAST nodo = new NodoAST("instruccion_if");RESULT=nodo;:}    
+      | instruccion_if:a instrucciones_elseif:b {:NodoAST nodo = new NodoAST("SI");RESULT=nodo;:} 
+      | instruccion_if:a instrucciones_elseif:b instruccion_else:c {:NodoAST nodo = new NodoAST("SI");RESULT=nodo;:}    
+      | instruccion_if:a instruccion_else:b {:NodoAST nodo = new NodoAST("SI");RESULT=nodo;:}    
+;
+instruccion_if ::= 
+      tIf tParA E:a tParC tLlaveA LISTAINSTRUCCIONES:b tLlaveC {:NodoAST nodo = new NodoAST("instruccion_if");RESULT=nodo;:}     
+;
+
+instrucciones_elseif ::= 
+        instrucciones_elseif:a instruccion_elseif:b{:NodoAST nodo = new NodoAST("instrucciones_elseif");RESULT=nodo;:}   
+      | instruccion_elseif:a{:NodoAST nodo = new NodoAST("instrucciones_elseif");RESULT=nodo;:}   
+; 
+
+instruccion_elseif ::= 
+        tElse tIf tParA E:a tParC tLlaveA LISTAINSTRUCCIONES:b tLlaveC {:NodoAST nodo = new NodoAST("instruccion_elseif");RESULT=nodo;:}
+;
+
+instruccion_else ::= 
+        tElse tLlaveA LISTAINSTRUCCIONES:a tLlaveC {:NodoAST nodo = new NodoAST("instruccion_else ");RESULT=nodo;:}
+;
+
+IMPRIMIR ::= tPrint tParA E:exp tParC tPuntoComa{:NodoAST nodo = new NodoAST("IMPRIMIR");RESULT=nodo;:};
+
+DECLARACION ::= tId:id tIgual E:exp tPuntoComa{:NodoAST nodo = new NodoAST("DECLARACION");nodo.add(new NodoAST(id));nodo.add(new NodoAST("="));nodo.add(exp);nodo.add(new NodoAST(";"));RESULT=nodo;:}    
+              | tPunto tId:id tIgual E:exp tPuntoComa{:NodoAST nodo = new NodoAST("DECLARACION");RESULT=nodo;:}   
+              | tId:id tCorcheA E:a tCorcheC tIgual E:exp tPuntoComa{:NodoAST nodo = new NodoAST("DECLARACION");RESULT=nodo;:}    
+            ;
+ASIGNACION ::=  tId:id tCorcheA E:a tComa E:b tCorcheC tIgual E:exp tPuntoComa {:NodoAST nodo = new NodoAST("ASIGNACION");RESULT=nodo;:}  
+                | tId:id tCorcheA E:a tComa tCorcheC tIgual E:exp tPuntoComa{:NodoAST nodo = new NodoAST("ASIGNACION");RESULT=nodo;:}      
+                | tId:id tCorcheA tComa E:b tCorcheC tIgual E:exp tPuntoComa{:NodoAST nodo = new NodoAST("ASIGNACION");RESULT=nodo;:}      
+            ;
+E ::= tResta E:a{:NodoAST nodo = new NodoAST("-");RESULT=nodo;:}%prec UMENOS 
+    | E:a tModulo E:b {:NodoAST nodo = new NodoAST("MODULO");nodo.add(a);nodo.add(new NodoAST("%"));nodo.add(b);RESULT=nodo;:}   
+    | E:a tSuma E:b {:NodoAST nodo = new NodoAST("SUMA");nodo.add(a);nodo.add(new NodoAST("+"));nodo.add(b);RESULT=nodo;:}     
+    | E:a tResta E:b {:NodoAST nodo = new NodoAST("RESTA");nodo.add(a);nodo.add(new NodoAST("-"));nodo.add(b);RESULT=nodo;:}  
+    | E:a tMult E:b {:NodoAST nodo = new NodoAST("MULTP");nodo.add(a);nodo.add(new NodoAST("*"));nodo.add(b);RESULT=nodo;:}   
+    | E:a tDiv E:b {:NodoAST nodo = new NodoAST("DIV");nodo.add(a);nodo.add(new NodoAST("/"));nodo.add(b);RESULT=nodo;:}   
+    | E:a tPow E:b {:NodoAST nodo = new NodoAST("POW");nodo.add(a);nodo.add(new NodoAST("&"));nodo.add(b);RESULT=nodo;:}  
+    | E:a tIgualIgual E:b {:NodoAST nodo = new NodoAST("IGUAL");nodo.add(a);nodo.add(new NodoAST("=="));nodo.add(b);RESULT=nodo;:}  
+    | E:a tMenorQ E:b {:NodoAST nodo = new NodoAST("MATORQ");nodo.add(a);nodo.add(new NodoAST("<"));nodo.add(b);RESULT=nodo;:}    
+    | E:a tMayorQ E:b {:NodoAST nodo = new NodoAST("MENORQ");nodo.add(a);nodo.add(new NodoAST(">"));nodo.add(b);RESULT=nodo;:}    
+    | E:a tMenorQ tIgual E:b {:NodoAST nodo = new NodoAST("MENORQIGUAL");nodo.add(a);nodo.add(new NodoAST("<="));nodo.add(b);RESULT=nodo;:}     
+    | E:a tMayorQ tIgual E:b {:NodoAST nodo = new NodoAST("MAYORQIGUAL");nodo.add(a);nodo.add(new NodoAST(">="));nodo.add(b);RESULT=nodo;:}   
+    | E:a tDifQ tIgual E:b {:NodoAST nodo = new NodoAST("DIFQ");nodo.add(a);nodo.add(new NodoAST("!="));nodo.add(b);RESULT=nodo;:}   
+    | E:a tAnd tAnd E:b {:NodoAST nodo = new NodoAST("AND");nodo.add(a);nodo.add(new NodoAST("&&"));nodo.add(b);RESULT=nodo;:} 
+    | E:a tOr E:b {:NodoAST nodo = new NodoAST("OR");nodo.add(a);nodo.add(new NodoAST("|"));nodo.add(b);RESULT=nodo;:}   
+    | E:a tDifQ E:b {:NodoAST nodo = new NodoAST("DIF");nodo.add(a);nodo.add(new NodoAST("!"));nodo.add(b);RESULT=nodo;:}   
+    | E:a tXor E:b {:NodoAST nodo = new NodoAST("XOR");nodo.add(a);nodo.add(new NodoAST("<="));nodo.add(b);RESULT=nodo;:} 
+    | tParA E:a tParC {:RESULT=a;:}    
+    | tId:a tCorcheA E:b tCorcheC {:RESULT=new NodoAST("id[1]");:}   
+    | tId:a tCorcheA E:b tComa E:c tCorcheC {:RESULT=new NodoAST("id[1,2]");:}   
+    | tId:a tCorcheA E:b tComa tCorcheC {:RESULT=new NodoAST("id[1,]");:}     
+    | tId:a tCorcheA tComa E:b tCorcheC {:RESULT=new NodoAST("id[,1]");:}     
+    | tId:a {:RESULT=new NodoAST(a);:}      
+    | tEntero:a {:RESULT=new NodoAST(a);:}    
+    | tTrue {:RESULT=new NodoAST("true");:}      
+    | tFalse {:RESULT=new NodoAST("false");:}     
+    | tDoble:a {:RESULT=new NodoAST(a);:}        
+    | tCadena:a {:RESULT=new NodoAST(a);:}        
+    | LLAMADA_FUNCION:a {:RESULT=a;:}    
+    | FUNCION_DEFINIDA:a {:RESULT=a;:}    
+    ;

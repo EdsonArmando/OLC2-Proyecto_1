@@ -6,7 +6,9 @@
 package Views;
 import Analizadores.LexicoArit;
 import Analizadores.SintacticoArit;
+import Analizadores.analisis_sintactico_AST;
 import Entorno.Entorno;
+import Estructuras.NodoAST;
 import Estructuras.Singleton;
 import Instruccion.Instruccion;
 import java.awt.Component;
@@ -18,6 +20,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -104,7 +108,7 @@ public class Inicio extends javax.swing.JFrame {
                     .addComponent(jTabbedPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(idAnalizar)
-                        .addGap(0, 550, Short.MAX_VALUE)))
+                        .addGap(0, 301, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
@@ -177,8 +181,25 @@ public class Inicio extends javax.swing.JFrame {
         for(Instruccion ins : resultados){
             ins.ejecutar(ent);
         }
+        Graficar(datos);
     }//GEN-LAST:event_idAnalizarActionPerformed
-
+    private void Graficar(String datos){
+        NodoAST raiz;
+        LexicoArit lexico = new LexicoArit(new BufferedReader(new StringReader(datos)));
+        analisis_sintactico_AST sintactico = new analisis_sintactico_AST(lexico);
+        try{
+            sintactico.parse();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        raiz = sintactico.raiz;
+        raiz.Graficar(raiz);
+         try {
+             raiz.generarArchivo();
+         } catch (IOException ex) {
+             Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+         }
+    }
     /**
      * @param args the command line arguments
      */

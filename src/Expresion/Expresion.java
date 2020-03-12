@@ -7,6 +7,7 @@ package Expresion;
 
 import Entorno.Entorno;
 import Entorno.Simbolo.EnumTipoDato;
+import Estructuras.NodoAST;
 import Instruccion.Instruccion;
 
 /**
@@ -15,6 +16,7 @@ import Instruccion.Instruccion;
  */
 public abstract class Expresion{
     public Object valor=null;
+    public NodoAST nodo;
     public EnumTipoDato tipo=null;
     public abstract Expresion obtenerValor(Entorno ent);
     public abstract EnumTipoDato getTipo();

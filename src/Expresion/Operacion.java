@@ -8,6 +8,7 @@ package Expresion;
 import Entorno.Entorno;
 import Entorno.Simbolo;
 import Entorno.Simbolo.EnumTipoDato;
+import Estructuras.NodoAST;
 import Views.Inicio;
 import java.util.LinkedList;
 import java.util.Vector;
@@ -51,6 +52,7 @@ public class Operacion extends Expresion{
         ARRAYPOSICION
     }
      private Vector vector;
+     public NodoAST hijo;
      private final Tipo_operacion tipo;
      public Expresion operadorIzq;
      public Expresion operadorDer;
@@ -59,6 +61,7 @@ public class Operacion extends Expresion{
      private Expresion posColumna;
      public Object valor;
      public Operacion(Expresion operadorIzq, Expresion operadorDer, Tipo_operacion tipo) {
+        
         this.tipo = tipo;
         this.operadorIzq = operadorIzq;
         this.operadorDer = operadorDer;
