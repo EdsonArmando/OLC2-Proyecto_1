@@ -181,7 +181,7 @@ public class Inicio extends javax.swing.JFrame {
         for(Instruccion ins : resultados){
             ins.ejecutar(ent);
         }
-        Graficar(datos);
+        //Graficar(datos);
     }//GEN-LAST:event_idAnalizarActionPerformed
     private void Graficar(String datos){
         NodoAST raiz;

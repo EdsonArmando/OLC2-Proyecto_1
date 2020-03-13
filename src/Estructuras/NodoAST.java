@@ -53,6 +53,10 @@ public class NodoAST {
                 val+="nodo"+String.valueOf(nodo.hashCode())+"[label= \"" + nodo.valor+" \"" +"fillcolor=\"LightBlue\", style =\"filled\", shape=\"box\"]; \n";   
                 val +="nodo"+String.valueOf(hash)+" -> " + "nodo"+String.valueOf(nodo.hashCode())+"\n";
                 break;
+            case 5:
+                val+="nodo"+String.valueOf(nodo.hashCode())+"[label= \"" + nodo.valor+" \"" +"fillcolor=\"LightBlue\", style =\"filled\", shape=\"box\"]; \n";   
+                val +="nodo"+String.valueOf(hash)+" -> " + "nodo"+String.valueOf(nodo.hashCode())+"\n";
+                break;
             case 1:
                 Instruccion(nodo.hijos.get(0),nodo.hashCode());
                 break;

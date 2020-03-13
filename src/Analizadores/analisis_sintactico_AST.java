@@ -784,7 +784,7 @@ class CUP$analisis_sintactico_AST$actions {
 		int aleft = ((java_cup.runtime.Symbol)CUP$analisis_sintactico_AST$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$analisis_sintactico_AST$stack.peek()).right;
 		NodoAST a = (NodoAST)((java_cup.runtime.Symbol) CUP$analisis_sintactico_AST$stack.peek()).value;
-		NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;
+		NodoAST nodo = new NodoAST("INSTRUCCION");nodo.add(a);RESULT=nodo;
               CUP$analisis_sintactico_AST$result = parser.getSymbolFactory().newSymbol("INSTRUCCION",2, ((java_cup.runtime.Symbol)CUP$analisis_sintactico_AST$stack.peek()), ((java_cup.runtime.Symbol)CUP$analisis_sintactico_AST$stack.peek()), RESULT);
             }
           return CUP$analisis_sintactico_AST$result;
@@ -1049,7 +1049,7 @@ class CUP$analisis_sintactico_AST$actions {
 		int aleft = ((java_cup.runtime.Symbol)CUP$analisis_sintactico_AST$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$analisis_sintactico_AST$stack.peek()).right;
 		NodoAST a = (NodoAST)((java_cup.runtime.Symbol) CUP$analisis_sintactico_AST$stack.peek()).value;
-		NodoAST nodo = new NodoAST("instruccion_if");RESULT=nodo;
+		NodoAST nodo = new NodoAST("SI");RESULT=nodo;
               CUP$analisis_sintactico_AST$result = parser.getSymbolFactory().newSymbol("SI",9, ((java_cup.runtime.Symbol)CUP$analisis_sintactico_AST$stack.peek()), ((java_cup.runtime.Symbol)CUP$analisis_sintactico_AST$stack.peek()), RESULT);
             }
           return CUP$analisis_sintactico_AST$result;
@@ -1178,7 +1178,13 @@ class CUP$analisis_sintactico_AST$actions {
 		int expleft = ((java_cup.runtime.Symbol)CUP$analisis_sintactico_AST$stack.elementAt(CUP$analisis_sintactico_AST$top-2)).left;
 		int expright = ((java_cup.runtime.Symbol)CUP$analisis_sintactico_AST$stack.elementAt(CUP$analisis_sintactico_AST$top-2)).right;
 		NodoAST exp = (NodoAST)((java_cup.runtime.Symbol) CUP$analisis_sintactico_AST$stack.elementAt(CUP$analisis_sintactico_AST$top-2)).value;
-		NodoAST nodo = new NodoAST("IMPRIMIR");RESULT=nodo;
+		NodoAST nodo = new NodoAST("IMPRIMIR");
+            nodo.add(new NodoAST("print"));
+            nodo.add(new NodoAST("("));
+            nodo.add(exp);
+            nodo.add(new NodoAST(")"));
+            nodo.add(new NodoAST(";"));
+            RESULT=nodo;
               CUP$analisis_sintactico_AST$result = parser.getSymbolFactory().newSymbol("IMPRIMIR",8, ((java_cup.runtime.Symbol)CUP$analisis_sintactico_AST$stack.elementAt(CUP$analisis_sintactico_AST$top-4)), ((java_cup.runtime.Symbol)CUP$analisis_sintactico_AST$stack.peek()), RESULT);
             }
           return CUP$analisis_sintactico_AST$result;

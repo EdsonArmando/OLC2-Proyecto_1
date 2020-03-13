@@ -50,7 +50,7 @@ espacio = \t|\f|" "|\r|\n
 }
 
 <COMENTMULTI>{
-    "#*"         {yybegin(ESTADOACTUAL);}
+    "/*"         {yybegin(ESTADOACTUAL);}
     .            {}
     [ \t\r\n\f]  {}
 }
@@ -61,8 +61,8 @@ espacio = \t|\f|" "|\r|\n
 }
 
 <YYINITIAL>{ 
-    "*#"            { ESTADOACTUAL = YYINITIAL; yybegin(COMENTMULTI);} 
-    "#"             { ESTADOACTUAL = YYINITIAL; yybegin(COMENTSIMPLE);}
+    "*/"            { ESTADOACTUAL = YYINITIAL; yybegin(COMENTMULTI);} 
+    "//"            { ESTADOACTUAL = YYINITIAL; yybegin(COMENTSIMPLE);}
     "\""            { ESTADOACTUAL = YYINITIAL; yybegin(STRING);}
     "{"             {return addSymbol(new Symbol(Syma.tLlaveA,yycolumn,yyline,yytext()));}
     "}"             {return addSymbol(new Symbol(Syma.tLlaveC,yycolumn,yyline,yytext()));}

@@ -45,21 +45,33 @@ public class Grafica_Linea extends Funcion{
         xlab = param_Actuales.get(2).obtenerValor(ent).valor.toString();
         ylab = param_Actuales.get(3).obtenerValor(ent).valor.toString();
         main = param_Actuales.get(4).obtenerValor(ent).valor.toString();
-        Vector vector = (Vector)param_Actuales.get(0).obtenerValor(ent).valor;
+        Vector<Expresion> vector = (Vector)param_Actuales.get(0).obtenerValor(ent).valor;
         XYSeriesCollection dataset = new XYSeriesCollection();
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+        int cont=1;
         for(int i=0;i<vector.size();i++){
-            resultado = (Expresion)vector.get(i);
-            Object[][] tempMatriz = (Object[][])resultado.obtenerValor(ent).valor;
-            XYSeries series = new XYSeries("Grafica Numero"+i);
-            for(int j=0;j<tempMatriz.length;j++){
-                for(int k=0;k<tempMatriz[j].length;k++){
-                    Coordenada = (Expresion)tempMatriz[j][k];
-                    String coordenada = Coordenada.obtenerValor(ent).valor.toString();
-                    String[] valores = coordenada.split(",");
-                    series.add(Integer.valueOf((valores[0])),Integer.valueOf(valores[1]));
+            XYSeries series = new XYSeries("Grafica Numero"+(i+1));
+            resultado = (Expresion)vector.get(i).obtenerValor(ent);
+            if(resultado.tipo == Simbolo.EnumTipoDato.MATRIX){
+                Object[][] tempMatriz = (Object[][])resultado.valor;
+                for(int j=0;j<tempMatriz[0].length;j++){
+                    for(int k=0;k<tempMatriz.length;k++){
+                        Expresion result = (Expresion)tempMatriz[k][j];
+                        Double uno = (Double)result.obtenerValor(ent).valor;
+                        series.add(cont, uno.intValue());
+                        cont++;
+                    }
+                }
+            }else if(resultado.tipo == Simbolo.EnumTipoDato.VECTOR){
+                Vector<Expresion> vec = (Vector)resultado.valor;
+                for(int c=0;c<vec.size();c++){
+                    Double val = (Double)vec.get(c).obtenerValor(ent).valor;
+                    series.add(cont, val.intValue());
+                    cont++;
                 }
             }
+            
+            cont=1;
             dataset.addSeries(series);
             renderer.setSeriesPaint(i,retornarColor(i));
         }

@@ -154,20 +154,20 @@ h=c(20,80,10,60,100,30,25,5);
 names=c("cocaCola","Vestidos","Materias","Dinero","Musica","Estudiantes","Concierto","UVG");
 barplot(h,"Categorias","Cantidad","GraficaBarras",names)
 
-
-J=matrix(c("1,1","2,0","3,2","1,8","2,7"),5,4);
-B=matrix(c("2,4","4,5","1,2","3,4","8,1"),5,4);
-K=matrix(c("1,6","7,9","0,7","3,7","4,5"),5,4);
-print(A);
+J=matrix(c(10,15,5,30,25,3),3,2);
+B=c(5,30,7,9,6,14);
+K=matrix(c(10,16,5,5,14,18),3,2);
+print(J);
 Vec=0;
 Vec[1]=J;
 Vec[2]=B;
+Vec[3]=K;
 plot(Vec,"0","EjeX","EjeY","Grafica Lineas")
 
-vecHist=c(1,2,3,4,5,4,4,4,3,3);
+vecHist=c(10,15,5,8,7,4,11,18,27,14,12);
 hist(vecHist,"Histograma","Ejex",vecHist,vecHist)
 
-matHis=matrix(c(1,2,3,4,5),4,2);
+matHis=matrix(c(10,15,5,30,25,3),3,2);
 print(matHis);
 Vec5=c(1,5);
 

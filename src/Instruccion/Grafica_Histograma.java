@@ -58,12 +58,10 @@ public class Grafica_Histograma extends Funcion{
             Expresion result = (Expresion)valores.get(i);
             Double uno = (Double)result.obtenerValor(ent).valor;
             value[i] = uno;
-            int number=10;
-            
-            
         }
         dataset.setType(HistogramType.FREQUENCY);
-        dataset.addSeries("Histogram",value, 5);
+        dataset.addSeries("Histogram",value, 6);
+        
         JFreeChart chart = ChartFactory.createHistogram(main, xlab, xlab, dataset, PlotOrientation.VERTICAL, true, true, true);
         ChartFrame frame = new ChartFrame(main, chart);
         frame.pack();

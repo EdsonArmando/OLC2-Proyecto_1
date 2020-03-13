@@ -48,12 +48,15 @@ public class Grafica_Dispersion extends Funcion {
         boolean byrow=(boolean)param_Actuales.get(7).obtenerValor(ent).valor;
         XYSeries s = new XYSeries(id);
         XYSeriesCollection datos = new XYSeriesCollection();
-        for(int i=0;i<matrix.length;i++){
-                Expresion result = (Expresion)matrix[i][0];
-                Expresion result2 = (Expresion)matrix[i][1];
-                Double uno = (Double)result.obtenerValor(ent).valor;
-                Double dos = (Double)result2.obtenerValor(ent).valor;
-                s.add(uno.intValue(), dos.intValue());
+        int cont=1;
+        for(int j=0;j<matrix[0].length;j++){
+            for(int i=0;i<matrix.length;i++){
+                Expresion vec = (Expresion)matrix[i][j];
+                Double val = (Double)vec.obtenerValor(ent).valor;
+                s.add(cont, val.intValue());
+                cont++;
+            }
+                
         }
         datos.addSeries(s);
         JFreeChart grafica = ChartFactory.createScatterPlot(main, xlab, ylab, datos, PlotOrientation.VERTICAL, true, true, true);

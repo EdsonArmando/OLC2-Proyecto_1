@@ -88,7 +88,7 @@ precedence right UMENOS,tIgual;
 
 start with LISTA;
 
-LISTA ::= LISTAINSTRUCCIONES:li {:
+LISTA ::=   LISTAINSTRUCCIONES:li {:
             NodoAST padre = new NodoAST("LISTA");
             padre.add(li);
             parser.raiz=padre;
@@ -106,7 +106,7 @@ LISTAINSTRUCCIONES ::= LISTAINSTRUCCIONES:li INSTRUCCION:ins {:
                     :}
                     ;
 INSTRUCCION ::= DECLARACION:a {:NodoAST nodo = new NodoAST("INSTRUCCION");nodo.add(a);RESULT=nodo;:}    
-                | IMPRIMIR:a {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}    
+                | IMPRIMIR:a {:NodoAST nodo = new NodoAST("INSTRUCCION");nodo.add(a);RESULT=nodo;:}    
                 | SI:a {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}   
                 | ASIGNACION:a {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}   
                 | WHILE:a {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}   
@@ -141,7 +141,7 @@ WHILE ::= tWhile tParA E:a tParC tLlaveA LISTAINSTRUCCIONES:li tLlaveC {:NodoAST
 DO_WHILE ::= tDo tLlaveA LISTAINSTRUCCIONES:li tLlaveC tWhile tParA E:a tParC tPuntoComa {:NodoAST nodo = new NodoAST("DO_WHILE");RESULT=nodo;:} ;    
 
 SI ::= 
-        instruccion_if:a {:NodoAST nodo = new NodoAST("instruccion_if");RESULT=nodo;:}    
+        instruccion_if:a {:NodoAST nodo = new NodoAST("SI");RESULT=nodo;:}    
       | instruccion_if:a instrucciones_elseif:b {:NodoAST nodo = new NodoAST("SI");RESULT=nodo;:} 
       | instruccion_if:a instrucciones_elseif:b instruccion_else:c {:NodoAST nodo = new NodoAST("SI");RESULT=nodo;:}    
       | instruccion_if:a instruccion_else:b {:NodoAST nodo = new NodoAST("SI");RESULT=nodo;:}    
@@ -163,7 +163,13 @@ instruccion_else ::=
         tElse tLlaveA LISTAINSTRUCCIONES:a tLlaveC {:NodoAST nodo = new NodoAST("instruccion_else ");RESULT=nodo;:}
 ;
 
-IMPRIMIR ::= tPrint tParA E:exp tParC tPuntoComa{:NodoAST nodo = new NodoAST("IMPRIMIR");RESULT=nodo;:};
+IMPRIMIR ::= tPrint tParA E:exp tParC tPuntoComa{:NodoAST nodo = new NodoAST("IMPRIMIR");
+            nodo.add(new NodoAST("print"));
+            nodo.add(new NodoAST("("));
+            nodo.add(exp);
+            nodo.add(new NodoAST(")"));
+            nodo.add(new NodoAST(";"));
+            RESULT=nodo;:};
 
 DECLARACION ::= tId:id tIgual E:exp tPuntoComa{:NodoAST nodo = new NodoAST("DECLARACION");nodo.add(new NodoAST(id));nodo.add(new NodoAST("="));nodo.add(exp);nodo.add(new NodoAST(";"));RESULT=nodo;:}    
               | tPunto tId:id tIgual E:exp tPuntoComa{:NodoAST nodo = new NodoAST("DECLARACION");RESULT=nodo;:}   
