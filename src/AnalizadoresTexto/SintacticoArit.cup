@@ -89,7 +89,7 @@ precedence right UMENOS,tIgual;
 
 start with LISTA;
 
-LISTA ::= LISTAINSTRUCCIONES:li {:
+LISTA ::= tLlaveA LISTAINSTRUCCIONES:li tLlaveC {:
             parser.resultado=li;
         :}
         ;

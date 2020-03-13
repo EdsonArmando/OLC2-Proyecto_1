@@ -88,7 +88,7 @@ precedence right UMENOS,tIgual;
 
 start with LISTA;
 
-LISTA ::=   LISTAINSTRUCCIONES:li {:
+LISTA ::=   tLlaveA LISTAINSTRUCCIONES:li tLlaveC{:
             NodoAST padre = new NodoAST("LISTA");
             padre.add(li);
             parser.raiz=padre;

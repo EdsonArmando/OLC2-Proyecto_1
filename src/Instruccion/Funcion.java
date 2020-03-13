@@ -15,7 +15,7 @@ import java.util.LinkedList;
  */
 public abstract class Funcion extends Expresion implements Instruccion{
     public String id;
-    Simbolo.EnumTipoDato tipo;
+    public Simbolo.EnumTipoDato tipo;
     Expresion valor;
     LinkedList<Instruccion> codigo;
     LinkedList<Expresion> param_Formales;

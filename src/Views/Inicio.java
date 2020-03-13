@@ -161,27 +161,32 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu1MouseClicked
 
     private void idAnalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idAnalizarActionPerformed
-        JScrollPane scroll = new JScrollPane();
-        salidaConsola.setText("");
-        Singleton.getInstance().limpiarEntorno();
-        Singleton.getInstance().funcionesSistema();
-        Component comp = jTabbedPane1.getComponentAt(jTabbedPane1.getSelectedIndex());
-        scroll=(javax.swing.JScrollPane) comp;
-        String datos = tex1.getText();
-        LinkedList<Instruccion> resultados;
-        LexicoArit lexico = new LexicoArit(new BufferedReader(new StringReader(datos)));
-        SintacticoArit sintactico = new SintacticoArit(lexico);
-          try{
-            sintactico.parse();
-        }catch(Exception e){
-            System.out.println(e);
+          try{                                           
+              JScrollPane scroll = new JScrollPane();
+              salidaConsola.setText("");
+              Singleton.getInstance().limpiarEntorno();
+              Singleton.getInstance().funcionesSistema();
+              Component comp = jTabbedPane1.getComponentAt(jTabbedPane1.getSelectedIndex());
+              scroll=(javax.swing.JScrollPane) comp;
+              String datos = tex1.getText();
+              LinkedList<Instruccion> resultados;
+              LexicoArit lexico = new LexicoArit(new BufferedReader(new StringReader(datos)));
+              SintacticoArit sintactico = new SintacticoArit(lexico);
+              try{
+                  sintactico.parse();
+              }catch(Exception e){
+                  System.out.println(e);
+              }
+              resultados=sintactico.resultado;
+              Entorno ent = new Entorno(null);
+              for(Instruccion ins : resultados){
+                  ins.ejecutar(ent);
+              }
+              ent.graficarTabla();
+              //Graficar(datos);
+          }catch(IOException ex){
+             Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null,ex);
         }
-        resultados=sintactico.resultado;    
-        Entorno ent = new Entorno(null);
-        for(Instruccion ins : resultados){
-            ins.ejecutar(ent);
-        }
-        //Graficar(datos);
     }//GEN-LAST:event_idAnalizarActionPerformed
     private void Graficar(String datos){
         NodoAST raiz;

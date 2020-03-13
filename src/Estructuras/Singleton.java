@@ -68,6 +68,9 @@ public class Singleton {
         }
         return null;
     }
+    public HashMap<String,Funcion> getTabla(){
+        return this.funciones;
+    }
     public Funcion getFuncion(String id,int param){
         if(funciones.containsKey(id)&&param==8){
             return funciones.get("plot1");

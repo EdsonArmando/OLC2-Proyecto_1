@@ -5,7 +5,11 @@
  */
 package Entorno;
 
+import Estructuras.Singleton;
+import Instruccion.Funcion;
 import Views.Inicio;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -51,5 +55,41 @@ public class Entorno {
     }
     public void modificarVariable(String nombre, Simbolo valor){
           tabla.put(nombre, valor);
+    }
+    public void graficarTabla() throws IOException{
+        FileWriter archivo = new FileWriter("Entorno.html");
+        HashMap<String,Funcion> funciones=Singleton.getInstance().getTabla();
+        int cont=1;
+        archivo.write("<html>");
+        archivo.write("<head>");
+        archivo.write("<style>"
+                + "table{"
+                + "  font-family: arial, sans-serif; border-collapse: collapse;    width: 100%;}"
+                + "td, th{"
+                + "border: 1px solid #dddddd;text-align: left;  padding: 8px;}"
+                + "tr:nth-child(even){"
+                + " background-color: #dddddd;}"
+                + "</style>");
+        archivo.write("</head>");
+        archivo.write("<body>");
+        archivo.write("<H1>Tabla de Simbolos</H1>");
+        archivo.write("<br><br>");
+        archivo.write("<table>");
+        archivo.write("<tr><th>No</th><th>Nombre</th><th>Tipo</th><th>Valor</th><th>Tamaño</th></tr>");
+        for (String key : tabla.keySet()) {
+            Simbolo sim = tabla.get(key);
+            archivo.write("<tr><td>" + cont + "</td><td>" + key + "</td><td>" + sim.tipo.toString() + "</td><td>" + sim.valor.toString() + "</td><td>" + String.valueOf(sim.valor.hashCode()) + "</td></tr>" );    
+            cont++;
+        }
+        for(String key : funciones.keySet()){
+            Funcion func = funciones.get(key);
+            archivo.write("<tr><td>" + cont + "</td><td>" + key + "</td><td>" + func.tipo.toString() + "</td><td>" + func.tipo.toString() + "</td><td>" + func.tipo.toString() + "</td></tr>" );    
+            cont++;
+        }
+        archivo.write("</table>");
+        archivo.write("</body>");
+        archivo.write("</html>");
+        archivo.close();
+        
     }
 }

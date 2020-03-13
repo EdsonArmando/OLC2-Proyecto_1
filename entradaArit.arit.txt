@@ -1,174 +1,176 @@
-fibo=function(n){
-if(n[1]>1){
-return fibo(n[1]-1)+fibo(n[1]-2);
-}else if(n[1]==1){
-return 1;
-}else if(n[1]==0){
-return 0;
+{
+	fibo=function(n){
+	if(n[1]>1){
+	return fibo(n[1]-1)+fibo(n[1]-2);
+	}else if(n[1]==1){
+	return 1;
+	}else if(n[1]==0){
+	return 0;
+	}
+	}
+	print("-------------Fibonnacci----------");
+	print(fibo(0));
+	print(fibo(1));
+	print(fibo(2));
+	print(fibo(3));
+	print(fibo(4));
+	print(fibo(5));
+
+	ackermann=function(m,n){
+	if(m[1]==0){
+	return (n[1]+1);
+	}else{
+	if((m[1]>0) && (n[1]==0)){
+	return ackermann(m[1]-1,1);
+	}else{
+	no = ackermann(m[1],n[1]-1);
+	nu = ackermann(m[1]-1,no[1]);
+	return nu[1];
+	}
+	}
+	}
+	var = ackermann(3,6);
+	print("-------------Ackeermann----------");
+	print("El valor es : " + var[1]);
+
+
+	factorial=function(num){
+	if(num[1]==0){
+	return 1;
+	}else{
+	return num[1]*factorial(num[1]-1);
+	}
+	}
+	print("-------------Factorial----------");
+	var[2] = factorial(5);
+	print(var[2]);
+
+	potencia=function(base,exponente){
+	if(exponente[1]==0){
+	return 1;
+	}else if(exponente[1]<0){
+	return potencia(base[1], exponente[1]+1) / base[1];
+	}else{
+	return  base[1] * potencia(base[1], exponente[1]-1);
+	}
+	}
+	print("-------------Potencia----------");
+	var[3]=potencia(2,2);
+	print(var[3]);
+
+	hofstaderFemale=function(n){ 
+	if(n[1] < 0){
+	return 0;
+	}else if(n[1]==0){
+	return 1;
+	}else{
+	return n[1] - hofstaderFemale(n[1] - 1); 
+	}
+	}
+
+	print("-------------hofstaderFemale----------");
+	var[4] = hofstaderFemale(0);
+	print(hofstaderFemale(0));
+	print(hofstaderFemale(1));
+	print(hofstaderFemale(2));
+	print(hofstaderFemale(3));
+	print(hofstaderFemale(4));
+	print(hofstaderFemale(5));
+
+	Impar=function(num){
+	if(num[1]==0){
+	return 0;
+	}else{
+	return Par(num[1]-1);
+	}
+	}
+	Par=function(num){
+	if(num[1]==0){
+	return 1;
+	}else{
+	return Impar(num[1]-1);
+	}
+	}
+	print("-------------IMPAR-------------");
+	print("Numero a analizar= 3");
+	var[5]=Impar(3);
+	if(var[5]==1){
+	print("El numero 3 es Impar");
+	}else{
+	print("No es verdadero");
+	}
+	print("-------------TORRES DE HANOI-------------");
+	Hanoi=function(n,origen,auxiliar,destino){
+	if(n[1]==1){
+	print("mover disco de " + origen[1] + " a " + destino[1]);
+	}else{
+	Hanoi(n[1]-1, origen[1], destino[1], auxiliar[1])
+	print("mover disco de "+ origen[1] + " a " + destino[1]);
+	Hanoi(n[1]-1, auxiliar[1], origen[1], destino[1])
+	}
+	}
+	Hanoi(3,1,2,3)
+
+
+	print("--------------------------------------------Utilizando Contador----------------------");
+	cont=1;
+	while(cont[1]<4){
+	cont[1]=cont[1]+1;
+	cont[cont[1]]=cont[1];
+	}
+
+	print(cont);
+
+
+	vary = c("Juan","Caballo","Pedor");
+	nuevo = c("Si","Falaa","RTOdos");
+	vecto = c(nuevo,vary);
+	print(vecto);
+
+	Lista3 = list(1,2, 3, 4, c(5,6));
+	Lista4=Lista3[5];
+	print("El valor es :");
+	print(Lista4);
+
+	A=matrix(c(1,2,3,4,5),5,4);
+	varPrueba = A[1,];
+	var2 = A[,2];
+	print(A);
+	prueba = A[5];
+	print("Modificacion de la matriz");
+	A[2,2]=24;
+	print(A);
+	A[2,]=8;
+	print("Modificacion fila");
+	print(A);
+	A[,3]=7;
+	print("Modificacion columna");
+	print(A);
+
+	vec1=c(30,40,20,60);
+	vec2=c("mate","ingles","Fisica","Archivos");
+	pie(vec1,vec2,"Grafica1")
+
+	h=c(20,80,10,60,100,30,25,5);
+	names=c("cocaCola","Vestidos","Materias","Dinero","Musica","Estudiantes","Concierto","UVG");
+	barplot(h,"Categorias","Cantidad","GraficaBarras",names)
+
+	J=matrix(c(10,15,5,30,25,3),3,2);
+	B=c(5,30,7,9,6,14);
+	K=matrix(c(10,16,5,5,14,18),3,2);
+	print(J);
+	Vec=0;
+	Vec[1]=J;
+	Vec[2]=B;
+	Vec[3]=K;
+	plot(Vec,"0","EjeX","EjeY","Grafica Lineas")
+
+	vecHist=c(10,15,5,8,7,4,11,18,27,14,12);
+	hist(vecHist,"Histograma","Ejex",vecHist,vecHist)
+
+	matHis=matrix(c(10,15,5,30,25,3),3,2);
+	print(matHis);
+	Vec5=c(1,5);
+
+	plot(matHis,Vec5,"Grafica de Dispersion","Ejex","Ejey",Vec5,Vec5,5>2)
 }
-}
-print("-------------Fibonnacci----------");
-print(fibo(0));
-print(fibo(1));
-print(fibo(2));
-print(fibo(3));
-print(fibo(4));
-print(fibo(5));
-
-ackermann=function(m,n){
-if(m[1]==0){
-return (n[1]+1);
-}else{
-if((m[1]>0) && (n[1]==0)){
-return ackermann(m[1]-1,1);
-}else{
-no = ackermann(m[1],n[1]-1);
-nu = ackermann(m[1]-1,no[1]);
-return nu[1];
-}
-}
-}
-var = ackermann(3,6);
-print("-------------Ackeermann----------");
-print("El valor es : " + var[1]);
-
-
-factorial=function(num){
-if(num[1]==0){
-return 1;
-}else{
-return num[1]*factorial(num[1]-1);
-}
-}
-print("-------------Factorial----------");
-var[2] = factorial(5);
-print(var[2]);
-
-potencia=function(base,exponente){
-if(exponente[1]==0){
-return 1;
-}else if(exponente[1]<0){
-return potencia(base[1], exponente[1]+1) / base[1];
-}else{
-return  base[1] * potencia(base[1], exponente[1]-1);
-}
-}
-print("-------------Potencia----------");
-var[3]=potencia(2,2);
-print(var[3]);
-
-hofstaderFemale=function(n){ 
-if(n[1] < 0){
-return 0;
-}else if(n[1]==0){
-return 1;
-}else{
-return n[1] - hofstaderFemale(n[1] - 1); 
-}
-}
-
-print("-------------hofstaderFemale----------");
-var[4] = hofstaderFemale(0);
-print(hofstaderFemale(0));
-print(hofstaderFemale(1));
-print(hofstaderFemale(2));
-print(hofstaderFemale(3));
-print(hofstaderFemale(4));
-print(hofstaderFemale(5));
-
-Impar=function(num){
-if(num[1]==0){
-return 0;
-}else{
-return Par(num[1]-1);
-}
-}
-Par=function(num){
-if(num[1]==0){
-return 1;
-}else{
-return Impar(num[1]-1);
-}
-}
-print("-------------IMPAR-------------");
-print("Numero a analizar= 3");
-var[5]=Impar(3);
-if(var[5]==1){
-print("El numero 3 es Impar");
-}else{
-print("No es verdadero");
-}
-print("-------------TORRES DE HANOI-------------");
-Hanoi=function(n,origen,auxiliar,destino){
-if(n[1]==1){
-print("mover disco de " + origen[1] + " a " + destino[1]);
-}else{
-Hanoi(n[1]-1, origen[1], destino[1], auxiliar[1])
-print("mover disco de "+ origen[1] + " a " + destino[1]);
-Hanoi(n[1]-1, auxiliar[1], origen[1], destino[1])
-}
-}
-Hanoi(3,1,2,3)
-
-
-print("--------------------------------------------Utilizando Contador----------------------");
-cont=1;
-while(cont[1]<4){
-cont[1]=cont[1]+1;
-cont[cont[1]]=cont[1];
-}
-
-print(cont);
-
-
-vary = c("Juan","Caballo","Pedor");
-nuevo = c("Si","Falaa","RTOdos");
-vecto = c(nuevo,vary);
-print(vecto);
-
-Lista3 = list(1,2, 3, 4, c(5,6));
-Lista4=Lista3[5];
-print("El valor es :");
-print(Lista4);
-
-A=matrix(c(1,2,3,4,5),5,4);
-varPrueba = A[1,];
-var2 = A[,2];
-print(A);
-prueba = A[5];
-print("Modificacion de la matriz");
-A[2,2]=24;
-print(A);
-A[2,]=8;
-print("Modificacion fila");
-print(A);
-A[,3]=7;
-print("Modificacion columna");
-print(A);
-
-vec1=c(30,40,20,60);
-vec2=c("mate","ingles","Fisica","Archivos");
-pie(vec1,vec2,"Grafica1")
-
-h=c(20,80,10,60,100,30,25,5);
-names=c("cocaCola","Vestidos","Materias","Dinero","Musica","Estudiantes","Concierto","UVG");
-barplot(h,"Categorias","Cantidad","GraficaBarras",names)
-
-J=matrix(c(10,15,5,30,25,3),3,2);
-B=c(5,30,7,9,6,14);
-K=matrix(c(10,16,5,5,14,18),3,2);
-print(J);
-Vec=0;
-Vec[1]=J;
-Vec[2]=B;
-Vec[3]=K;
-plot(Vec,"0","EjeX","EjeY","Grafica Lineas")
-
-vecHist=c(10,15,5,8,7,4,11,18,27,14,12);
-hist(vecHist,"Histograma","Ejex",vecHist,vecHist)
-
-matHis=matrix(c(10,15,5,30,25,3),3,2);
-print(matHis);
-Vec5=c(1,5);
-
-plot(matHis,Vec5,"Grafica de Dispersion","Ejex","Ejey",Vec5,Vec5,5>2)
