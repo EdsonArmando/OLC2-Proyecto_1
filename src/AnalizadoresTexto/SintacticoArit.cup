@@ -67,7 +67,7 @@ action code
 {:
 
 :} 
-terminal String tId,tHist,tPlot,tPie,tBarplot,tMatrix,tList,tDo,tC,tWhile,tReturn,tFor,tIf,tElse,tModulo,tDosPuntos,tPunto,tLlaveA,tPuntoComa,tLlaveC,tCadena,tCorcheA,tCorcheC;
+terminal String tId,tPie,tBarplot,tMatrix,tList,tDo,tC,tWhile,tReturn,tFor,tIf,tElse,tModulo,tDosPuntos,tPunto,tLlaveA,tPuntoComa,tLlaveC,tCadena,tCorcheA,tCorcheC;
 terminal String UMENOS,tDoble,tFunction,tIgualIgual,tEntero,tTrue,tFalse,tParA,tParC,tCaracter,tIgual,tDifQ,tOr,tAnd,tXor,tComa,tSuma,tResta,tMult,tDiv,tPow,tMayorQ,tMenorQ; 
 terminal String tPrint;
 

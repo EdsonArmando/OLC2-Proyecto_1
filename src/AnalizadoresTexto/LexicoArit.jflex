@@ -34,8 +34,8 @@ caracter = "\'" [^\'] "\'"
 espacio = \t|\f|" "|\r|\n
 
 
-%state COMENTMULTI
-%state COMENTSIMPLE
+%state COMENT_SIMPLE
+%state COMENT_MULTI
 %state STRING
 
 %%
@@ -49,20 +49,17 @@ espacio = \t|\f|" "|\r|\n
     [^\"] { cadena += yytext(); }
 }
 
-<COMENTMULTI>{
-    "/*"         {yybegin(ESTADOACTUAL);}
-    .            {}
-    [ \t\r\n\f]  {}
-}
+<YYINITIAL> "#*"                {yybegin(COMENT_MULTI);}     // Si la entrada es un comentario inicia aqui
+<COMENT_MULTI> "*#"             {yybegin(YYINITIAL);}        // Si se acaba el comentario vuelve a YYINITIAL
+<COMENT_MULTI> .                {}
+<COMENT_MULTI> [ \t\r\n\f]      {}
 
-<COMENTSIMPLE>{ 
-    [^"\n"]      {}
-      "\n"       {yybegin(ESTADOACTUAL);}
-}
+<YYINITIAL> "#"                {yybegin(COMENT_SIMPLE);}   // Si la entrada es comentario simple inicia aqui
+<COMENT_SIMPLE> [^"\n"]         {}                          // 
+<COMENT_SIMPLE> "\n"            {yybegin(YYINITIAL);}       // aqui sale del estado
+
 
 <YYINITIAL>{ 
-    "*/"            { ESTADOACTUAL = YYINITIAL; yybegin(COMENTMULTI);} 
-    "//"            { ESTADOACTUAL = YYINITIAL; yybegin(COMENTSIMPLE);}
     "\""            { ESTADOACTUAL = YYINITIAL; yybegin(STRING);}
     "{"             {return addSymbol(new Symbol(Syma.tLlaveA,yycolumn,yyline,yytext()));}
     "}"             {return addSymbol(new Symbol(Syma.tLlaveC,yycolumn,yyline,yytext()));}
@@ -102,8 +99,7 @@ espacio = \t|\f|" "|\r|\n
     "matrix"        {return addSymbol(new Symbol(Syma.tMatrix,yycolumn,yyline,yytext()));}
     "pie"           {return addSymbol(new Symbol(Syma.tPie,yycolumn,yyline,yytext()));}
     "barplot"       {return addSymbol(new Symbol(Syma.tBarplot,yycolumn,yyline,yytext()));}
-    "plot"          {return addSymbol(new Symbol(Syma.tPlot,yycolumn,yyline,yytext()));}
-    "hist"          {return addSymbol(new Symbol(Syma.tHist,yycolumn,yyline,yytext()));}
+    
 
     {id}            {return addSymbol(new Symbol(Syma.tId,yycolumn,yyline,yytext()));}
     {caracter}      {return addSymbol(new Symbol(Syma.tCaracter,yycolumn,yyline,yytext()));}
