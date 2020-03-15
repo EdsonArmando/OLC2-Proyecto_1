@@ -1,4 +1,6 @@
 {
+	#* Funciones propias
+	del desarrollador *#
 	fibo=function(n){
 	if(n[1]>1){
 	return fibo(n[1]-1)+fibo(n[1]-2);
@@ -29,6 +31,8 @@
 	}
 	}
 	}
+
+	#Declaracion de Variable
 	var = ackermann(3,6);
 	print("-------------Ackeermann----------");
 	print("El valor es : " + var[1]);
@@ -121,17 +125,19 @@
 
 	print(cont);
 
-
+	#Creando vectores con la funcion c
 	vary = c("Juan","Caballo","Pedor");
 	nuevo = c("Si","Falaa","RTOdos");
 	vecto = c(nuevo,vary);
 	print(vecto);
 
+	#Creando Listas
 	Lista3 = list(1,2, 3, 4, c(5,6));
 	Lista4=Lista3[5];
 	print("El valor es :");
 	print(Lista4);
 
+	#Creacion de matrices
 	A=matrix(c(1,2,3,4,5),5,4);
 	varPrueba = A[1,];
 	var2 = A[,2];
@@ -147,30 +153,80 @@
 	print("Modificacion columna");
 	print(A);
 
+	#Grafica de pie
 	vec1=c(30,40,20,60);
 	vec2=c("mate","ingles","Fisica","Archivos");
 	pie(vec1,vec2,"Grafica1")
 
+	#Grafica de Barras
 	h=c(20,80,10,60,100,30,25,5);
 	names=c("cocaCola","Vestidos","Materias","Dinero","Musica","Estudiantes","Concierto","UVG");
 	barplot(h,"Categorias","Cantidad","GraficaBarras",names)
 
+	#Grafica de Lineas
 	J=matrix(c(10,15,5,30,25,3),3,2);
 	B=c(5,30,7,9,6,14);
 	K=matrix(c(10,16,5,5,14,18),3,2);
 	print(J);
-	Vec=0;
+
 	Vec[1]=J;
 	Vec[2]=B;
 	Vec[3]=K;
 	plot(Vec,"0","EjeX","EjeY","Grafica Lineas")
 
+	#Hitograma
 	vecHist=c(10,15,5,8,7,4,11,18,27,14,12);
 	hist(vecHist,"Histograma","Ejex",vecHist,vecHist)
 
+	#Grafica de Dispersion
 	matHis=matrix(c(10,15,5,30,25,3),3,2);
 	print(matHis);
 	Vec5=c(1,5);
 
 	plot(matHis,Vec5,"Grafica de Dispersion","Ejex","Ejey",Vec5,Vec5,5>2)
+
+	#Suma de Vectores
+	SumA = c(1, 2, 3, 1, 5);
+	SumB = c(2, -2, 1, 1, 8); 
+
+	# Sumando un numero a un vector
+	Print("Suma de Vectores");
+	SumA = SumA + SumB; # nuevo contenido del vector A -> 
+	print(SumA);
+
+	#Multiplicacion de vectores
+	Print("Multiplicacion de Vectores");
+	vecMult = SumA*SumB;
+	print(vecMult);
+
+	#Division de vectores
+	Print("Divion de vectores de Vectores");
+	vecDiv = SumA/SumB;
+	print(vecDiv);
+
+	#Resta de vectores
+	Print("Resta de vectores de Vectores");
+	vecRes = SumA-SumB;
+	print(vecRes);
+
+	# Operaciones de comparación entre vectores
+	# Verificando si cada elemento del vector es menor a 3
+	Print("Es menor que 3");
+	vecMenor = SumA < 3;
+	print(vecMenor);
+
+	# Verificando si cada elemento del vector es mayor a 3
+	Print("Es mayor que 8");
+	vecMayor = SumA > 8;
+	print(vecMayor);
+
+	#Operaciones logicas entre vectores
+	print("true && true");
+	VecTrue = vecMenor && vecMayor;
+	print(VecTrue);
 }
+
+
+
+
+

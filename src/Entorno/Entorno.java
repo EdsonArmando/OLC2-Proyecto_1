@@ -25,8 +25,7 @@ public class Entorno {
     }
     public void insertar(String nombre, Simbolo valor){   
         if (this.tabla.containsKey(nombre)) {
-            System.out.println("La variable ya existe");
-            tabla.put(nombre, valor);
+            modificarVariable(nombre,valor);
             return;
         }
         this.tabla.put(nombre, valor);
@@ -75,15 +74,15 @@ public class Entorno {
         archivo.write("<H1>Tabla de Simbolos</H1>");
         archivo.write("<br><br>");
         archivo.write("<table>");
-        archivo.write("<tr><th>No</th><th>Nombre</th><th>Tipo</th><th>Valor</th><th>Tamaño</th></tr>");
+        archivo.write("<tr><th>No</th><th>Nombre</th><th>Tipo</th><th>Ambito</th><th>Tamaño</th></tr>");
         for (String key : tabla.keySet()) {
             Simbolo sim = tabla.get(key);
-            archivo.write("<tr><td>" + cont + "</td><td>" + key + "</td><td>" + sim.tipo.toString() + "</td><td>" + sim.valor.toString() + "</td><td>" + String.valueOf(sim.valor.hashCode()) + "</td></tr>" );    
+            archivo.write("<tr><td>" + cont + "</td><td>" + key + "</td><td>" + sim.tipo.toString() + "</td><td>" + "Global" + "</td><td>" + String.valueOf(sim.valor.hashCode()) + "</td></tr>" );    
             cont++;
         }
         for(String key : funciones.keySet()){
             Funcion func = funciones.get(key);
-            archivo.write("<tr><td>" + cont + "</td><td>" + key + "</td><td>" + func.tipo.toString() + "</td><td>" + func.tipo.toString() + "</td><td>" + func.tipo.toString() + "</td></tr>" );    
+            archivo.write("<tr><td>" + cont + "</td><td>" + key + "</td><td>" + func.tipo.toString() + "</td><td>" + "Global" + "</td><td>" + func.tipo.toString() + "</td></tr>" );    
             cont++;
         }
         archivo.write("</table>");

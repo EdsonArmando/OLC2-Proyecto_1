@@ -34,16 +34,16 @@ public class Singleton {
         /*Meter todos mis metodos propios del lenguaje*/
     }
     public void funcionesSistema(){
-        funciones.put("toLower",new To_Lower("tolower",Simbolo.EnumTipoDato.STRING));
-        funciones.put("toUpper",new To_Upper("toUpper",Simbolo.EnumTipoDato.STRING));
-        funciones.put("c",new Function_C("c",Simbolo.EnumTipoDato.STRING));
-        funciones.put("list",new Function_List("list",Simbolo.EnumTipoDato.STRING));
-        funciones.put("matrix",new Function_Matrix("matrix",Simbolo.EnumTipoDato.STRING));
-        funciones.put("pie",new Grafica_Pie("pie",Simbolo.EnumTipoDato.STRING));
-        funciones.put("barplot",new Grafica_Barras("barras",Simbolo.EnumTipoDato.STRING));
-        funciones.put("plot",new Grafica_Linea("plot",Simbolo.EnumTipoDato.STRING));
-        funciones.put("hist",new Grafica_Histograma("hist",Simbolo.EnumTipoDato.STRING));
-        funciones.put("plot1",new Grafica_Dispersion("plot",Simbolo.EnumTipoDato.STRING));
+        funciones.put("toLower",new To_Lower("tolower",Simbolo.EnumTipoDato.FUNCION));
+        funciones.put("toUpper",new To_Upper("toUpper",Simbolo.EnumTipoDato.FUNCION));
+        funciones.put("c",new Function_C("c",Simbolo.EnumTipoDato.FUNCION));
+        funciones.put("list",new Function_List("list",Simbolo.EnumTipoDato.FUNCION));
+        funciones.put("matrix",new Function_Matrix("matrix",Simbolo.EnumTipoDato.FUNCION));
+        funciones.put("pie",new Grafica_Pie("pie",Simbolo.EnumTipoDato.FUNCION));
+        funciones.put("barplot",new Grafica_Barras("barras",Simbolo.EnumTipoDato.FUNCION));
+        funciones.put("plot",new Grafica_Linea("plot",Simbolo.EnumTipoDato.FUNCION));
+        funciones.put("hist",new Grafica_Histograma("hist",Simbolo.EnumTipoDato.FUNCION));
+        funciones.put("plot1",new Grafica_Dispersion("plot",Simbolo.EnumTipoDato.FUNCION));
     }
     public static Singleton getInstance(){
         if(singleton== null){

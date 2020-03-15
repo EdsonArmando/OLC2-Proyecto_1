@@ -57,7 +57,7 @@ public class Declaracion implements Instruccion {
                 listVar.setElementAt(exprValor,0);
             }
         }else{
-                if(existe){
+                if(existe && tamanio!=0){
                 Simbolo sim = ent.obtener(id,ent);
                 Vector temp=(Vector)sim.valor;  
                 if(tamanio<=temp.size()){
@@ -79,6 +79,12 @@ public class Declaracion implements Instruccion {
                         ent.modificarVariable(id, new Simbolo(Simbolo.EnumTipoDato.LIST,listVar,id));
                     }   
                 return new Retornar();
+            }else if(existe){
+                ent.modificarVariable(id, new Simbolo(Simbolo.EnumTipoDato.VECTOR,exprValor.valor,id));
+                return new Retornar();
+            }
+            else{
+                    listVar.setElementAt(exprValor, tamanio-1);
             }
         }
         ent.insertar(id, new Simbolo(Simbolo.EnumTipoDato.VECTOR,listVar,id));
