@@ -224,7 +224,21 @@
 	print("true && true");
 	VecTrue = vecMenor && vecMayor;
 	print(VecTrue);
+
+	#Operaciones entre matrices
+	unoMatri = matrix(c(1,2,3,4,5,6),3,3);
+	dosMatri = 2/unoMatri;
+	print(unoMatri);
+	print("------------------------");
+	print(dosMatri);
+
+	mat  = matrix(c(16,20,24,28,32),3,3);
+	mat2 = matrix(c(8,10,12,14,16),3,3);
+	nuevaMatri = mat / mat2;
+	print(nuevaMatri);
 }
+
+
 
 
 
