@@ -33,6 +33,7 @@ public class Operacion extends Expresion{
         MENOR_IGUAL_QUE,
         IDENTIFICADOR_POS_ARRAY,
         IDENTIFICADOR_POS_ARRAY_MATRIX,
+        ARRAY_3,
         DEV_FILA,
         DEV_COLUMNA,
         DIFERENTE_QUE,
@@ -324,6 +325,9 @@ public class Operacion extends Expresion{
                 return new Literal(Simbolo.EnumTipoDato.LIST,lista);
             }else if(sim.tipo==Simbolo.EnumTipoDato.MATRIX){
                 return new Literal(Simbolo.EnumTipoDato.MATRIX,sim.valor);
+            }else if(sim.tipo==Simbolo.EnumTipoDato.ARREGLO){
+
+                return new Literal(Simbolo.EnumTipoDato.ARREGLO,sim.valor);
             }
             return null;
              /* ======== Dev POSICION ARRAY,MATRIZ,LISTA ======== */

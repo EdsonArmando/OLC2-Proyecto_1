@@ -30,7 +30,7 @@ doble = {digito}+"." {digito}+
 numero = {digito}+("." {digito}+)?
 letra = [a-zA-ZñÑ]
 id = {letra}+({letra}|{digito}|("_"|"."))*   
-caracter = "\'" [^\'] "\'"
+caracter = "\'" [^\'] "\'" 
 espacio = \t|\f|" "|\r|\n
 
 
@@ -99,8 +99,7 @@ espacio = \t|\f|" "|\r|\n
     "matrix"        {return addSymbol(new Symbol(Syma.tMatrix,yycolumn,yyline,yytext()));}
     "pie"           {return addSymbol(new Symbol(Syma.tPie,yycolumn,yyline,yytext()));}
     "barplot"       {return addSymbol(new Symbol(Syma.tBarplot,yycolumn,yyline,yytext()));}
-    
-
+  
     {id}            {return addSymbol(new Symbol(Syma.tId,yycolumn,yyline,yytext()));}
     {caracter}      {return addSymbol(new Symbol(Syma.tCaracter,yycolumn,yyline,yytext()));}
     {entero}        {return addSymbol(new Symbol(Syma.tEntero,yycolumn,yyline,yytext()));}

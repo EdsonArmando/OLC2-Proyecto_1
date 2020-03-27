@@ -236,7 +236,61 @@
 	mat2 = matrix(c(8,10,12,14,16),3,3);
 	nuevaMatri = mat / mat2;
 	print(nuevaMatri);
+
+	#Declarando un arreglo de 3 Dimensiones
+	arra = array(c(1,2,3,4,5,6,7),c(3,2,2));
+
+	#Funciones propias del Lenguaje
+	#Funcion typeOf devuelve de que tipo de dato es la variable
+	print("------Funcion typeOf------");
+	print(typeOf(arra));
+
+	#Funcion length devuelve el tamaño de una estructura
+	print("------Funcion length------");
+	print(length(arra));
+
+	#Funcion nCol devuelve la cantidad de columnas de cierta matriz.
+	print("------Funcion nCol------");
+	print(nCol(mat));
+
+	#Funcion NRow devuelve  la cantidad de ------filas de cierta matriz.
+	print("------Funcion NRow------");
+	print(NRow(mat));
+
+	#Funcion String Length Recibe como parámetro una cadena y devuelve un entero con la longitud de la cadena
+	cad = "HolaMundo";
+	print("------Funcion String Length------");
+	print(StringLength(cad[1]));
+
+	#Funcion Remove devuelve  la cantidad de filas de cierta matriz.
+	print("------Funcion Remove------");
+	print(remove(cad[1],"Hola"));
+
+	#Funcion ToLowerCase devuelve  una cadena en minusculas.
+	cadena2="HOLAMUNDO";
+	print("------Funcion ToLowerCase------");
+	print(ToLowerCase(cadena2[1]));
+
+	#Funcion ToUpperCase devuelve  una cadena en Mayuusculas.
+	cadnea3 = "edson";
+	print("------Funcion ToUpperCase------");
+	print(ToUpperCase(cadnea3[1]));
+
 }
+
+#*
+	Para Dos Dimensiones [x][y]
+	posicion_total= ((x)+(tamanoy)*(y-1)-1);
+
+	Para Tres Dimensiones [x][y][z]
+	posicion_total= ((x)+(tamanoy)*(y-1))+(tamanox)*(tamanoy)*(z - 1);
+
+	Para Cuatro Dimensiones [x][y][z][w]
+	posicion_total= ((x)+(tamanoy)*(y-1))+(tamanox)*(tamanoy)*(z - 1)+(tamanox)*(tamanoy)*(tamanoz)*(w - 1);
+
+	Para Cinco Dimensiones [x][y][z][w][t]
+	postot= ((x)+(tamanoy)*(y-1))+(tamanox)*(tamanoy)*(z - 1)+(tamanox)*(tamanoy)*(tamanoz)*(w - 1)+(tamanox)*(tamanoy)*(tamanoz)*(tamanow)*(t - 1);
+*#
 
 
 

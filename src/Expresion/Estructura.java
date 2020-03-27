@@ -18,10 +18,18 @@ public class Estructura extends Expresion{
     Expresion fila;
     Expresion columna;
     Operacion.Tipo_operacion tipo;
+    Expresion w;
     public Estructura(String id,Expresion fila,Expresion columna,Operacion.Tipo_operacion tipo){
         this.id = id;
         this.fila = fila;
         this.columna = columna;
+        this.tipo = tipo;
+    }
+    public Estructura(String id,Expresion fila,Expresion columna,Expresion w,Operacion.Tipo_operacion tipo){
+        this.id = id;
+        this.fila = fila;
+        this.columna = columna;
+        this.w = w;
         this.tipo = tipo;
     }
     public Estructura(String id,Expresion fila,Operacion.Tipo_operacion tipo){
@@ -55,6 +63,10 @@ public class Estructura extends Expresion{
                 vect.add(tempMatrix[i][col.intValue()-1]);
             }
             return new Literal(Simbolo.EnumTipoDato.VECTOR,vect);
+        }else if(tipo == Operacion.Tipo_operacion.ARRAY_3){
+            Object[] vec = (Object[])sim.valor;
+            Double posicion_total= (((Double)fila.obtenerValor(ent).valor)+(sim.tamanioY)*((Double)columna.obtenerValor(ent).valor-1))+(sim.tamanioX)*(sim.tamanioY)*((Double)w.obtenerValor(ent).valor - 1);
+            return (Expresion)vec[posicion_total.intValue()];
         }
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

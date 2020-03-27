@@ -201,6 +201,7 @@ public class Inicio extends javax.swing.JFrame {
         raiz.Graficar(raiz);
          try {
              raiz.generarArchivo();
+             System.out.println("Grafica completa");
          } catch (IOException ex) {
              Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
          }

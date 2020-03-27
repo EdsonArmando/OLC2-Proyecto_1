@@ -1,13 +1,13 @@
 digraph lista{ rankdir=TB;node[shape = box, style = filled, color = white]; 
-nodo664918021[label= "LISTA "fillcolor="LightBlue", style ="filled", shape="box"]; 
-nodo951962213[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
-nodo664918021 -> nodo951962213
-nodo637138263[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
-nodo2025014807[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
-nodo951962213 -> nodo637138263
-nodo951962213 -> nodo2025014807
-nodo1375455476[label= "IMPRIMIR "fillcolor="LightBlue", style ="filled", shape="box"]; 
-nodo637138263 -> nodo1375455476
-nodo121888332[label= "IMPRIMIR "fillcolor="LightBlue", style ="filled", shape="box"]; 
-nodo2025014807 -> nodo121888332
+nodo349886071[label= "LISTA "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo424851712[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo349886071 -> nodo424851712
+nodo217595701[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo155880423[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo424851712 -> nodo217595701
+nodo424851712 -> nodo155880423
+nodo1264688599[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo217595701 -> nodo1264688599
+nodo1199023874[label= "IMPRIMIR "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo155880423 -> nodo1199023874
 }

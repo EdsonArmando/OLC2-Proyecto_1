@@ -51,7 +51,7 @@ public class FuncionPropia extends Funcion implements Instruccion {
     @Override
     public Retornar ejecutar(Entorno ent) {
         Funcion fun=this;
-        Singleton.getInstance().putFuncion(fun, id);
+        Singleton.getInstance().putFuncion(fun, id.toLowerCase());
         return new Retornar();
     }
 }

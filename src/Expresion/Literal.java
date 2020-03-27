@@ -14,9 +14,17 @@ import Entorno.Simbolo.EnumTipoDato;
  * @author EG
  */
 public class Literal extends Expresion{
+    public int tamanioX,tamanioY,tamanioW;
     public Literal(EnumTipoDato tipo, Object valor) {
         this.tipo = tipo;
         this.valor = valor;
+    }
+    public Literal(EnumTipoDato tipo, Object valor,Double tamx, Double tamy,Double tamw) {
+        this.tipo = tipo;
+        this.valor = valor;
+        this.tamanioX=tamx.intValue();
+        this.tamanioY = tamy.intValue();
+        this.tamanioW = tamw.intValue();
     }
     @Override
     public Expresion obtenerValor(Entorno ent) {

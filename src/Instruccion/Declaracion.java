@@ -8,6 +8,8 @@ package Instruccion;
 import Entorno.Entorno;
 import Entorno.Simbolo;
 import Expresion.Expresion;
+import Expresion.Literal;
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.sym.Literal;
 import java.util.Vector;
 
 /**
@@ -52,6 +54,10 @@ public class Declaracion implements Instruccion {
                 return new Retornar();
             }else if(exprValor.tipo==Simbolo.EnumTipoDato.MATRIX){
                 ent.insertar(id, new Simbolo(exprValor.tipo,exprValor.valor,id));
+                return new Retornar();
+            }else if(exprValor.tipo==Simbolo.EnumTipoDato.ARREGLO){
+                Literal arr = (Literal)exprValor;
+                ent.insertar(id, new Simbolo(exprValor.tipo,exprValor.valor,id,arr.tamanioX,arr.tamanioY,arr.tamanioW));
                 return new Retornar();
             }else{
                 listVar.setElementAt(exprValor,0);
