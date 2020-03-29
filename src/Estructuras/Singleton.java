@@ -21,9 +21,11 @@ import Instruccion.Length;
 import Instruccion.Ncol;
 import Instruccion.Nrow;
 import Instruccion.Remove;
+import Instruccion.Round;
 import Instruccion.StringLenght;
 import Instruccion.To_Lower;
 import Instruccion.To_Upper;
+import Instruccion.Trunk;
 import Instruccion.TypeOf;
 import Views.Inicio;
 import java.util.HashMap;
@@ -58,6 +60,8 @@ public class Singleton {
         funciones.put("nrow", new Nrow("nrow",Simbolo.EnumTipoDato.FUNCION));
         funciones.put("stringlength", new StringLenght("stringlength",Simbolo.EnumTipoDato.FUNCION));
         funciones.put("remove", new Remove("remove",Simbolo.EnumTipoDato.FUNCION));
+        funciones.put("trunk", new Trunk("trunk",Simbolo.EnumTipoDato.FUNCION));
+        funciones.put("round", new Round("round",Simbolo.EnumTipoDato.FUNCION));
     }
     public static Singleton getInstance(){
         if(singleton== null){

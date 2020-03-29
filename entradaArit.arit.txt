@@ -271,10 +271,20 @@
 	print("------Funcion ToLowerCase------");
 	print(ToLowerCase(cadena2[1]));
 
-	#Funcion ToUpperCase devuelve  una cadena en Mayuusculas.
+	#Funcion ToUpperCase devuelve  una cadena en Mayusculas.
 	cadnea3 = "edson";
 	print("------Funcion ToUpperCase------");
 	print(ToUpperCase(cadnea3[1]));
+
+	#Funciones trunk  y round
+	val2 = 5.8;
+	print("------Funcion Trunk------");
+	print(trunk(val2[1]));
+	print("------Funcion Round------");
+	print(round(val2[1]));
+	print("------Funcion Suma------");
+	sun = round(val2[1])+5;
+	print(sun[1]);
 
 }
 
