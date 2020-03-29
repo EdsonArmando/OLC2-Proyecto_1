@@ -325,6 +325,13 @@
 	print("La moda es:  " + mode(vec11));
 	print("La mediana es: " + median(vec11));
 
+	A = c(1, 2, 3, 4, 5);
+	B = c(5, -2, 1, 2, 8);
+	x = A < B;
+	D = c(true, false, false, false, false);
+	B = A | true; 
+	print(B && D);
+
 }
 
 #*

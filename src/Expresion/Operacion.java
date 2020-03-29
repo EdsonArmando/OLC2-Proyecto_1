@@ -472,14 +472,23 @@ public class Operacion extends Expresion{
                     return (Expresion)vector.get(uno.intValue()-1);
                 }
             }else if(sim.tipo == Simbolo.EnumTipoDato.LIST){
-                LinkedList lista = (LinkedList)sim.valor;
-                LinkedList temp = new LinkedList();
+                LinkedList<Expresion> lista = (LinkedList)sim.valor;
+                LinkedList<Expresion> temp = new LinkedList();
                 Double uno = (Double)posVariable.obtenerValor(ent).valor;
-                
                 if(lista.size()==1){
                     return (Expresion)lista.get(0);
                 }else{
-                    return (Expresion)lista.get(uno.intValue()-1);
+                    Vector<Expresion> one = new Vector();
+                    Expresion tem = (Expresion)lista.get(uno.intValue()-1);
+                    if(tem.tipo == Simbolo.EnumTipoDato.VECTOR){
+                        Vector<Expresion> nuevos = (Vector<Expresion>)tem.obtenerValor(ent).valor;
+                        one.addAll(nuevos);
+                    }else{
+                        one.setSize(1);
+                        one.set(0, lista.get(uno.intValue()).obtenerValor(ent));
+                    }
+                    temp.add(new Literal(Simbolo.EnumTipoDato.VECTOR,one));
+                    return new Literal(Simbolo.EnumTipoDato.LIST,temp);
                 }
             }else if(sim.tipo == Simbolo.EnumTipoDato.MATRIX){
                 Object[][] matrix = (Object[][])sim.valor;

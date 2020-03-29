@@ -37,13 +37,21 @@ public class Imprimir implements Instruccion  {
                 }
                  Inicio.salidaConsola.append("\n");
             }else if(resultado.tipo == Simbolo.EnumTipoDato.LIST){
-                LinkedList temp = (LinkedList)resultado.valor;
-                for(Object expr: temp){
+                LinkedList<Expresion> temp = (LinkedList<Expresion>)resultado.valor;
+                for(Expresion expr: temp){
                     if(expr==null){
                         Inicio.salidaConsola.append(" null ,");
                     }else{
-                        Expresion exp = (Expresion) expr;
-                        Inicio.salidaConsola.append(exp.valor.toString()+" , ");
+                        
+                        if(expr.tipo == Simbolo.EnumTipoDato.VECTOR){
+                            Vector<Expresion> uno = (Vector<Expresion>) expr.obtenerValor(ent).valor;
+                            for(Expresion exps : uno){
+                                Inicio.salidaConsola.append(exps.obtenerValor(ent).valor.toString()+" , ");
+                            }   
+                        }else{
+                            Expresion exp = (Expresion) expr;
+                            Inicio.salidaConsola.append(exp.valor.toString()+" , ");
+                        }
                     }
                 }
             }else if(resultado.tipo==Simbolo.EnumTipoDato.MATRIX){
