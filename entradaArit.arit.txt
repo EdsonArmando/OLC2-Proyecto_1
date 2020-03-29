@@ -318,7 +318,13 @@
 	MAT2 = matrix(c(20,10,8),3,3);
 	VECTO = c(2,30,1);
 	print(MAT>MAT2);
-	
+
+	#Funcion para calcular la Media
+	vec11 =  c(12,13,15,16,24,15,17,19,17,15);
+	print("La media es: " + mean(vec11));
+	print("La moda es:  " + mode(vec11));
+	print("La mediana es: " + median(vec11));
+
 }
 
 #*
@@ -334,12 +340,3 @@
 	Para Cinco Dimensiones [x][y][z][w][t]
 	postot= ((x)+(tamanoy)*(y-1))+(tamanox)*(tamanoy)*(z - 1)+(tamanox)*(tamanoy)*(tamanoz)*(w - 1)+(tamanox)*(tamanoy)*(tamanoz)*(tamanow)*(t - 1);
 *#
-
-
-
-
-
-
-
-
-	

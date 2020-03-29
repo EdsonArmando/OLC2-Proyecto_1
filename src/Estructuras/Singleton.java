@@ -18,6 +18,9 @@ import Instruccion.Grafica_Linea;
 import Instruccion.Grafica_Pie;
 import Instruccion.Instruccion;
 import Instruccion.Length;
+import Instruccion.Mean;
+import Instruccion.Median;
+import Instruccion.Mode;
 import Instruccion.Ncol;
 import Instruccion.Nrow;
 import Instruccion.Remove;
@@ -62,6 +65,9 @@ public class Singleton {
         funciones.put("remove", new Remove("remove",Simbolo.EnumTipoDato.FUNCION));
         funciones.put("trunk", new Trunk("trunk",Simbolo.EnumTipoDato.FUNCION));
         funciones.put("round", new Round("round",Simbolo.EnumTipoDato.FUNCION));
+        funciones.put("mean", new Mean("mean",Simbolo.EnumTipoDato.FUNCION));
+        funciones.put("median", new Median("median",Simbolo.EnumTipoDato.FUNCION));
+        funciones.put("mode", new Mode("mode",Simbolo.EnumTipoDato.FUNCION));
     }
     public static Singleton getInstance(){
         if(singleton== null){
