@@ -99,33 +99,42 @@ public class Operacion extends Expresion{
         if(tipo== Tipo_operacion.DIVISION){
             Literal exprUno = (Literal)operadorIzq.obtenerValor(ent);
             Literal exprDos = (Literal)operadorDer.obtenerValor(ent);
-            if((exprUno.tipo==EnumTipoDato.VECTOR | exprUno.tipo == EnumTipoDato.MATRIX) && exprDos.tipo==EnumTipoDato.INT){
+            if(exprUno.tipo==EnumTipoDato.VECTOR && exprDos.tipo==EnumTipoDato.INT){
             int cont=0;
             Vector<Expresion> temp = null;
-            Object[][] matriz = null;
-            if(exprUno.tipo==EnumTipoDato.VECTOR){
-                temp = (Vector)exprUno.valor;
-                nuevo = new Vector();
-                nuevo.setSize(temp.size());
-            }else{
-                matriz = (Object[][])exprUno.valor;
-            }
+            temp = (Vector)exprUno.valor;
+            nuevo = new Vector();
+            nuevo.setSize(temp.size());
             if(temp!=null){
                 for(Expresion exp:temp){
                 nuevo.setElementAt(new Literal(Simbolo.EnumTipoDato.INT,(Double)exp.valor/(Double)exprDos.valor), cont);
                 cont++;
                 }
                 return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
-            }else{
-                Object[][] matri = new Object[matriz.length][matriz[0].length];
-                for(int i=0;i<matriz.length;i++){
-                    for(int j=0;j<matriz[i].length;j++){
-                        Expresion val = (Expresion)matriz[i][j];
-                        matri[i][j]=new Literal(Simbolo.EnumTipoDato.INT,(Double)val.valor/(Double)exprDos.valor);
-                    }
-                }
-                return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
             }
+            
+            }else if((exprUno.tipo == EnumTipoDato.MATRIX) &&(exprDos.tipo==EnumTipoDato.VECTOR | exprDos.tipo==EnumTipoDato.INT)){
+                Object[][] matriz = (Object[][])exprUno.valor;
+                Object[][] matri = new Object[matriz.length][matriz[0].length];
+                if(exprDos.tipo != Simbolo.EnumTipoDato.VECTOR){
+                        for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.INT,(Double)val.valor/(Double)exprDos.valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
+                }else{
+                    Vector<Expresion> vec2 = (Vector<Expresion>)exprDos.valor;
+                    for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.INT,(Double)val.valor/(Double)vec2.get(i).obtenerValor(ent).valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
+                }
+                
             
             }else if(exprUno.tipo==EnumTipoDato.INT && (exprDos.tipo==EnumTipoDato.VECTOR | exprDos.tipo==EnumTipoDato.MATRIX)){
                 int cont=0;
@@ -187,16 +196,42 @@ public class Operacion extends Expresion{
             Literal exprUno = (Literal)operadorIzq.obtenerValor(ent);
             Literal exprDos = (Literal)operadorDer.obtenerValor(ent);
             if(exprUno.tipo==EnumTipoDato.VECTOR && exprDos.tipo==EnumTipoDato.INT){
-            int cont=0;    
-            Vector<Expresion> temp = (Vector)exprUno.valor;
+            int cont=0;
+            Vector<Expresion> temp = null;
+            temp = (Vector)exprUno.valor;
             nuevo = new Vector();
             nuevo.setSize(temp.size());
-            for(Expresion exp:temp){
-                
+            if(temp!=null){
+                for(Expresion exp:temp){
                 nuevo.setElementAt(new Literal(Simbolo.EnumTipoDato.INT,(Double)exp.valor*(Double)exprDos.valor), cont);
                 cont++;
+                }
+                return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
             }
-            return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
+            
+            }else if((exprUno.tipo == EnumTipoDato.MATRIX) &&(exprDos.tipo==EnumTipoDato.VECTOR | exprDos.tipo==EnumTipoDato.INT)){
+                Object[][] matriz = (Object[][])exprUno.valor;
+                Object[][] matri = new Object[matriz.length][matriz[0].length];
+                if(exprDos.tipo != Simbolo.EnumTipoDato.VECTOR){
+                        for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.INT,(Double)val.valor*(Double)exprDos.valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
+                }else{
+                    Vector<Expresion> vec2 = (Vector<Expresion>)exprDos.valor;
+                    for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.INT,(Double)val.valor*(Double)vec2.get(i).obtenerValor(ent).valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
+                }
+                
+            
             }else if(exprUno.tipo==EnumTipoDato.INT && exprDos.tipo==EnumTipoDato.VECTOR){
                 int cont=0;
                 Vector<Expresion> temp = (Vector)exprDos.valor;
@@ -207,17 +242,30 @@ public class Operacion extends Expresion{
                     cont++;
                 }
                 return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
-            }else if(exprUno.tipo==EnumTipoDato.VECTOR && exprDos.tipo==EnumTipoDato.VECTOR){
-                int cont=0;
-                Vector<Expresion> temp1 = (Vector)exprUno.valor;
-                Vector<Expresion> temp2 = (Vector)exprDos.valor;
-                Vector<Expresion> nuevo2 = new Vector();
-                nuevo2.setSize(temp1.size());
-                for(int i=0;i<temp2.size();i++){
-                    nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.INT,(Double)temp1.get(i).obtenerValor(ent).valor * (Double)temp2.get(i).obtenerValor(ent).valor), i);
+            }else if((exprUno.tipo==EnumTipoDato.VECTOR |exprUno.tipo==EnumTipoDato.MATRIX )&& (exprDos.tipo==EnumTipoDato.VECTOR| exprDos.tipo==EnumTipoDato.MATRIX)){
+                if(exprUno.tipo == Simbolo.EnumTipoDato.VECTOR){
+                    int cont=0;
+                    Vector<Expresion> temp1 = (Vector)exprUno.valor;
+                    Vector<Expresion> temp2 = (Vector)exprDos.valor;
+                    Vector<Expresion> nuevo2 = new Vector();
+                    nuevo2.setSize(temp1.size());
+                    for(int i=0;i<temp2.size();i++){
+                        nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.INT,(Double)temp1.get(i).obtenerValor(ent).valor * (Double)temp2.get(i).obtenerValor(ent).valor), i);
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
+                }else{
+                    Object[][] mat1 = (Object[][])exprUno.valor;
+                    Object[][] mat2 = (Object[][])exprDos.valor;
+                    Object[][] matNue = new Object[mat1.length][mat1[0].length];
+                    for(int i=0;i<mat2.length;i++){
+                        for(int j=0;j<mat2[i].length;j++){
+                            Expresion uno = (Expresion)mat1[i][j];
+                            Expresion dos = (Expresion)mat2[i][j];
+                            matNue[i][j]=new Literal(Simbolo.EnumTipoDato.INT,(Double)uno.valor*(Double)dos.valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matNue);
                 }
-                
-                return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
             }
             return new Literal(Simbolo.EnumTipoDato.INT,(Double)exprUno.valor * (Double)exprDos.valor);
         }else if(tipo== Tipo_operacion.MODULO){
@@ -228,16 +276,42 @@ public class Operacion extends Expresion{
             Literal exprUno = (Literal)operadorIzq.obtenerValor(ent);
             Literal exprDos = (Literal)operadorDer.obtenerValor(ent);
             if(exprUno.tipo==EnumTipoDato.VECTOR && exprDos.tipo==EnumTipoDato.INT){
-            int cont=0;    
-            Vector<Expresion> temp = (Vector)exprUno.valor;
+            int cont=0;
+            Vector<Expresion> temp = null;
+            temp = (Vector)exprUno.valor;
             nuevo = new Vector();
             nuevo.setSize(temp.size());
-            for(Expresion exp:temp){
-                exp = new Literal(Simbolo.EnumTipoDato.INT,(Double)exp.valor-(Double)exprDos.valor);
-                nuevo.setElementAt(exp, cont);
+            if(temp!=null){
+                for(Expresion exp:temp){
+                nuevo.setElementAt(new Literal(Simbolo.EnumTipoDato.INT,(Double)exp.valor-(Double)exprDos.valor), cont);
                 cont++;
+                }
+                return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
             }
-            return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
+            
+            }else if((exprUno.tipo == EnumTipoDato.MATRIX) &&(exprDos.tipo==EnumTipoDato.VECTOR | exprDos.tipo==EnumTipoDato.INT)){
+                Object[][] matriz = (Object[][])exprUno.valor;
+                Object[][] matri = new Object[matriz.length][matriz[0].length];
+                if(exprDos.tipo != Simbolo.EnumTipoDato.VECTOR){
+                        for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.INT,(Double)val.valor-(Double)exprDos.valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
+                }else{
+                    Vector<Expresion> vec2 = (Vector<Expresion>)exprDos.valor;
+                    for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.INT,(Double)val.valor-(Double)vec2.get(i).obtenerValor(ent).valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
+                }
+                
+            
             }else if(exprUno.tipo==EnumTipoDato.INT && exprDos.tipo==EnumTipoDato.VECTOR){
                 int cont=0;
                 Vector<Expresion> temp = (Vector)exprDos.valor;
@@ -249,33 +323,72 @@ public class Operacion extends Expresion{
                     cont++;
                 }
                 return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
-            }else if(exprUno.tipo==EnumTipoDato.VECTOR && exprDos.tipo==EnumTipoDato.VECTOR){
-                int cont=0;
-                Vector<Expresion> temp1 = (Vector)exprUno.valor;
-                Vector<Expresion> temp2 = (Vector)exprDos.valor;
-                Vector<Expresion> nuevo2 = new Vector();
-                nuevo2.setSize(temp1.size());
-                for(int i=0;i<temp2.size();i++){
-                    nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.INT,(Double)temp1.get(i).obtenerValor(ent).valor - (Double)temp2.get(i).obtenerValor(ent).valor), i);
+            }else if((exprUno.tipo==EnumTipoDato.VECTOR |exprUno.tipo==EnumTipoDato.MATRIX )&& (exprDos.tipo==EnumTipoDato.VECTOR| exprDos.tipo==EnumTipoDato.MATRIX)){
+                if(exprUno.tipo == Simbolo.EnumTipoDato.VECTOR){
+                    int cont=0;
+                    Vector<Expresion> temp1 = (Vector)exprUno.valor;
+                    Vector<Expresion> temp2 = (Vector)exprDos.valor;
+                    Vector<Expresion> nuevo2 = new Vector();
+                    nuevo2.setSize(temp1.size());
+                    for(int i=0;i<temp2.size();i++){
+                        nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.INT,(Double)temp1.get(i).obtenerValor(ent).valor - (Double)temp2.get(i).obtenerValor(ent).valor), i);
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
+                }else{
+                    Object[][] mat1 = (Object[][])exprUno.valor;
+                    Object[][] mat2 = (Object[][])exprDos.valor;
+                    Object[][] matNue = new Object[mat1.length][mat1[0].length];
+                    for(int i=0;i<mat2.length;i++){
+                        for(int j=0;j<mat2[i].length;j++){
+                            Expresion uno = (Expresion)mat1[i][j];
+                            Expresion dos = (Expresion)mat2[i][j];
+                            matNue[i][j]=new Literal(Simbolo.EnumTipoDato.INT,(Double)uno.valor-(Double)dos.valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matNue);
                 }
-                
-                return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
             }
             return new Literal(Simbolo.EnumTipoDato.INT,(Double)exprUno.valor - (Double)exprDos.valor);
         }else if(tipo== Tipo_operacion.SUMA){
             Literal exprUno = (Literal)operadorIzq.obtenerValor(ent);
             Literal exprDos = (Literal)operadorDer.obtenerValor(ent);
             if(exprUno.tipo==EnumTipoDato.VECTOR && exprDos.tipo==EnumTipoDato.INT){
-            int cont=0;    
-            Vector<Expresion> temp = (Vector)exprUno.valor;
+            int cont=0;
+            Vector<Expresion> temp = null;
+            temp = (Vector)exprUno.valor;
             nuevo = new Vector();
             nuevo.setSize(temp.size());
-            for(Expresion exp:temp){
-                exp = new Literal(Simbolo.EnumTipoDato.INT,(Double)exp.valor+(Double)exprDos.valor);
-                nuevo.setElementAt(exp, cont);
+            if(temp!=null){
+                for(Expresion exp:temp){
+                nuevo.setElementAt(new Literal(Simbolo.EnumTipoDato.INT,(Double)exp.valor+(Double)exprDos.valor), cont);
                 cont++;
+                }
+                return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
             }
-            return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
+            
+            }else if((exprUno.tipo == EnumTipoDato.MATRIX) &&(exprDos.tipo==EnumTipoDato.VECTOR | exprDos.tipo==EnumTipoDato.INT)){
+                Object[][] matriz = (Object[][])exprUno.valor;
+                Object[][] matri = new Object[matriz.length][matriz[0].length];
+                if(exprDos.tipo != Simbolo.EnumTipoDato.VECTOR){
+                        for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.INT,(Double)val.valor+(Double)exprDos.valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
+                }else{
+                    Vector<Expresion> vec2 = (Vector<Expresion>)exprDos.valor;
+                    for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.INT,(Double)val.valor+(Double)vec2.get(i).obtenerValor(ent).valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
+                }
+                
+            
             }else if(exprUno.tipo==EnumTipoDato.INT && exprDos.tipo==EnumTipoDato.VECTOR){
                 int cont=0;
                 Vector<Expresion> temp = (Vector)exprDos.valor;
@@ -287,17 +400,30 @@ public class Operacion extends Expresion{
                     cont++;
                 }
                 return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
-            }else if(exprUno.tipo==EnumTipoDato.VECTOR && exprDos.tipo==EnumTipoDato.VECTOR){
-                int cont=0;
-                Vector<Expresion> temp1 = (Vector)exprUno.valor;
-                Vector<Expresion> temp2 = (Vector)exprDos.valor;
-                Vector<Expresion> nuevo2 = new Vector();
-                nuevo2.setSize(temp1.size());
-                for(int i=0;i<temp2.size();i++){
-                    nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.INT,(Double)temp1.get(i).obtenerValor(ent).valor + (Double)temp2.get(i).obtenerValor(ent).valor), i);
+            }else if((exprUno.tipo==EnumTipoDato.VECTOR |exprUno.tipo==EnumTipoDato.MATRIX )&& (exprDos.tipo==EnumTipoDato.VECTOR| exprDos.tipo==EnumTipoDato.MATRIX)){
+                if(exprUno.tipo == Simbolo.EnumTipoDato.VECTOR){
+                    int cont=0;
+                    Vector<Expresion> temp1 = (Vector)exprUno.valor;
+                    Vector<Expresion> temp2 = (Vector)exprDos.valor;
+                    Vector<Expresion> nuevo2 = new Vector();
+                    nuevo2.setSize(temp1.size());
+                    for(int i=0;i<temp2.size();i++){
+                        nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.INT,(Double)temp1.get(i).obtenerValor(ent).valor + (Double)temp2.get(i).obtenerValor(ent).valor), i);
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
+                }else{
+                    Object[][] mat1 = (Object[][])exprUno.valor;
+                    Object[][] mat2 = (Object[][])exprDos.valor;
+                    Object[][] matNue = new Object[mat1.length][mat1[0].length];
+                    for(int i=0;i<mat2.length;i++){
+                        for(int j=0;j<mat2[i].length;j++){
+                            Expresion uno = (Expresion)mat1[i][j];
+                            Expresion dos = (Expresion)mat2[i][j];
+                            matNue[i][j]=new Literal(Simbolo.EnumTipoDato.INT,(Double)uno.valor+(Double)dos.valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matNue);
                 }
-                
-                return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
             }
             if(exprUno.tipo==EnumTipoDato.INT && exprDos.tipo==EnumTipoDato.INT){
                 return new Literal(Simbolo.EnumTipoDato.INT,(Double)exprUno.valor + (Double)exprDos.valor);
@@ -387,7 +513,54 @@ public class Operacion extends Expresion{
                 cont++;
             }
             return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
-            }else if(exprUno.tipo==EnumTipoDato.INT && exprDos.tipo==EnumTipoDato.VECTOR){
+            
+            }else if((exprUno.tipo == EnumTipoDato.MATRIX) &&(exprDos.tipo==EnumTipoDato.VECTOR | exprDos.tipo==EnumTipoDato.INT)){
+                Object[][] matriz = (Object[][])exprUno.valor;
+                Object[][] matri = new Object[matriz.length][matriz[0].length];
+                if(exprDos.tipo != Simbolo.EnumTipoDato.VECTOR){
+                        for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)val.valor>(Double)exprDos.valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
+                }else{
+                    Vector<Expresion> vec2 = (Vector<Expresion>)exprDos.valor;
+                    for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)val.valor>(Double)vec2.get(i).obtenerValor(ent).valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
+                }
+            }else if((exprUno.tipo==EnumTipoDato.VECTOR |exprUno.tipo==EnumTipoDato.MATRIX )&& (exprDos.tipo==EnumTipoDato.VECTOR| exprDos.tipo==EnumTipoDato.MATRIX)){
+                if(exprUno.tipo == Simbolo.EnumTipoDato.VECTOR){
+                    int cont=0;
+                    Vector<Expresion> temp1 = (Vector)exprUno.valor;
+                    Vector<Expresion> temp2 = (Vector)exprDos.valor;
+                    Vector<Expresion> nuevo2 = new Vector();
+                    nuevo2.setSize(temp1.size());
+                    for(int i=0;i<temp2.size();i++){
+                        nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)temp1.get(i).obtenerValor(ent).valor > (Double)temp2.get(i).obtenerValor(ent).valor), i);
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
+                }else{
+                    Object[][] mat1 = (Object[][])exprUno.valor;
+                    Object[][] mat2 = (Object[][])exprDos.valor;
+                    Object[][] matNue = new Object[mat1.length][mat1[0].length];
+                    for(int i=0;i<mat2.length;i++){
+                        for(int j=0;j<mat2[i].length;j++){
+                            Expresion uno = (Expresion)mat1[i][j];
+                            Expresion dos = (Expresion)mat2[i][j];
+                            matNue[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)uno.valor>(Double)dos.valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matNue);
+                }
+            }
+            else if(exprUno.tipo==EnumTipoDato.INT && exprDos.tipo==EnumTipoDato.VECTOR){
                 int cont=0;
                 Vector<Expresion> temp = (Vector)exprDos.valor;
                 nuevo = new Vector();
@@ -397,17 +570,6 @@ public class Operacion extends Expresion{
                     cont++;
                 }
                 return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
-            }else if(exprUno.tipo==EnumTipoDato.VECTOR && exprDos.tipo==EnumTipoDato.VECTOR){
-                int cont=0;
-                Vector<Expresion> temp1 = (Vector)exprUno.valor;
-                Vector<Expresion> temp2 = (Vector)exprDos.valor;
-                Vector<Expresion> nuevo2 = new Vector();
-                nuevo2.setSize(temp1.size());
-                for(int i=0;i<temp2.size();i++){
-                    nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)temp1.get(i).obtenerValor(ent).valor > (Double)temp2.get(i).obtenerValor(ent).valor), i);
-                }
-                
-                return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
             }
             return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Double.valueOf(exprUno.valor.toString()).doubleValue() > Double.valueOf(exprDos.valor.toString()).doubleValue());
         }else if(tipo== Tipo_operacion.MENOR_QUE){
@@ -433,17 +595,51 @@ public class Operacion extends Expresion{
                     cont++;
                 }
                 return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
-            }else if(exprUno.tipo==EnumTipoDato.VECTOR && exprDos.tipo==EnumTipoDato.VECTOR){
-                int cont=0;
-                Vector<Expresion> temp1 = (Vector)exprUno.valor;
-                Vector<Expresion> temp2 = (Vector)exprDos.valor;
-                Vector<Expresion> nuevo2 = new Vector();
-                nuevo2.setSize(temp1.size());
-                for(int i=0;i<temp2.size();i++){
-                    nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)temp1.get(i).obtenerValor(ent).valor < (Double)temp2.get(i).obtenerValor(ent).valor), i);
+            }else if((exprUno.tipo == EnumTipoDato.MATRIX) &&(exprDos.tipo==EnumTipoDato.VECTOR | exprDos.tipo==EnumTipoDato.INT)){
+                Object[][] matriz = (Object[][])exprUno.valor;
+                Object[][] matri = new Object[matriz.length][matriz[0].length];
+                if(exprDos.tipo != Simbolo.EnumTipoDato.VECTOR){
+                        for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)val.valor<(Double)exprDos.valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
+                }else{
+                    Vector<Expresion> vec2 = (Vector<Expresion>)exprDos.valor;
+                    for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)val.valor<(Double)vec2.get(i).obtenerValor(ent).valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
                 }
-                
-                return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
+            }else if((exprUno.tipo==EnumTipoDato.VECTOR |exprUno.tipo==EnumTipoDato.MATRIX )&& (exprDos.tipo==EnumTipoDato.VECTOR| exprDos.tipo==EnumTipoDato.MATRIX)){
+                if(exprUno.tipo == Simbolo.EnumTipoDato.VECTOR){
+                    int cont=0;
+                    Vector<Expresion> temp1 = (Vector)exprUno.valor;
+                    Vector<Expresion> temp2 = (Vector)exprDos.valor;
+                    Vector<Expresion> nuevo2 = new Vector();
+                    nuevo2.setSize(temp1.size());
+                    for(int i=0;i<temp2.size();i++){
+                        nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)temp1.get(i).obtenerValor(ent).valor < (Double)temp2.get(i).obtenerValor(ent).valor), i);
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
+                }else{
+                    Object[][] mat1 = (Object[][])exprUno.valor;
+                    Object[][] mat2 = (Object[][])exprDos.valor;
+                    Object[][] matNue = new Object[mat1.length][mat1[0].length];
+                    for(int i=0;i<mat2.length;i++){
+                        for(int j=0;j<mat2[i].length;j++){
+                            Expresion uno = (Expresion)mat1[i][j];
+                            Expresion dos = (Expresion)mat2[i][j];
+                            matNue[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)uno.valor<(Double)dos.valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matNue);
+                }
             }
             return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Double.valueOf(exprUno.valor.toString()).doubleValue() < Double.valueOf(exprDos.valor.toString()).doubleValue());
         }else if(tipo== Tipo_operacion.MAYOR_IGUAL_QUE){
@@ -469,17 +665,51 @@ public class Operacion extends Expresion{
                     cont++;
                 }
                 return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
-            }else if(exprUno.tipo==EnumTipoDato.VECTOR && exprDos.tipo==EnumTipoDato.VECTOR){
-                int cont=0;
-                Vector<Expresion> temp1 = (Vector)exprUno.valor;
-                Vector<Expresion> temp2 = (Vector)exprDos.valor;
-                Vector<Expresion> nuevo2 = new Vector();
-                nuevo2.setSize(temp1.size());
-                for(int i=0;i<temp2.size();i++){
-                    nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)temp1.get(i).obtenerValor(ent).valor >= (Double)temp2.get(i).obtenerValor(ent).valor), i);
+            }else if((exprUno.tipo == EnumTipoDato.MATRIX) &&(exprDos.tipo==EnumTipoDato.VECTOR | exprDos.tipo==EnumTipoDato.INT)){
+                Object[][] matriz = (Object[][])exprUno.valor;
+                Object[][] matri = new Object[matriz.length][matriz[0].length];
+                if(exprDos.tipo != Simbolo.EnumTipoDato.VECTOR){
+                        for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)val.valor>=(Double)exprDos.valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
+                }else{
+                    Vector<Expresion> vec2 = (Vector<Expresion>)exprDos.valor;
+                    for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)val.valor>=(Double)vec2.get(i).obtenerValor(ent).valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
                 }
-                
-                return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
+            }else if((exprUno.tipo==EnumTipoDato.VECTOR |exprUno.tipo==EnumTipoDato.MATRIX )&& (exprDos.tipo==EnumTipoDato.VECTOR| exprDos.tipo==EnumTipoDato.MATRIX)){
+                if(exprUno.tipo == Simbolo.EnumTipoDato.VECTOR){
+                    int cont=0;
+                    Vector<Expresion> temp1 = (Vector)exprUno.valor;
+                    Vector<Expresion> temp2 = (Vector)exprDos.valor;
+                    Vector<Expresion> nuevo2 = new Vector();
+                    nuevo2.setSize(temp1.size());
+                    for(int i=0;i<temp2.size();i++){
+                        nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)temp1.get(i).obtenerValor(ent).valor >= (Double)temp2.get(i).obtenerValor(ent).valor), i);
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
+                }else{
+                    Object[][] mat1 = (Object[][])exprUno.valor;
+                    Object[][] mat2 = (Object[][])exprDos.valor;
+                    Object[][] matNue = new Object[mat1.length][mat1[0].length];
+                    for(int i=0;i<mat2.length;i++){
+                        for(int j=0;j<mat2[i].length;j++){
+                            Expresion uno = (Expresion)mat1[i][j];
+                            Expresion dos = (Expresion)mat2[i][j];
+                            matNue[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)uno.valor>=(Double)dos.valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matNue);
+                }
             }
             return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Double.valueOf(exprUno.valor.toString()).doubleValue() >= Double.valueOf(exprDos.valor.toString()).doubleValue());
         }else if(tipo== Tipo_operacion.MENOR_IGUAL_QUE){
@@ -505,17 +735,51 @@ public class Operacion extends Expresion{
                     cont++;
                 }
                 return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
-            }else if(exprUno.tipo==EnumTipoDato.VECTOR && exprDos.tipo==EnumTipoDato.VECTOR){
-                int cont=0;
-                Vector<Expresion> temp1 = (Vector)exprUno.valor;
-                Vector<Expresion> temp2 = (Vector)exprDos.valor;
-                Vector<Expresion> nuevo2 = new Vector();
-                nuevo2.setSize(temp1.size());
-                for(int i=0;i<temp2.size();i++){
-                    nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)temp1.get(i).obtenerValor(ent).valor <= (Double)temp2.get(i).obtenerValor(ent).valor), i);
+            }else if((exprUno.tipo == EnumTipoDato.MATRIX) &&(exprDos.tipo==EnumTipoDato.VECTOR | exprDos.tipo==EnumTipoDato.INT)){
+                Object[][] matriz = (Object[][])exprUno.valor;
+                Object[][] matri = new Object[matriz.length][matriz[0].length];
+                if(exprDos.tipo != Simbolo.EnumTipoDato.VECTOR){
+                        for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)val.valor<=(Double)exprDos.valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
+                }else{
+                    Vector<Expresion> vec2 = (Vector<Expresion>)exprDos.valor;
+                    for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)val.valor<=(Double)vec2.get(i).obtenerValor(ent).valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
                 }
-                
-                return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
+            }else if((exprUno.tipo==EnumTipoDato.VECTOR |exprUno.tipo==EnumTipoDato.MATRIX )&& (exprDos.tipo==EnumTipoDato.VECTOR| exprDos.tipo==EnumTipoDato.MATRIX)){
+                if(exprUno.tipo == Simbolo.EnumTipoDato.VECTOR){
+                    int cont=0;
+                    Vector<Expresion> temp1 = (Vector)exprUno.valor;
+                    Vector<Expresion> temp2 = (Vector)exprDos.valor;
+                    Vector<Expresion> nuevo2 = new Vector();
+                    nuevo2.setSize(temp1.size());
+                    for(int i=0;i<temp2.size();i++){
+                        nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)temp1.get(i).obtenerValor(ent).valor <= (Double)temp2.get(i).obtenerValor(ent).valor), i);
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
+                }else{
+                    Object[][] mat1 = (Object[][])exprUno.valor;
+                    Object[][] mat2 = (Object[][])exprDos.valor;
+                    Object[][] matNue = new Object[mat1.length][mat1[0].length];
+                    for(int i=0;i<mat2.length;i++){
+                        for(int j=0;j<mat2[i].length;j++){
+                            Expresion uno = (Expresion)mat1[i][j];
+                            Expresion dos = (Expresion)mat2[i][j];
+                            matNue[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)uno.valor<=(Double)dos.valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matNue);
+                }
             }
             return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Double.valueOf(exprUno.valor.toString()).doubleValue() <= Double.valueOf(exprDos.valor.toString()).doubleValue());
         }else if(tipo== Tipo_operacion.IGUAL_QUE){
@@ -542,17 +806,51 @@ public class Operacion extends Expresion{
                     cont++;
                 }
                 return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
-            }else if(exprUno.tipo==EnumTipoDato.VECTOR && exprDos.tipo==EnumTipoDato.VECTOR){
-                int cont=0;
-                Vector<Expresion> temp1 = (Vector)exprUno.valor;
-                Vector<Expresion> temp2 = (Vector)exprDos.valor;
-                Vector<Expresion> nuevo2 = new Vector();
-                nuevo2.setSize(temp1.size());
-                for(int i=0;i<temp2.size();i++){
-                    nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)temp1.get(i).obtenerValor(ent).valor == (Double)temp2.get(i).obtenerValor(ent).valor), i);
+            }else if((exprUno.tipo == EnumTipoDato.MATRIX) &&(exprDos.tipo==EnumTipoDato.VECTOR | exprDos.tipo==EnumTipoDato.INT)){
+                Object[][] matriz = (Object[][])exprUno.valor;
+                Object[][] matri = new Object[matriz.length][matriz[0].length];
+                if(exprDos.tipo != Simbolo.EnumTipoDato.VECTOR){
+                        for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)val.valor==(Double)exprDos.valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
+                }else{
+                    Vector<Expresion> vec2 = (Vector<Expresion>)exprDos.valor;
+                    for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)val.valor==(Double)vec2.get(i).obtenerValor(ent).valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
                 }
-                
-                return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
+            }else if((exprUno.tipo==EnumTipoDato.VECTOR |exprUno.tipo==EnumTipoDato.MATRIX )&& (exprDos.tipo==EnumTipoDato.VECTOR| exprDos.tipo==EnumTipoDato.MATRIX)){
+                if(exprUno.tipo == Simbolo.EnumTipoDato.VECTOR){
+                    int cont=0;
+                    Vector<Expresion> temp1 = (Vector)exprUno.valor;
+                    Vector<Expresion> temp2 = (Vector)exprDos.valor;
+                    Vector<Expresion> nuevo2 = new Vector();
+                    nuevo2.setSize(temp1.size());
+                    for(int i=0;i<temp2.size();i++){
+                        nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)temp1.get(i).obtenerValor(ent).valor == (Double)temp2.get(i).obtenerValor(ent).valor), i);
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
+                }else{
+                    Object[][] mat1 = (Object[][])exprUno.valor;
+                    Object[][] mat2 = (Object[][])exprDos.valor;
+                    Object[][] matNue = new Object[mat1.length][mat1[0].length];
+                    for(int i=0;i<mat2.length;i++){
+                        for(int j=0;j<mat2[i].length;j++){
+                            Expresion uno = (Expresion)mat1[i][j];
+                            Expresion dos = (Expresion)mat2[i][j];
+                            matNue[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)uno.valor==(Double)dos.valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matNue);
+                }
             }
             return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Double.valueOf(exprUno.valor.toString()).doubleValue() == Double.valueOf(exprDos.valor.toString()).doubleValue());
         }else if(tipo== Tipo_operacion.DIFERENTE_QUE){
@@ -578,17 +876,51 @@ public class Operacion extends Expresion{
                     cont++;
                 }
                 return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
-            }else if(exprUno.tipo==EnumTipoDato.VECTOR && exprDos.tipo==EnumTipoDato.VECTOR){
-                int cont=0;
-                Vector<Expresion> temp1 = (Vector)exprUno.valor;
-                Vector<Expresion> temp2 = (Vector)exprDos.valor;
-                Vector<Expresion> nuevo2 = new Vector();
-                nuevo2.setSize(temp1.size());
-                for(int i=0;i<temp2.size();i++){
-                    nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)temp1.get(i).obtenerValor(ent).valor != (Double)temp2.get(i).obtenerValor(ent).valor), i);
+            }else if((exprUno.tipo == EnumTipoDato.MATRIX) &&(exprDos.tipo==EnumTipoDato.VECTOR | exprDos.tipo==EnumTipoDato.INT)){
+                Object[][] matriz = (Object[][])exprUno.valor;
+                Object[][] matri = new Object[matriz.length][matriz[0].length];
+                if(exprDos.tipo != Simbolo.EnumTipoDato.VECTOR){
+                        for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)val.valor!=(Double)exprDos.valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
+                }else{
+                    Vector<Expresion> vec2 = (Vector<Expresion>)exprDos.valor;
+                    for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)val.valor!=(Double)vec2.get(i).obtenerValor(ent).valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
                 }
-                
-                return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
+            }else if((exprUno.tipo==EnumTipoDato.VECTOR |exprUno.tipo==EnumTipoDato.MATRIX )&& (exprDos.tipo==EnumTipoDato.VECTOR| exprDos.tipo==EnumTipoDato.MATRIX)){
+                if(exprUno.tipo == Simbolo.EnumTipoDato.VECTOR){
+                    int cont=0;
+                    Vector<Expresion> temp1 = (Vector)exprUno.valor;
+                    Vector<Expresion> temp2 = (Vector)exprDos.valor;
+                    Vector<Expresion> nuevo2 = new Vector();
+                    nuevo2.setSize(temp1.size());
+                    for(int i=0;i<temp2.size();i++){
+                        nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)temp1.get(i).obtenerValor(ent).valor != (Double)temp2.get(i).obtenerValor(ent).valor), i);
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
+                }else{
+                    Object[][] mat1 = (Object[][])exprUno.valor;
+                    Object[][] mat2 = (Object[][])exprDos.valor;
+                    Object[][] matNue = new Object[mat1.length][mat1[0].length];
+                    for(int i=0;i<mat2.length;i++){
+                        for(int j=0;j<mat2[i].length;j++){
+                            Expresion uno = (Expresion)mat1[i][j];
+                            Expresion dos = (Expresion)mat2[i][j];
+                            matNue[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,(Double)uno.valor!=(Double)dos.valor);
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matNue);
+                }
             }
             return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Double.valueOf(exprUno.valor.toString()).doubleValue() != Double.valueOf(exprDos.valor.toString()).doubleValue());
         }else if(tipo== Tipo_operacion.AND){
@@ -610,21 +942,56 @@ public class Operacion extends Expresion{
                 nuevo = new Vector();
                 nuevo.setSize(temp.size());
                 for(Expresion exp:temp){
-                    nuevo.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(exp.valor.toString())&&Boolean.valueOf(exprUno.valor.toString())), cont);
+                    nuevo.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(exp.valor.toString()) && Boolean.valueOf(exprUno.valor.toString())), cont);
                     cont++;
                 }
                 return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
-            }else if(exprUno.tipo==EnumTipoDato.VECTOR && exprDos.tipo==EnumTipoDato.VECTOR){
-                int cont=0;
-                Vector<Expresion> temp1 = (Vector)exprUno.valor;
-                Vector<Expresion> temp2 = (Vector)exprDos.valor;
-                Vector<Expresion> nuevo2 = new Vector();
-                nuevo2.setSize(temp1.size());
-                for(int i=0;i<temp2.size();i++){
-                    nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(temp1.get(i).obtenerValor(ent).valor.toString()) && Boolean.valueOf(temp2.get(i).obtenerValor(ent).valor.toString())), i);
+            }else if((exprUno.tipo == EnumTipoDato.MATRIX) &&(exprDos.tipo==EnumTipoDato.VECTOR | exprDos.tipo==EnumTipoDato.BOOLEAN)){
+                Object[][] matriz = (Object[][])exprUno.valor;
+                Object[][] matri = new Object[matriz.length][matriz[0].length];
+                if(exprDos.tipo != Simbolo.EnumTipoDato.VECTOR){
+                        for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(val.valor.toString()) && Boolean.valueOf(exprDos.valor.toString()));
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
+                }else{
+                    Vector<Expresion> vec2 = (Vector<Expresion>)exprDos.valor;
+                    for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(val.valor.toString()) && Boolean.valueOf(vec2.get(i).obtenerValor(ent).valor.toString()));
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
                 }
-                
-                return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
+            }else if((exprUno.tipo==EnumTipoDato.VECTOR |exprUno.tipo==EnumTipoDato.MATRIX )&& (exprDos.tipo==EnumTipoDato.VECTOR| exprDos.tipo==EnumTipoDato.MATRIX)){
+                if(exprUno.tipo == Simbolo.EnumTipoDato.VECTOR){
+                    int cont=0;
+                    Vector<Expresion> temp1 = (Vector)exprUno.valor;
+                    Vector<Expresion> temp2 = (Vector)exprDos.valor;
+                    Vector<Expresion> nuevo2 = new Vector();
+                    nuevo2.setSize(temp1.size());
+                    for(int i=0;i<temp2.size();i++){
+                        
+                        nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(temp1.get(i).obtenerValor(ent).valor.toString()) && Boolean.valueOf(temp2.get(i).obtenerValor(ent).valor.toString())), i);
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
+                }else{
+                    Object[][] mat1 = (Object[][])exprUno.valor;
+                    Object[][] mat2 = (Object[][])exprDos.valor;
+                    Object[][] matNue = new Object[mat1.length][mat1[0].length];
+                    for(int i=0;i<mat2.length;i++){
+                        for(int j=0;j<mat2[i].length;j++){
+                            Expresion uno = (Expresion)mat1[i][j];
+                            Expresion dos = (Expresion)mat2[i][j];
+                            matNue[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(uno.valor.toString())&& Boolean.valueOf(dos.valor.toString()));
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matNue);
+                }
             }
             return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(exprUno.valor.toString()) && Boolean.valueOf(exprDos.valor.toString()));
         }else if(tipo== Tipo_operacion.OR){
@@ -651,17 +1018,52 @@ public class Operacion extends Expresion{
                     cont++;
                 }
                 return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
-            }else if(exprUno.tipo==EnumTipoDato.VECTOR && exprDos.tipo==EnumTipoDato.VECTOR){
-                int cont=0;
-                Vector<Expresion> temp1 = (Vector)exprUno.valor;
-                Vector<Expresion> temp2 = (Vector)exprDos.valor;
-                Vector<Expresion> nuevo2 = new Vector();
-                nuevo2.setSize(temp1.size());
-                for(int i=0;i<temp2.size();i++){
-                    nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(temp1.get(i).obtenerValor(ent).valor.toString()) | Boolean.valueOf(temp2.get(i).obtenerValor(ent).valor.toString())), i);
+            }else if((exprUno.tipo == EnumTipoDato.MATRIX) &&(exprDos.tipo==EnumTipoDato.VECTOR | exprDos.tipo==EnumTipoDato.BOOLEAN)){
+                Object[][] matriz = (Object[][])exprUno.valor;
+                Object[][] matri = new Object[matriz.length][matriz[0].length];
+                if(exprDos.tipo != Simbolo.EnumTipoDato.VECTOR){
+                        for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(val.valor.toString()) | Boolean.valueOf(exprDos.valor.toString()));
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
+                }else{
+                    Vector<Expresion> vec2 = (Vector<Expresion>)exprDos.valor;
+                    for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(val.valor.toString()) | Boolean.valueOf(vec2.get(i).obtenerValor(ent).valor.toString()));
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
                 }
-                
-                return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
+            }else if((exprUno.tipo==EnumTipoDato.VECTOR |exprUno.tipo==EnumTipoDato.MATRIX )&& (exprDos.tipo==EnumTipoDato.VECTOR | exprDos.tipo==EnumTipoDato.MATRIX)){
+                if(exprUno.tipo == Simbolo.EnumTipoDato.VECTOR){
+                    int cont=0;
+                    Vector<Expresion> temp1 = (Vector)exprUno.valor;
+                    Vector<Expresion> temp2 = (Vector)exprDos.valor;
+                    Vector<Expresion> nuevo2 = new Vector();
+                    nuevo2.setSize(temp1.size());
+                    for(int i=0;i<temp2.size();i++){
+                        
+                        nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(temp1.get(i).obtenerValor(ent).valor.toString()) | Boolean.valueOf(temp2.get(i).obtenerValor(ent).valor.toString())), i);
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
+                }else{
+                    Object[][] mat1 = (Object[][])exprUno.valor;
+                    Object[][] mat2 = (Object[][])exprDos.valor;
+                    Object[][] matNue = new Object[mat1.length][mat1[0].length];
+                    for(int i=0;i<mat2.length;i++){
+                        for(int j=0;j<mat2[i].length;j++){
+                            Expresion uno = (Expresion)mat1[i][j];
+                            Expresion dos = (Expresion)mat2[i][j];
+                            matNue[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(uno.valor.toString()) | Boolean.valueOf(dos.valor.toString()));
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matNue);
+                }
             }
             return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(exprUno.valor.toString()) | Boolean.valueOf(exprDos.valor.toString()));
         }else if(tipo== Tipo_operacion.XOR){
@@ -687,17 +1089,52 @@ public class Operacion extends Expresion{
                     cont++;
                 }
                 return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
-            }else if(exprUno.tipo==EnumTipoDato.VECTOR && exprDos.tipo==EnumTipoDato.VECTOR){
-                int cont=0;
-                Vector<Expresion> temp1 = (Vector)exprUno.valor;
-                Vector<Expresion> temp2 = (Vector)exprDos.valor;
-                Vector<Expresion> nuevo2 = new Vector();
-                nuevo2.setSize(temp1.size());
-                for(int i=0;i<temp2.size();i++){
-                    nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(temp1.get(i).obtenerValor(ent).valor.toString()) ^ Boolean.valueOf(temp2.get(i).obtenerValor(ent).valor.toString())), i);
+            }else if((exprUno.tipo == EnumTipoDato.MATRIX) &&(exprDos.tipo==EnumTipoDato.VECTOR | exprDos.tipo==EnumTipoDato.BOOLEAN)){
+                Object[][] matriz = (Object[][])exprUno.valor;
+                Object[][] matri = new Object[matriz.length][matriz[0].length];
+                if(exprDos.tipo != Simbolo.EnumTipoDato.VECTOR){
+                        for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(val.valor.toString()) ^ Boolean.valueOf(exprDos.valor.toString()));
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
+                }else{
+                    Vector<Expresion> vec2 = (Vector<Expresion>)exprDos.valor;
+                    for(int i=0;i<matriz.length;i++){
+                        for(int j=0;j<matriz[i].length;j++){
+                            Expresion val = (Expresion)matriz[i][j];
+                            matri[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(val.valor.toString()) ^ Boolean.valueOf(vec2.get(i).obtenerValor(ent).valor.toString()));
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matri);
                 }
-                
-                return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
+            }else if((exprUno.tipo==EnumTipoDato.VECTOR |exprUno.tipo==EnumTipoDato.MATRIX )&& (exprDos.tipo==EnumTipoDato.VECTOR | exprDos.tipo==EnumTipoDato.MATRIX)){
+                if(exprUno.tipo == Simbolo.EnumTipoDato.VECTOR){
+                    int cont=0;
+                    Vector<Expresion> temp1 = (Vector)exprUno.valor;
+                    Vector<Expresion> temp2 = (Vector)exprDos.valor;
+                    Vector<Expresion> nuevo2 = new Vector();
+                    nuevo2.setSize(temp1.size());
+                    for(int i=0;i<temp2.size();i++){
+                        
+                        nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(temp1.get(i).obtenerValor(ent).valor.toString()) ^ Boolean.valueOf(temp2.get(i).obtenerValor(ent).valor.toString())), i);
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
+                }else{
+                    Object[][] mat1 = (Object[][])exprUno.valor;
+                    Object[][] mat2 = (Object[][])exprDos.valor;
+                    Object[][] matNue = new Object[mat1.length][mat1[0].length];
+                    for(int i=0;i<mat2.length;i++){
+                        for(int j=0;j<mat2[i].length;j++){
+                            Expresion uno = (Expresion)mat1[i][j];
+                            Expresion dos = (Expresion)mat2[i][j];
+                            matNue[i][j]=new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(uno.valor.toString()) ^ Boolean.valueOf(dos.valor.toString()));
+                        }
+                    }
+                    return new Literal (Simbolo.EnumTipoDato.MATRIX,matNue);
+                }
             }
             return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(exprUno.valor.toString()) ^ Boolean.valueOf(exprDos.valor.toString()));
         }else if(tipo== Tipo_operacion.TRUE){

@@ -231,11 +231,18 @@
 	print(unoMatri);
 	print("------------------------");
 	print(dosMatri);
-
+	
 	mat  = matrix(c(16,20,24,28,32),3,3);
 	mat2 = matrix(c(8,10,12,14,16),3,3);
+	print("Division entre matrices------------------------");
 	nuevaMatri = mat / mat2;
 	print(nuevaMatri);
+	print("Mult entre matrices------------------------");
+	print(mat*mat2);
+	print("Suma entre matrices------------------------");
+	print(mat+mat2);
+	print("Resta entre matrices------------------------");
+	print(mat-mat2);
 
 	#Declarando un arreglo de 3 Dimensiones
 	arra = array(c(1,2,3,4,5,6,7),c(3,2,2));
@@ -286,6 +293,32 @@
 	sun = round(val2[1])+5;
 	print(sun[1]);
 
+	#Matriz +-*/ escalar
+	vecTemp = c(1,2,3);
+	print("Suma mat + 8--------");
+	print(mat+8);
+	print("Resta mat - 8--------");
+	print(mat-5);
+	print("Mult mat * 8--------");
+	print(mat*2);
+	print("Div mat / 8--------");
+	print(mat/2);
+	#Matriz +-*/ Vector
+	print("Suma mat + vecTemp--------");
+	print(mat+vecTemp);
+	print("Resta mat - vecTemp--------");
+	print(mat-vecTemp);
+	print("Mult mat * vecTemp--------");
+	print(mat*vecTemp);
+	print("Div mat / vecTemp--------");
+	print(mat/vecTemp);
+
+	#Operaciones relacionales entre matrieces
+	MAT = matrix(c(5,20,15),3,3);
+	MAT2 = matrix(c(20,10,8),3,3);
+	VECTO = c(2,30,1);
+	print(MAT>MAT2);
+	
 }
 
 #*
@@ -308,3 +341,5 @@
 
 
 
+
+	
