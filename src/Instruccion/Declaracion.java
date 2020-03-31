@@ -9,6 +9,7 @@ import Entorno.Entorno;
 import Entorno.Simbolo;
 import Expresion.Expresion;
 import Expresion.Literal;
+import Expresion.Operacion;
 import static com.sun.org.apache.xalan.internal.xsltc.compiler.sym.Literal;
 import java.util.Vector;
 
@@ -49,7 +50,7 @@ public class Declaracion implements Instruccion {
         if(tamanioVector==0){
             if(exprValor.tipo==Simbolo.EnumTipoDato.VECTOR){
                 listVar = (Vector)exprValor.valor;
-            }else if(exprValor.tipo == Simbolo.EnumTipoDato.LIST){      
+            }else if(exprValor.tipo == Simbolo.EnumTipoDato.LIST){
                 ent.insertar(id, new Simbolo(exprValor.tipo,exprValor.valor,id));
                 return new Retornar();
             }else if(exprValor.tipo==Simbolo.EnumTipoDato.MATRIX){
@@ -65,6 +66,11 @@ public class Declaracion implements Instruccion {
         }else{
                 if(existe && tamanio!=0){
                 Simbolo sim = ent.obtener(id,ent);
+                if(sim.tipo == Simbolo.EnumTipoDato.LIST){
+                    Asignacion asignacion = new Asignacion(id,posValor,valor,Operacion.Tipo_operacion.IDENTIFICADOR_POS_ARRAY_LIST);
+                    asignacion.ejecutar(ent);
+                    return new Retornar();
+                }
                 Vector temp=(Vector)sim.valor;  
                 if(tamanio<=temp.size()){
                     temp.setElementAt(exprValor,tamanio-1);
@@ -96,5 +102,4 @@ public class Declaracion implements Instruccion {
         ent.insertar(id, new Simbolo(Simbolo.EnumTipoDato.VECTOR,listVar,id));
         return new Retornar();
     }
-    
 }

@@ -31,8 +31,7 @@ public class FuncionPropia extends Funcion implements Instruccion {
                 Expresion val = param_Actuales.get(i).obtenerValor(ent);
                 Declaracion declaracion = new Declaracion(op.valor.toString(),val);
                 declaracion.ejecutar(tablaLocal);
-            }
-                    
+            }      
         }
         for (Instruccion instr : codigo) {
             Retornar ret=instr.ejecutar(tablaLocal);

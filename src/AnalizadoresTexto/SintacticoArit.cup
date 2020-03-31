@@ -171,6 +171,7 @@ DECLARACION ::= tId:id tIgual E:exp tPuntoComa{:RESULT= new Declaracion(id,exp);
 ASIGNACION ::=  tId:id tCorcheA E:a tComa E:b tCorcheC tIgual E:exp tPuntoComa{:RESULT=new Asignacion(id,a,b,exp,Operacion.Tipo_operacion.MODIFICACION_MATRIZ);:}
                 | tId:id tCorcheA E:a tComa tCorcheC tIgual E:exp tPuntoComa{:RESULT=new Asignacion(id,a,null,exp,Operacion.Tipo_operacion.MODIFICACION_FILA_MATRIZ);:}
                 | tId:id tCorcheA tComa E:b tCorcheC tIgual E:exp tPuntoComa{:RESULT=new Asignacion(id,null,b,exp,Operacion.Tipo_operacion.MODIFICACION_COLUMNA_MATRIZ);:}
+                | tId:a tCorcheA  tCorcheA E:b tCorcheC tCorcheC tIgual E:exp tPuntoComa{:RESULT=new Asignacion(a,b,exp,Operacion.Tipo_operacion.IDENTIFICADOR_POS_ARRAY_LIST);:}
             ;
 E ::= tResta E:a{:RESULT=new Operacion(a,Operacion.Tipo_operacion.NEGATIVO);:}%prec UMENOS 
     | E:a tModulo E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.MODULO);:}     
@@ -190,6 +191,7 @@ E ::= tResta E:a{:RESULT=new Operacion(a,Operacion.Tipo_operacion.NEGATIVO);:}%p
     | E:a tDifQ E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.NOT);:}
     | E:a tXor E:b {:RESULT=new Operacion(a,b,Operacion.Tipo_operacion.XOR);:}
     | tParA E:a tParC {:RESULT=a;:}
+    | tId:a tCorcheA  tCorcheA E:b tCorcheC tCorcheC {:RESULT=new Operacion(a,Tipo_operacion.IDENTIFICADOR_POS_ARRAY_LIST,b);:}
     | tId:a tCorcheA E:b tCorcheC {:RESULT=new Operacion(a,Tipo_operacion.IDENTIFICADOR_POS_ARRAY,b);:}
     | tId:a tCorcheA E:b tCorcheC tCorcheA E:c tCorcheC tCorcheA E:d tCorcheC {:RESULT=new Estructura(a,b,c,d,Tipo_operacion.ARRAY_3);:}
     | tId:a tCorcheA E:b tComa E:c tCorcheC {:RESULT=new Estructura(a,b,c,Tipo_operacion.IDENTIFICADOR_POS_ARRAY_MATRIX);:}

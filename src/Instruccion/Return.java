@@ -26,7 +26,7 @@ public class Return implements Instruccion{
     public Retornar ejecutar(Entorno ent) {
         Retornar retornar = new Retornar();
         retornar.isReturn=true;
-        retornar.valor=new Literal(Simbolo.EnumTipoDato.INT,valorReturn.obtenerValor(ent).valor);
+        retornar.valor=valorReturn.obtenerValor(ent);
         return retornar;                
     }
 }

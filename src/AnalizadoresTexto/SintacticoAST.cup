@@ -177,7 +177,8 @@ DECLARACION ::= tId:id tIgual E:exp tPuntoComa{:NodoAST nodo = new NodoAST("DECL
             ;
 ASIGNACION ::=  tId:id tCorcheA E:a tComa E:b tCorcheC tIgual E:exp tPuntoComa {:NodoAST nodo = new NodoAST("ASIGNACION");RESULT=nodo;:}  
                 | tId:id tCorcheA E:a tComa tCorcheC tIgual E:exp tPuntoComa{:NodoAST nodo = new NodoAST("ASIGNACION");RESULT=nodo;:}      
-                | tId:id tCorcheA tComa E:b tCorcheC tIgual E:exp tPuntoComa{:NodoAST nodo = new NodoAST("ASIGNACION");RESULT=nodo;:}      
+                | tId:id tCorcheA tComa E:b tCorcheC tIgual E:exp tPuntoComa{:NodoAST nodo = new NodoAST("ASIGNACION");RESULT=nodo;:} 
+                | tId:a tCorcheA  tCorcheA E:b tCorcheC tCorcheC tIgual E:exp tPuntoComa{:NodoAST nodo = new NodoAST("ASIGNACION");RESULT=nodo;:}
             ;
 E ::= tResta E:a{:NodoAST nodo = new NodoAST("-");RESULT=nodo;:}%prec UMENOS 
     | E:a tModulo E:b {:NodoAST nodo = new NodoAST("MODULO");nodo.add(a);nodo.add(new NodoAST("%"));nodo.add(b);RESULT=nodo;:}   
@@ -201,6 +202,7 @@ E ::= tResta E:a{:NodoAST nodo = new NodoAST("-");RESULT=nodo;:}%prec UMENOS
     RESULT = nodo;
     :}
     | tParA E:a tParC {:RESULT=a;:}    
+    | tId:a tCorcheA  tCorcheA E:b tCorcheC tCorcheC {:RESULT=new NodoAST("id[[1]]");:} 
     | tId:a tCorcheA E:b tCorcheC {:RESULT=new NodoAST("id[1]");:}   
     | tId:a tCorcheA E:b tComa E:c tCorcheC {:RESULT=new NodoAST("id[1,2]");:}   
     | tId:a tCorcheA E:b tComa tCorcheC {:RESULT=new NodoAST("id[1,]");:}     

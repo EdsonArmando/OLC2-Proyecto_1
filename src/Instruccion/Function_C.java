@@ -17,23 +17,24 @@ import java.util.Vector;
  * @author EG
  */
 public class Function_C extends Funcion {
-    LinkedList var = new LinkedList();
+    Simbolo.EnumTipoDato tipo;
     public Function_C(String id,Simbolo.EnumTipoDato tipo){
         super(id, tipo);
     }
     
     @Override
     public Expresion obtenerValor(Entorno ent) {
+       LinkedList var = new LinkedList();
        Vector vecto = new Vector();
         for(Expresion exp : param_Actuales){
             Expresion resultado = exp.obtenerValor(ent);
-            if(resultado.valor instanceof Vector){
-                vecto.addAll((Vector)resultado.valor);
+            if(resultado.tipo == Simbolo.EnumTipoDato.VECTOR){
+                var.add(resultado);
+                //vecto.addAll((Vector)resultado.valor);
             }else if(resultado.tipo==Simbolo.EnumTipoDato.LIST){
                 LinkedList nueva=(LinkedList)resultado.valor;
                 var.addAll(nueva);
             }else{
-                
                 vecto.add(resultado);
             }
         }

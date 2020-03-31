@@ -50,6 +50,7 @@ public class Operacion extends Expresion{
         MODIFICACION_FILA_MATRIZ,
         MODIFICACION_COLUMNA_MATRIZ,
         MODIFICACION_MATRIZ,
+        IDENTIFICADOR_POS_ARRAY_LIST,
         ARRAYPOSICION
     }
      private Vector vector;
@@ -457,6 +458,15 @@ public class Operacion extends Expresion{
             }
             return null;
              /* ======== Dev POSICION ARRAY,MATRIZ,LISTA ======== */
+        }else if(tipo == Tipo_operacion.IDENTIFICADOR_POS_ARRAY_LIST){
+            Simbolo sim = ent.obtener(valor.toString(),ent);
+            LinkedList<Expresion> lista = (LinkedList)sim.valor;
+            Double uno = (Double)posVariable.obtenerValor(ent).valor;
+            Expresion resultado = lista.get(uno.intValue()-1);
+            if(resultado.tipo == Simbolo.EnumTipoDato.VECTOR){
+                return resultado;
+            }
+            return null;
         }else if(tipo == Tipo_operacion.IDENTIFICADOR_POS_ARRAY){
             Simbolo sim = ent.obtener(valor.toString(),ent);
             if(sim.tipo==Simbolo.EnumTipoDato.VECTOR)
