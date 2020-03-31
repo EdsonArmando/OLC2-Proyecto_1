@@ -11,6 +11,13 @@
 	    lista = c(lista,est);
 	    return(lista);
 	}
+
+	printList = function(lista){
+	    counter = 0;
+	    for(i in lista){
+	        print(i);
+    	}
+	}
 	listaGlobal = initList(getVectorEstudiante("201503611", "P", "Pavel", "Vasquez", "B-", 0));
 	listaGlobal = addNode(listaGlobal, getVectorEstudiante("201610673", "Y","Yaiza", "Pineda", "B-", 100));
 	listaGlobal = addNode(listaGlobal, getVectorEstudiante("201612272", "A","Andres", "Carvajal", "B+",100));
@@ -29,8 +36,11 @@
 
 	listaGlobal = addNode(listaGlobal, getVectorEstudiante("200412765", "E","Enrique", "Archer", "A",100));
 	listaGlobal = addNode(listaGlobal, getVectorEstudiante("201503953", "Z","Zergio", "Leal", "B-", -1));
-	print(length(listaGlobal));
-
+	print("------------------------------------------------------------------");
+	print("IMPRIMIENDO ESTA LISTA CON CIERTO MENSAJE");
+	print("------------------------------------------------------------------");
+	printList(listaGlobal)
+	print("------------------------------------------------------------------");
 
 	print("******************************************************************");
 	print("LISTADO DE ESTUDIANTES DE LA SECCIÓN B-");
@@ -97,5 +107,6 @@
 	seccionBMenos = addNode(seccionBMenos, getVectorEstudiante(59, 789012, 201700473, "B-", "Javier Alejandro Golon Lopez", "javiagl98@gmail.com"));
 	seccionBMenos = addNode(seccionBMenos, getVectorEstudiante(60, 789012, 201700727, "B-", "Alberto Kanec Ixchop Ordoñez", "albertokanecixchop@gmail.com"));
 	seccionBMenos = addNode(seccionBMenos, getVectorEstudiante(61, 789012, 201700801, "B-", "Erwin Alejandro Garcia Barrera", "alejandro76.gb@gmail.com"));
-	print(length(seccionBMenos));
+	printList(seccionBMenos)
+	print("******************************************************************");
 	}

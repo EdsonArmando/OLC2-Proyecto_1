@@ -67,7 +67,7 @@ action code
 {:
 
 :} 
-terminal String tId,tPie,tBarplot,tMatrix,tList,tDo,tC,tWhile,tReturn,tFor,tIf,tElse,tModulo,tDosPuntos,tPunto,tLlaveA,tPuntoComa,tLlaveC,tCadena,tCorcheA,tCorcheC;
+terminal String tId,tIn,tPie,tBarplot,tMatrix,tList,tDo,tC,tWhile,tReturn,tFor,tIf,tElse,tModulo,tDosPuntos,tPunto,tLlaveA,tPuntoComa,tLlaveC,tCadena,tCorcheA,tCorcheC;
 terminal String UMENOS,tDoble,tFunction,tIgualIgual,tEntero,tTrue,tFalse,tParA,tParC,tCaracter,tIgual,tDifQ,tOr,tAnd,tXor,tComa,tSuma,tResta,tMult,tDiv,tPow,tMayorQ,tMenorQ; 
 terminal String tPrint;
 
@@ -75,7 +75,7 @@ non terminal Expresion E,LLAMADA_FUNCION;
 non terminal Instruccion INSTRUCCION;
 non terminal LinkedList<Expresion> LISTAEXPR;
 non terminal LinkedList<Instruccion> LISTA,LISTAINSTRUCCIONES;
-non terminal Instruccion ASIGNACION,DECLARACION,IMPRIMIR,SI,SUBIF,WHILE,DO_WHILE,FUNCION_DEFINIDA,RETURN;
+non terminal Instruccion ASIGNACION,DECLARACION,IMPRIMIR,FOR,SI,SUBIF,WHILE,DO_WHILE,FUNCION_DEFINIDA,RETURN;
 non terminal LinkedList<SubIf> instrucciones_elseif;
 non terminal SubIf instruccion_elseif;
 non terminal SubIf instruccion_else;
@@ -112,7 +112,11 @@ INSTRUCCION ::= DECLARACION:a {:RESULT=a;:}
                 | LLAMADA_FUNCION:exp {:RESULT=(Instruccion) exp;:}
                 | FUNCION_DEFINIDA: a {:RESULT=(Instruccion) a;:}
                 | RETURN:a {:RESULT=a;:}
+                | FOR:a {:RESULT=a;:}
             ;
+
+FOR ::= tFor tParA tId:a tIn E:val tParC tLlaveA LISTAINSTRUCCIONES:lista tLlaveC {:RESULT=new For(a,val,lista);:}
+    ;
 RETURN ::= tReturn E:a tPuntoComa {:RESULT=new Return(a);:};
 LISTAEXPR ::= LISTAEXPR:li tComa E:a {:
                     RESULT=li;

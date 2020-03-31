@@ -85,6 +85,7 @@ espacio = \t|\f|" "|\r|\n
     "*"             {return addSymbol(new Symbol(Syma.tMult,yycolumn,yyline,yytext()));}
     "/"             {return addSymbol(new Symbol(Syma.tDiv,yycolumn,yyline,yytext()));}
     "print"         {return addSymbol(new Symbol(Syma.tPrint,yycolumn,yyline,yytext()));}
+    "in"            {return addSymbol(new Symbol(Syma.tIn,yycolumn,yyline,yytext()));}
     "function"      {return addSymbol(new Symbol(Syma.tFunction,yycolumn,yyline,yytext()));}
     "true"          {return addSymbol(new Symbol(Syma.tTrue,yycolumn,yyline,yytext()));}
     "false"         {return addSymbol(new Symbol(Syma.tFalse,yycolumn,yyline,yytext()));}
