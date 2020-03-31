@@ -66,7 +66,7 @@ action code
 {:
 
 :} 
-terminal String tId,tPie,tBarplot,tMatrix,tList,tDo,tC,tWhile,tReturn,tFor,tIf,tElse,tModulo,tDosPuntos,tPunto,tLlaveA,tPuntoComa,tLlaveC,tCadena,tCorcheA,tCorcheC;
+terminal String tId,tIn,tPie,tBarplot,tMatrix,tList,tDo,tC,tWhile,tReturn,tFor,tIf,tElse,tModulo,tDosPuntos,tPunto,tLlaveA,tPuntoComa,tLlaveC,tCadena,tCorcheA,tCorcheC;
 terminal String UMENOS,tDoble,tFunction,tIgualIgual,tEntero,tTrue,tFalse,tParA,tParC,tCaracter,tIgual,tDifQ,tOr,tAnd,tXor,tComa,tSuma,tResta,tMult,tDiv,tPow,tMayorQ,tMenorQ; 
 terminal String tPrint;
 
@@ -74,7 +74,7 @@ non terminal NodoAST E,LLAMADA_FUNCION;
 non terminal NodoAST INSTRUCCION;
 non terminal NodoAST LISTAEXPR;
 non terminal NodoAST LISTA,LISTAINSTRUCCIONES;
-non terminal NodoAST ASIGNACION,DECLARACION,IMPRIMIR,SI,SUBIF,WHILE,DO_WHILE,FUNCION_DEFINIDA,RETURN;
+non terminal NodoAST ASIGNACION,FOR,DECLARACION,IMPRIMIR,SI,SUBIF,WHILE,DO_WHILE,FUNCION_DEFINIDA,RETURN;
 non terminal NodoAST instrucciones_elseif;
 non terminal NodoAST instruccion_elseif;
 non terminal NodoAST instruccion_else;
@@ -111,10 +111,13 @@ INSTRUCCION ::= DECLARACION:a {:NodoAST nodo = new NodoAST("INSTRUCCION");nodo.a
                 | ASIGNACION:a {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}   
                 | WHILE:a {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}   
                 | DO_WHILE:a {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}    
-                | LLAMADA_FUNCION:exp {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}       
+                | LLAMADA_FUNCION:exp tPuntoComa {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}       
                 | FUNCION_DEFINIDA: a {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}      
-                | RETURN:a {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}     
+                | RETURN:a {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}    
+                | FOR:a {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}
             ;
+
+FOR ::= tFor tParA tId tIn E tParC tLlaveA LISTAINSTRUCCIONES tLlaveC {:NodoAST nodo = new NodoAST("FOR");RESULT=nodo;:};
 RETURN ::= tReturn E:a tPuntoComa {:NodoAST nodo = new NodoAST("RETURN");RESULT=nodo;:};
 LISTAEXPR ::= LISTAEXPR:li tComa E:a {:
                    NodoAST nodo = new NodoAST("LISTAEXPR");

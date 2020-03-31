@@ -39,7 +39,7 @@
 	print("------------------------------------------------------------------");
 	print("IMPRIMIENDO ESTA LISTA CON CIERTO MENSAJE");
 	print("------------------------------------------------------------------");
-	printList(listaGlobal)
+	printList(listaGlobal);
 	print("------------------------------------------------------------------");
 
 	print("******************************************************************");
@@ -107,6 +107,6 @@
 	seccionBMenos = addNode(seccionBMenos, getVectorEstudiante(59, 789012, 201700473, "B-", "Javier Alejandro Golon Lopez", "javiagl98@gmail.com"));
 	seccionBMenos = addNode(seccionBMenos, getVectorEstudiante(60, 789012, 201700727, "B-", "Alberto Kanec Ixchop Ordoñez", "albertokanecixchop@gmail.com"));
 	seccionBMenos = addNode(seccionBMenos, getVectorEstudiante(61, 789012, 201700801, "B-", "Erwin Alejandro Garcia Barrera", "alejandro76.gb@gmail.com"));
-	printList(seccionBMenos)
+	printList(seccionBMenos);
 	print("******************************************************************");
 	}

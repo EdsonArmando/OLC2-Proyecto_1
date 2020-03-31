@@ -108,12 +108,12 @@
 	if(n[1]==1){
 	print("mover disco de " + origen[1] + " a " + destino[1]);
 	}else{
-	Hanoi(n[1]-1, origen[1], destino[1], auxiliar[1])
+	Hanoi(n[1]-1, origen[1], destino[1], auxiliar[1]);
 	print("mover disco de "+ origen[1] + " a " + destino[1]);
-	Hanoi(n[1]-1, auxiliar[1], origen[1], destino[1])
+	Hanoi(n[1]-1, auxiliar[1], origen[1], destino[1]);
 	}
 	}
-	Hanoi(3,1,2,3)
+	Hanoi(3,1,2,3);
 
 
 	print("--------------------------------------------Utilizando Contador----------------------");
@@ -156,12 +156,12 @@
 	#Grafica de pie
 	vec1=c(30,40,20,60);
 	vec2=c("mate","ingles","Fisica","Archivos");
-	pie(vec1,vec2,"Grafica1")
+	pie(vec1,vec2,"Grafica1");
 
 	#Grafica de Barras
 	h=c(20,80,10,60,100,30,25,5);
 	names=c("cocaCola","Vestidos","Materias","Dinero","Musica","Estudiantes","Concierto","UVG");
-	barplot(h,"Categorias","Cantidad","GraficaBarras",names)
+	barplot(h,"Categorias","Cantidad","GraficaBarras",names);
 
 	#Grafica de Lineas
 	J=matrix(c(10,15,5,30,25,3),3,2);
@@ -172,18 +172,18 @@
 	Vec[1]=J;
 	Vec[2]=B;
 	Vec[3]=K;
-	plot(Vec,"0","EjeX","EjeY","Grafica Lineas")
+	plot(Vec,"0","EjeX","EjeY","Grafica Lineas");
 
 	#Hitograma
 	vecHist=c(10,15,5,8,7,4,11,18,27,14,12);
-	hist(vecHist,"Histograma","Ejex",vecHist,vecHist)
+	hist(vecHist,"Histograma","Ejex",vecHist,vecHist);
 
 	#Grafica de Dispersion
 	matHis=matrix(c(10,15,5,30,25,3),3,2);
 	print(matHis);
 	Vec5=c(1,5);
 
-	plot(matHis,Vec5,"Grafica de Dispersion","Ejex","Ejey",Vec5,Vec5,5>2)
+	plot(matHis,Vec5,"Grafica de Dispersion","Ejex","Ejey",Vec5,Vec5,5>2);
 
 	#Suma de Vectores
 	SumA = c(1, 2, 3, 1, 5);

@@ -109,7 +109,7 @@ INSTRUCCION ::= DECLARACION:a {:RESULT=a;:}
                 | ASIGNACION:a {:RESULT=a;:}
                 | WHILE:a {:RESULT=a;:}
                 | DO_WHILE:a {:RESULT=a;:}
-                | LLAMADA_FUNCION:exp {:RESULT=(Instruccion) exp;:}
+                | LLAMADA_FUNCION:exp tPuntoComa {:RESULT=(Instruccion) exp;:}
                 | FUNCION_DEFINIDA: a {:RESULT=(Instruccion) a;:}
                 | RETURN:a {:RESULT=a;:}
                 | FOR:a {:RESULT=a;:}
