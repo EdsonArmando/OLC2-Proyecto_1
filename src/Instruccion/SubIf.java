@@ -6,10 +6,12 @@
 package Instruccion;
 
 import Entorno.Entorno;
+import Entorno.Simbolo;
 import Expresion.Expresion;
 import Expresion.Literal;
 import Expresion.Operacion;
 import java.util.LinkedList;
+import java.util.Vector;
 
 /**
  *
@@ -43,26 +45,35 @@ public class SubIf implements Instruccion{
         Literal valor=null;
         if(this.condicion!=null){
              valor= (Literal)condicion.obtenerValor(ent);
-             valorCondicion= (Boolean) valor.valor;
+             if(valor.tipo==Simbolo.EnumTipoDato.VECTOR){
+                Vector<Expresion> temp = (Vector<Expresion>)valor.valor;
+                valorCondicion = (Boolean)temp.get(0).obtenerValor(ent).valor;
+             }else{
+                 valorCondicion= (Boolean) valor.valor;
+             }
         }
         if(valorCondicion==true){
             SiEjecutado=true;
-            Entorno tablaLocal=new Entorno(null);
-            tablaLocal.tabla.putAll(ent.tabla);
+            Entorno tablaLocal=new Entorno(ent);
+            //tablaLocal.tabla.putAll(ent.tabla);
             for(Instruccion in: listaInstrucciones){
                 Retornar retorn= in.ejecutar(tablaLocal);
                 if(retorn.isReturn){
                 return retorn;
+                }else if(retorn.isBreak){
+                    return retorn;
                 }
             }
             //ent.tabla.putAll(tablaLocal.tabla);
         }else if(isElse==true && SiEjecutado==false){
-            Entorno tablaLocal=new Entorno(null);
-            tablaLocal.tabla.putAll(ent.tabla);
+            Entorno tablaLocal=new Entorno(ent);
+            //tablaLocal.tabla.putAll(ent.tabla);
             for(Instruccion in: listaInstrucciones){
                 Retornar retorn=in.ejecutar(tablaLocal);
                 if(retorn.isReturn){
                 return retorn;
+                }else if(retorn.isBreak){
+                    return retorn;
                 }
             }
             //ent.tabla.putAll(tablaLocal.tabla);

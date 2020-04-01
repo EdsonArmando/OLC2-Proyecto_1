@@ -1,13 +1,215 @@
 digraph lista{ rankdir=TB;node[shape = box, style = filled, color = white]; 
-nodo349886071[label= "LISTA "fillcolor="LightBlue", style ="filled", shape="box"]; 
-nodo424851712[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
-nodo349886071 -> nodo424851712
-nodo217595701[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
-nodo155880423[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
-nodo424851712 -> nodo217595701
-nodo424851712 -> nodo155880423
-nodo1264688599[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
-nodo217595701 -> nodo1264688599
-nodo1199023874[label= "IMPRIMIR "fillcolor="LightBlue", style ="filled", shape="box"]; 
-nodo155880423 -> nodo1199023874
+nodo728351247[label= "LISTA "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo2050379004[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo728351247 -> nodo2050379004
+nodo1333425738[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo2760502[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo2050379004 -> nodo1333425738
+nodo2050379004 -> nodo2760502
+nodo1698094214[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo766455152[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1333425738 -> nodo1698094214
+nodo1333425738 -> nodo766455152
+nodo830199465[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1643691039[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1698094214 -> nodo830199465
+nodo1698094214 -> nodo1643691039
+nodo855219786[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1726607816[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo830199465 -> nodo855219786
+nodo830199465 -> nodo1726607816
+nodo155761954[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo762638416[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo855219786 -> nodo155761954
+nodo855219786 -> nodo762638416
+nodo1400971386[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo2052062323[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo155761954 -> nodo1400971386
+nodo155761954 -> nodo2052062323
+nodo908259253[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1021210449[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1400971386 -> nodo908259253
+nodo1400971386 -> nodo1021210449
+nodo1711675968[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1664081559[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo908259253 -> nodo1711675968
+nodo908259253 -> nodo1664081559
+nodo1112660480[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo221938172[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1711675968 -> nodo1112660480
+nodo1711675968 -> nodo221938172
+nodo1538805249[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1191114887[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1112660480 -> nodo1538805249
+nodo1112660480 -> nodo1191114887
+nodo171162498[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1407188569[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1538805249 -> nodo171162498
+nodo1538805249 -> nodo1407188569
+nodo1250851429[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo2072353139[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo171162498 -> nodo1250851429
+nodo171162498 -> nodo2072353139
+nodo1820181034[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1090307274[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1250851429 -> nodo1820181034
+nodo1250851429 -> nodo1090307274
+nodo2031666146[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo780243891[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1820181034 -> nodo2031666146
+nodo1820181034 -> nodo780243891
+nodo753887451[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo177414936[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo2031666146 -> nodo753887451
+nodo2031666146 -> nodo177414936
+nodo900458107[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo395700086[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo753887451 -> nodo900458107
+nodo753887451 -> nodo395700086
+nodo1080814831[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1408474137[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo900458107 -> nodo1080814831
+nodo900458107 -> nodo1408474137
+nodo964763682[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo18341427[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1080814831 -> nodo964763682
+nodo1080814831 -> nodo18341427
+nodo511985258[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1373115127[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo964763682 -> nodo511985258
+nodo964763682 -> nodo1373115127
+nodo1634253022[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1580270726[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo511985258 -> nodo1634253022
+nodo511985258 -> nodo1580270726
+nodo1648012860[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1935955750[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1634253022 -> nodo1648012860
+nodo1634253022 -> nodo1935955750
+nodo1466871772[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo28148867[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1648012860 -> nodo1466871772
+nodo1648012860 -> nodo28148867
+nodo919704004[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1742552415[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1466871772 -> nodo919704004
+nodo1466871772 -> nodo1742552415
+nodo1173319223[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo680227733[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo919704004 -> nodo1173319223
+nodo919704004 -> nodo680227733
+nodo317622513[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo475490358[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1173319223 -> nodo317622513
+nodo1173319223 -> nodo475490358
+nodo586621789[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1360259917[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo317622513 -> nodo586621789
+nodo317622513 -> nodo1360259917
+nodo928798878[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo284004507[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo586621789 -> nodo928798878
+nodo586621789 -> nodo284004507
+nodo194749456[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1167880109[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo928798878 -> nodo194749456
+nodo928798878 -> nodo1167880109
+nodo282154792[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1816421601[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo194749456 -> nodo282154792
+nodo194749456 -> nodo1816421601
+nodo975828573[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo476972978[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo282154792 -> nodo975828573
+nodo282154792 -> nodo476972978
+nodo102529792[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1227912270[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo975828573 -> nodo102529792
+nodo975828573 -> nodo1227912270
+nodo1012856875[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1348545413[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo102529792 -> nodo1012856875
+nodo102529792 -> nodo1348545413
+nodo893423346[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo2132286992[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1012856875 -> nodo893423346
+nodo1012856875 -> nodo2132286992
+nodo885800568[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1831343719[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo893423346 -> nodo885800568
+nodo893423346 -> nodo1831343719
+nodo1546531374[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1677283109[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo885800568 -> nodo1546531374
+nodo885800568 -> nodo1677283109
+nodo907248348[label= "LISTAINSTRUCCIONES "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo463806807[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1546531374 -> nodo907248348
+nodo1546531374 -> nodo463806807
+nodo909627215[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo522075851[label= "INSTRUCCION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo907248348 -> nodo909627215
+nodo907248348 -> nodo522075851
+nodo892426902[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo909627215 -> nodo892426902
+nodo120351486[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo522075851 -> nodo120351486
+nodo258572515[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo463806807 -> nodo258572515
+nodo1634672547[label= "IMPRIMIR "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1677283109 -> nodo1634672547
+nodo1580539122[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1831343719 -> nodo1580539122
+nodo984278608[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo2132286992 -> nodo984278608
+nodo2030507902[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1348545413 -> nodo2030507902
+nodo1619828218[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1227912270 -> nodo1619828218
+nodo371777429[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo476972978 -> nodo371777429
+nodo2078094182[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1816421601 -> nodo2078094182
+nodo983594884[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1167880109 -> nodo983594884
+nodo1044864615[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo284004507 -> nodo1044864615
+nodo1849944653[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo475490358 -> nodo1849944653
+nodo2081923808[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo680227733 -> nodo2081923808
+nodo1160963761[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1742552415 -> nodo1160963761
+nodo1090665494[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo28148867 -> nodo1090665494
+nodo811775993[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1935955750 -> nodo811775993
+nodo1906508727[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1580270726 -> nodo1906508727
+nodo594961500[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1373115127 -> nodo594961500
+nodo1933844136[label= "IMPRIMIR "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1408474137 -> nodo1933844136
+nodo1446818374[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo177414936 -> nodo1446818374
+nodo1072409997[label= "IMPRIMIR "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1090307274 -> nodo1072409997
+nodo800025256[label= "DECLARACION "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1407188569 -> nodo800025256
+nodo2085458091[label= "IMPRIMIR "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1664081559 -> nodo2085458091
+nodo1339073510[label= "IMPRIMIR "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1021210449 -> nodo1339073510
+nodo766900308[label= "IMPRIMIR "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo2052062323 -> nodo766900308
+nodo2040212832[label= "IMPRIMIR "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo762638416 -> nodo2040212832
+nodo1774400048[label= "IMPRIMIR "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1726607816 -> nodo1774400048
+nodo591815549[label= "IMPRIMIR "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo1643691039 -> nodo591815549
+nodo565397529[label= "IMPRIMIR "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo766455152 -> nodo565397529
+nodo23298402[label= "IMPRIMIR "fillcolor="LightBlue", style ="filled", shape="box"]; 
+nodo2760502 -> nodo23298402
 }

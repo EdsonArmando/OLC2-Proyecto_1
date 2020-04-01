@@ -45,6 +45,7 @@ public class Operacion extends Expresion{
         OR,
         TRUE,
         FALSE,
+        DIFQ,
         POTENCIA,
         CONCATENACION,
         MODIFICACION_FILA_MATRIZ,
@@ -204,6 +205,11 @@ public class Operacion extends Expresion{
             nuevo.setSize(temp.size());
             if(temp!=null){
                 for(Expresion exp:temp){
+                if(exp.tipo != exprDos.tipo){
+                    Inicio.salidaConsola.append("Error semantico no se puede multiplicar datos diferentes \n");
+                    return new Literal(Simbolo.EnumTipoDato.ERROR,null);
+                   
+                }
                 nuevo.setElementAt(new Literal(Simbolo.EnumTipoDato.INT,(Double)exp.valor*(Double)exprDos.valor), cont);
                 cont++;
                 }
@@ -272,6 +278,11 @@ public class Operacion extends Expresion{
         }else if(tipo== Tipo_operacion.MODULO){
             Literal exprUno = (Literal)operadorIzq.obtenerValor(ent);
             Literal exprDos = (Literal)operadorDer.obtenerValor(ent);
+            if(exprUno.tipo == Simbolo.EnumTipoDato.VECTOR){
+                Vector<Expresion> uno = (Vector<Expresion>) exprUno.valor;
+                Expresion temp = uno.get(0).obtenerValor(ent);
+                exprUno = new Literal(temp.tipo,temp.valor);
+            }
             return new Literal(Simbolo.EnumTipoDato.INT,(Double)exprUno.valor % (Double)exprDos.valor);
         }else if(tipo== Tipo_operacion.RESTA){
             Literal exprUno = (Literal)operadorIzq.obtenerValor(ent);
@@ -285,6 +296,20 @@ public class Operacion extends Expresion{
             if(temp!=null){
                 for(Expresion exp:temp){
                 nuevo.setElementAt(new Literal(Simbolo.EnumTipoDato.INT,(Double)exp.valor-(Double)exprDos.valor), cont);
+                cont++;
+                }
+                return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
+            }
+            
+            }if(exprUno.tipo==EnumTipoDato.INT && exprDos.tipo==EnumTipoDato.VECTOR){
+            int cont=0;
+            Vector<Expresion> temp = null;
+            temp = (Vector)exprDos.valor;
+            nuevo = new Vector();
+            nuevo.setSize(temp.size());
+            if(temp!=null){
+                for(Expresion exp:temp){
+                nuevo.setElementAt(new Literal(Simbolo.EnumTipoDato.INT,(Double)exp.valor-(Double)exprUno.valor), cont);
                 cont++;
                 }
                 return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
@@ -409,7 +434,11 @@ public class Operacion extends Expresion{
                     Vector<Expresion> nuevo2 = new Vector();
                     nuevo2.setSize(temp1.size());
                     for(int i=0;i<temp2.size();i++){
-                        nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.INT,(Double)temp1.get(i).obtenerValor(ent).valor + (Double)temp2.get(i).obtenerValor(ent).valor), i);
+                         if(temp1.get(i).obtenerValor(ent).tipo==EnumTipoDato.INT && temp2.get(i).obtenerValor(ent).tipo==EnumTipoDato.INT){
+                            nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.INT,(Double)temp1.get(i).obtenerValor(ent).valor + (Double)temp2.get(i).obtenerValor(ent).valor), i);
+                        }else{
+                            nuevo2.setElementAt(new Literal(Simbolo.EnumTipoDato.STRING,temp1.get(i).obtenerValor(ent).valor.toString() + temp2.get(i).obtenerValor(ent).valor.toString()), i);
+                        }
                     }
                     return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo2);
                 }else{
@@ -436,6 +465,19 @@ public class Operacion extends Expresion{
             Literal exprUno = (Literal)operadorIzq.obtenerValor(ent);
             return new Literal(Simbolo.EnumTipoDato.INT,(Double)exprUno.valor *-1);
         
+        }else if(tipo== Tipo_operacion.DIFQ){
+            Literal exprUno = (Literal)operadorIzq.obtenerValor(ent);
+            if(exprUno.tipo == Simbolo.EnumTipoDato.VECTOR){
+                Vector<Expresion> temp = (Vector<Expresion>)exprUno.valor;
+                Vector<Expresion> nuevo2 = new Vector<Expresion>();
+                nuevo2.setSize(temp.size());
+                for(int i =0;i<temp.size();i++){
+                    boolean val = !Boolean.valueOf(temp.get(i).obtenerValor(ent).valor.toString());
+                    nuevo2.set(i, new Literal(Simbolo.EnumTipoDato.BOOLEAN,val));
+                }
+                return new Literal(Simbolo.EnumTipoDato.VECTOR,nuevo2);
+            }
+            return new Literal(Simbolo.EnumTipoDato.BOOLEAN,!Boolean.valueOf(exprUno.valor.toString()));
         }
          /* ======== OPERACIONES UNARIOS ======== */
         else if(tipo == Tipo_operacion.NUMERO){
@@ -455,6 +497,14 @@ public class Operacion extends Expresion{
             }else if(sim.tipo==Simbolo.EnumTipoDato.ARREGLO){
 
                 return new Literal(Simbolo.EnumTipoDato.ARREGLO,sim.valor);
+            }else if(sim.tipo==Simbolo.EnumTipoDato.INT){
+                return new Literal(Simbolo.EnumTipoDato.INT,sim.valor);
+            }else if(sim.tipo==Simbolo.EnumTipoDato.STRING){
+                return new Literal(Simbolo.EnumTipoDato.STRING,sim.valor);
+            }else if(sim.tipo==Simbolo.EnumTipoDato.BOOLEAN){
+                return new Literal(Simbolo.EnumTipoDato.BOOLEAN,sim.valor);
+            }else if(sim.tipo==Simbolo.EnumTipoDato.DOUBLE){
+                return new Literal(Simbolo.EnumTipoDato.DOUBLE,sim.valor);
             }
             return null;
              /* ======== Dev POSICION ARRAY,MATRIZ,LISTA ======== */
@@ -479,7 +529,11 @@ public class Operacion extends Expresion{
                     if(uno.intValue()>vector.size()){
                         return new Literal(Simbolo.EnumTipoDato.ERROR,null);
                     }
-                    return (Expresion)vector.get(uno.intValue()-1);
+                        if(vector.get(uno.intValue()-1)==null){
+                            return new Literal(Simbolo.EnumTipoDato.STRING,"null");
+                        }else{
+                            return (Expresion)vector.get(uno.intValue()-1);
+                        }
                 }
             }else if(sim.tipo == Simbolo.EnumTipoDato.LIST){
                 LinkedList<Expresion> lista = (LinkedList)sim.valor;
@@ -814,15 +868,36 @@ public class Operacion extends Expresion{
                 cont++;
             }
             return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
+            }else if(exprUno.tipo==EnumTipoDato.VECTOR && exprDos.tipo==EnumTipoDato.STRING){
+                int cont=0;    
+            Vector<Expresion> temp = (Vector)exprUno.valor;
+            nuevo = new Vector();
+            nuevo.setSize(temp.size()); 
+            for(Expresion exp:temp){
+                if(exp.tipo == exprDos.tipo){
+                    nuevo.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,exp.valor.toString().equals(exprDos.valor.toString())), cont);
+                    cont++;
+                }else{
+                        return new Literal(Simbolo.EnumTipoDato.BOOLEAN,false);
+                    }
+                
+            }
+            return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
             }else if(exprUno.tipo==EnumTipoDato.INT && exprDos.tipo==EnumTipoDato.VECTOR){
                 int cont=0;
                 Vector<Expresion> temp = (Vector)exprDos.valor;
                 nuevo = new Vector();
                 nuevo.setSize(temp.size()); 
                 for(Expresion exp:temp){
-            
-                    nuevo.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,Double.valueOf(exp.valor.toString()).doubleValue()==Double.valueOf(exprUno.valor.toString()).doubleValue()), cont);
-                    cont++;
+                    if(exp.tipo == exprUno.tipo){
+                        nuevo.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,Double.valueOf(exp.valor.toString()).doubleValue()==Double.valueOf(exprUno.valor.toString()).doubleValue()), cont);
+                        cont++;
+                        
+                    }else{
+                        return new Literal(Simbolo.EnumTipoDato.BOOLEAN,false);
+          
+                    }
+                    
                 }
                 return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
             }else if((exprUno.tipo == EnumTipoDato.MATRIX) &&(exprDos.tipo==EnumTipoDato.VECTOR | exprDos.tipo==EnumTipoDato.INT)){
@@ -870,8 +945,16 @@ public class Operacion extends Expresion{
                     }
                     return new Literal (Simbolo.EnumTipoDato.MATRIX,matNue);
                 }
+            }else if(exprUno.tipo == Simbolo.EnumTipoDato.INT && exprDos.tipo == Simbolo.EnumTipoDato.INT){
+                return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Double.valueOf(exprUno.valor.toString()).doubleValue() == Double.valueOf(exprDos.valor.toString()).doubleValue());
+            }else if(exprUno.tipo == Simbolo.EnumTipoDato.STRING && exprDos.tipo == Simbolo.EnumTipoDato.STRING){
+                return new Literal(Simbolo.EnumTipoDato.BOOLEAN,exprUno.valor.toString().equals(exprDos.valor.toString()));
+            }else if(exprUno.tipo == Simbolo.EnumTipoDato.BOOLEAN && exprDos.tipo == Simbolo.EnumTipoDato.BOOLEAN){
+                return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Boolean.valueOf(exprUno.valor.toString())==Boolean.valueOf(exprDos.valor.toString()));
+            }else{
+                return new Literal(Simbolo.EnumTipoDato.BOOLEAN,false);
             }
-            return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Double.valueOf(exprUno.valor.toString()).doubleValue() == Double.valueOf(exprDos.valor.toString()).doubleValue());
+
         }else if(tipo== Tipo_operacion.DIFERENTE_QUE){
             Literal exprUno = (Literal)operadorIzq.obtenerValor(ent);
             Literal exprDos = (Literal)operadorDer.obtenerValor(ent);
@@ -883,6 +966,16 @@ public class Operacion extends Expresion{
             for(Expresion exp:temp){
                 nuevo.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,Double.valueOf(exp.valor.toString()).doubleValue()!=Double.valueOf(exprDos.valor.toString()).doubleValue()), cont);
                 cont++;
+            }
+            return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
+            }else if(exprUno.tipo==EnumTipoDato.VECTOR && exprDos.tipo==EnumTipoDato.STRING){
+            int cont=0;    
+            Vector<Expresion> temp = (Vector)exprUno.valor;
+            nuevo = new Vector();
+            nuevo.setSize(temp.size());
+            for(Expresion exp:temp){
+                    nuevo.setElementAt(new Literal(Simbolo.EnumTipoDato.BOOLEAN,!exp.valor.toString().equals(exprDos.valor.toString())), cont);
+                    cont++; 
             }
             return new Literal (Simbolo.EnumTipoDato.VECTOR,nuevo);
             }else if(exprUno.tipo==EnumTipoDato.INT && exprDos.tipo==EnumTipoDato.VECTOR){
@@ -940,7 +1033,9 @@ public class Operacion extends Expresion{
                     }
                     return new Literal (Simbolo.EnumTipoDato.MATRIX,matNue);
                 }
-            }
+            }else if(exprUno.tipo == Simbolo.EnumTipoDato.STRING && exprDos.tipo == Simbolo.EnumTipoDato.STRING){
+                return new Literal(Simbolo.EnumTipoDato.BOOLEAN,!exprUno.valor.toString().equals(exprDos.valor.toString()));
+            }   
             return new Literal(Simbolo.EnumTipoDato.BOOLEAN,Double.valueOf(exprUno.valor.toString()).doubleValue() != Double.valueOf(exprDos.valor.toString()).doubleValue());
         }else if(tipo== Tipo_operacion.AND){
             Literal exprUno = (Literal)operadorIzq.obtenerValor(ent);

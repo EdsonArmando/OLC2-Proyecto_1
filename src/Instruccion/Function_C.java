@@ -26,12 +26,17 @@ public class Function_C extends Funcion {
     public Expresion obtenerValor(Entorno ent) {
        LinkedList var = new LinkedList();
        Vector vecto = new Vector();
+       boolean esLista = false;
         for(Expresion exp : param_Actuales){
             Expresion resultado = exp.obtenerValor(ent);
             if(resultado.tipo == Simbolo.EnumTipoDato.VECTOR){
-                var.add(resultado);
-                //vecto.addAll((Vector)resultado.valor);
+                if(esLista==true){
+                    var.add(resultado);
+                }else{
+                    vecto.addAll((Vector)resultado.valor);
+                }
             }else if(resultado.tipo==Simbolo.EnumTipoDato.LIST){
+                esLista = true;
                 LinkedList nueva=(LinkedList)resultado.valor;
                 var.addAll(nueva);
             }else{
@@ -46,7 +51,20 @@ public class Function_C extends Funcion {
         }
         return new Literal(Simbolo.EnumTipoDato.VECTOR,vecto);
     }
-
+    public static boolean verificacion(LinkedList<Expresion> exp,Entorno ent){
+        Entorno temp = new Entorno(null);
+        temp.tabla.putAll(ent.tabla);
+        LinkedList<Expresion> tempo = new LinkedList<Expresion>();
+        tempo.addAll(exp);
+        boolean esLista=false;
+        for(Expresion ex : tempo){
+            if(ex.obtenerValor(temp).tipo==Simbolo.EnumTipoDato.LIST){
+                esLista=true;
+                return esLista;
+            }
+        }        
+        return false;
+    }
     @Override
     public Simbolo.EnumTipoDato getTipo() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

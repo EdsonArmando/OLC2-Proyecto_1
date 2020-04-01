@@ -66,15 +66,15 @@ action code
 {:
 
 :} 
-terminal String tId,tIn,tPie,tBarplot,tMatrix,tList,tDo,tC,tWhile,tReturn,tFor,tIf,tElse,tModulo,tDosPuntos,tPunto,tLlaveA,tPuntoComa,tLlaveC,tCadena,tCorcheA,tCorcheC;
+terminal String tId,tBreak,tTern,tIn,tPie,tBarplot,tMatrix,tList,tDo,tC,tWhile,tReturn,tFor,tIf,tElse,tModulo,tDosPuntos,tPunto,tLlaveA,tPuntoComa,tLlaveC,tCadena,tCorcheA,tCorcheC;
 terminal String UMENOS,tDoble,tFunction,tIgualIgual,tEntero,tTrue,tFalse,tParA,tParC,tCaracter,tIgual,tDifQ,tOr,tAnd,tXor,tComa,tSuma,tResta,tMult,tDiv,tPow,tMayorQ,tMenorQ; 
 terminal String tPrint;
 
-non terminal NodoAST E,LLAMADA_FUNCION;
+non terminal NodoAST E,LLAMADA_FUNCION,TERNARIO;
 non terminal NodoAST INSTRUCCION;
 non terminal NodoAST LISTAEXPR;
 non terminal NodoAST LISTA,LISTAINSTRUCCIONES;
-non terminal NodoAST ASIGNACION,FOR,DECLARACION,IMPRIMIR,SI,SUBIF,WHILE,DO_WHILE,FUNCION_DEFINIDA,RETURN;
+non terminal NodoAST ASIGNACION,BREAK,FOR,DECLARACION,IMPRIMIR,SI,SUBIF,WHILE,DO_WHILE,FUNCION_DEFINIDA,RETURN;
 non terminal NodoAST instrucciones_elseif;
 non terminal NodoAST instruccion_elseif;
 non terminal NodoAST instruccion_else;
@@ -84,7 +84,7 @@ precedence left tSuma, tResta,UMENOS;
 precedence left tMult, tDiv,tModulo, tIgualIgual;
 precedence left tPow, tMayorQ,tMenorQ;
 precedence left tAnd, tOr,tXor,tDifQ;
-precedence right UMENOS,tIgual; 
+precedence right UMENOS,tIgual,tTern; 
 
 start with LISTA;
 
@@ -115,8 +115,10 @@ INSTRUCCION ::= DECLARACION:a {:NodoAST nodo = new NodoAST("INSTRUCCION");nodo.a
                 | FUNCION_DEFINIDA: a {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}      
                 | RETURN:a {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}    
                 | FOR:a {:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}
+                | tBreak:a tPuntoComa{:NodoAST nodo = new NodoAST("INSTRUCCION");RESULT=nodo;:}
             ;
-
+TERNARIO ::= E:condicion tTern E:exprUno tDosPuntos E:exprDos {:NodoAST nodo = new NodoAST("TERNARIO");RESULT=nodo;:}
+    ;
 FOR ::= tFor tParA tId tIn E tParC tLlaveA LISTAINSTRUCCIONES tLlaveC {:NodoAST nodo = new NodoAST("FOR");RESULT=nodo;:};
 RETURN ::= tReturn E:a tPuntoComa {:NodoAST nodo = new NodoAST("RETURN");RESULT=nodo;:};
 LISTAEXPR ::= LISTAEXPR:li tComa E:a {:
@@ -184,7 +186,8 @@ ASIGNACION ::=  tId:id tCorcheA E:a tComa E:b tCorcheC tIgual E:exp tPuntoComa {
                 | tId:a tCorcheA  tCorcheA E:b tCorcheC tCorcheC tIgual E:exp tPuntoComa{:NodoAST nodo = new NodoAST("ASIGNACION");RESULT=nodo;:}
             ;
 E ::= tResta E:a{:NodoAST nodo = new NodoAST("-");RESULT=nodo;:}%prec UMENOS 
-    | E:a tModulo E:b {:NodoAST nodo = new NodoAST("MODULO");nodo.add(a);nodo.add(new NodoAST("%"));nodo.add(b);RESULT=nodo;:}   
+    | E:a tModulo E:b {:NodoAST nodo = new NodoAST("MODULO");nodo.add(a);nodo.add(new NodoAST("%"));nodo.add(b);RESULT=nodo;:}  
+    | tDifQ E:a{:NodoAST nodo = new NodoAST("!");RESULT=nodo;:}%prec UMENOS 
     | E:a tSuma E:b {:NodoAST nodo = new NodoAST("SUMA");nodo.add(a);nodo.add(new NodoAST("+"));nodo.add(b);RESULT=nodo;:}     
     | E:a tResta E:b {:NodoAST nodo = new NodoAST("RESTA");nodo.add(a);nodo.add(new NodoAST("-"));nodo.add(b);RESULT=nodo;:}  
     | E:a tMult E:b {:NodoAST nodo = new NodoAST("MULTP");nodo.add(a);nodo.add(new NodoAST("*"));nodo.add(b);RESULT=nodo;:}   
@@ -217,5 +220,6 @@ E ::= tResta E:a{:NodoAST nodo = new NodoAST("-");RESULT=nodo;:}%prec UMENOS
     | tDoble:a {:RESULT=new NodoAST(a);:}        
     | tCadena:a {:RESULT=new NodoAST(a);:}        
     | LLAMADA_FUNCION:a {:RESULT=a;:}    
+    | TERNARIO:a {:RESULT=a;:}
     | FUNCION_DEFINIDA:a {:RESULT=a;:}    
     ;

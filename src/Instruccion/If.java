@@ -45,6 +45,8 @@ public class If implements Instruccion{
                 isTrue=((SubIf)in).getValorCondicion();
                 if(retorn.isReturn){
                     return retorn;
+                }else if(retorn.isBreak){
+                    return retorn;
                 }
             }
             //if(((SubSi)in).getValorCondicion());

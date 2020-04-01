@@ -183,7 +183,7 @@ public class Inicio extends javax.swing.JFrame {
                   ins.ejecutar(ent);
               }
               ent.graficarTabla();
-              //Graficar(datos);
+              Graficar(datos);
           }catch(IOException ex){
              Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null,ex);
         }

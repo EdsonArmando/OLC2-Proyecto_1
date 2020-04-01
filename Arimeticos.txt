@@ -1,0 +1,82 @@
+{
+	# OLC2 - PROYECTO 1
+	# @Archivo de pruebas sencillo
+	# @Posiblemente contenga muchos errores
+	# @Comentar errores para ir los corrigiendo
+	# @Suerte :D
+	puntos = 100;
+	top10Notas = c(0,0,0,0,0,0,0,0,0,0);
+	top10Nombres = c(0,0,0,0,0,0,0,0,0,0);
+	print("---------------------------------- EVALUANDO VECTORES --------------------------------------------------");
+	a = c(1,2,3,4,5,6,7,8,9,10);
+	b = c(TRUE, FALSE, FALSE, FALSE, TRUE);
+	cc = c(1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 1.10);
+	d = c("J", "A", "D", "S", "P", "V", "HOLA", "A", "R", "I", "T");
+	e = c(a,b,cc,d);
+	size = length(e);
+	temp = c(36);
+	condicion = (size != 36);
+	if(condicion[1]){
+    		puntos = (puntos - (c(-1)*-1*-1*c(-1))) + (puntos * puntos)/(c(2)*puntos);
+    		print("TEST 1 - FAIL");
+	}else{
+    		print("TEST 1 - EZ");
+	}
+
+	f = e + e;
+	g = f * 2;  
+	h = c(e,e);
+	i = c(b,FALSE,FALSE,FALSE,FALSE,TRUE) | ((a * -2) > (c(a) + c(a+cc)) )| false ;
+	j =( c("A") == e[27]) ? 0 : -1;
+	k = e[27] + e[27];
+ 	dos = c((j* c(-1)));
+  	if(!i |c(k,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE) != f[27]| dos[1] == c(1,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE)){
+		 puntos = trunk(puntos - trunk(cc[10]) - (cc[7]+cc[3]));
+    	         print("TEST 2 - FAIL");
+	}else{
+		print("TEST 2 - EZ");
+	}
+	print("ya me aburri");
+
+	if(typeof(puntos[1]) != "INT"){
+	    puntos = puntos - 2;
+	    print("TEST 3 - FAIL");
+	}else{
+	    print("TEST 3 - PASS");
+	}
+	l = e;
+	l[90] = "expandiendo EL VECTOR";
+	print(l[89]);
+	if(l[89] != "null"){
+	    puntos = puntos - 3;
+	    print("TEST 4 - FAIL");
+			}else{
+	   		 print("TEST 4 - PASS");
+	}
+
+	counter=1;
+	for(i in l){
+		if(counter[1]<36){
+			i=counter[1] %% 3;
+		}else if(counter[1]==89){
+			counter[1]=counter[1]-1;
+			break;
+		}
+		counter[1]=counter[1] + c(1) + 1 - 1 - c(c(c(c(c(c(c(c(c(c(c(c(c(c(1)))))))))))))) + 1;
+	}
+		if(counter[1] != 88){
+	    puntos = puntos - 3;
+	    print("TEST 5 - FAIL");
+	}else{
+	    print("TEST 5 - PASS");
+	}
+	print("PUNTEO EN EVALUACION SIMPLE DE VECTORES: "+puntos[1]);
+
+print("---------------------------------- FIN EVALUACION VECTORES --------------------------------------------------");
+print("");
+print("");
+print("");
+print("");
+print("");
+print("");
+}

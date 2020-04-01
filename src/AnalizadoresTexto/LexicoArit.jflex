@@ -77,6 +77,7 @@ espacio = \t|\f|" "|\r|\n
     ">"             {return addSymbol(new Symbol(Syma.tMayorQ,yycolumn,yyline,yytext()));}
     "<"             {return addSymbol(new Symbol(Syma.tMenorQ,yycolumn,yyline,yytext()));}
     "!"             {return addSymbol(new Symbol(Syma.tDifQ,yycolumn,yyline,yytext()));}
+    "?"             {return addSymbol(new Symbol(Syma.tTern,yycolumn,yyline,yytext()));}
     "%%"            {return addSymbol(new Symbol(Syma.tModulo,yycolumn,yyline,yytext()));}
     "&"             {return addSymbol(new Symbol(Syma.tAnd,yycolumn,yyline,yytext()));}
     "^"             {return addSymbol(new Symbol(Syma.tXor,yycolumn,yyline,yytext()));}
@@ -95,6 +96,7 @@ espacio = \t|\f|" "|\r|\n
     "while"         {return addSymbol(new Symbol(Syma.tWhile,yycolumn,yyline,yytext()));}
     "for"           {return addSymbol(new Symbol(Syma.tFor,yycolumn,yyline,yytext()));}
     "return"        {return addSymbol(new Symbol(Syma.tReturn,yycolumn,yyline,yytext()));}
+    "break"         {return addSymbol(new Symbol(Syma.tBreak,yycolumn,yyline,yytext()));}
     "c"             {return addSymbol(new Symbol(Syma.tC,yycolumn,yyline,yytext()));}
     "list"          {return addSymbol(new Symbol(Syma.tList,yycolumn,yyline,yytext()));}
     "matrix"        {return addSymbol(new Symbol(Syma.tMatrix,yycolumn,yyline,yytext()));}
